@@ -164,7 +164,7 @@ export function LookupForm({ onUnitLoaded, isPending }: Props) {
 
       <CardContent className="pt-4">
         <p className="mb-3 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs leading-5 text-emerald-900">
-          Enter the applicant&apos;s name, details, and Unit of Competency (UOC), or use the selections provided on eLearn.
+          Enter the applicant&apos;s name, details, and Unit of Competency (UOC), or use the selections provided on the LMS.
         </p>
         <form onSubmit={handleCodeSubmit} className="grid min-w-0 gap-3 sm:grid-cols-2 lg:grid-cols-6">
           <label className="grid min-w-0 gap-1">
@@ -390,7 +390,7 @@ export function LookupForm({ onUnitLoaded, isPending }: Props) {
                   />
                 </label>
                 <label className="grid gap-1">
-                  <span className="text-[11px] font-semibold text-zinc-700">eLearn URL</span>
+                  <span className="text-[11px] font-semibold text-zinc-700">LMS URL</span>
                   <Input
                     type="url"
                     placeholder="https://…"

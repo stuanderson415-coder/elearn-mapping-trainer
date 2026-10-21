@@ -122,7 +122,7 @@ export async function exportRplToWord(unit: UnitOfCompetency, record: RplRecord)
     ['Pre-RPL Interview notes', record.student.preRplChecklist.interviewNotes],
     ['Job Card provided', record.student.preRplChecklist.jobCardProvided ? 'Yes' : 'No'],
     ['SharePoint evidence repository', record.student.preRplChecklist.sharePointPath || (record.student.preRplChecklist.sharePointRepositoryCreated ? 'Created' : 'Not recorded')],
-    ['eLearn storage', record.student.preRplChecklist.elearnUrl || (record.student.preRplChecklist.elearnStorageCreated ? 'Created' : 'Not recorded')],
+    ['LMS storage', record.student.preRplChecklist.elearnUrl || (record.student.preRplChecklist.elearnStorageCreated ? 'Created' : 'Not recorded')],
     ['Driver licence', record.student.preRplChecklist.driversLicenceProvided
       ? [record.student.preRplChecklist.driversLicenceNumber, record.student.preRplChecklist.driversLicenceState, record.student.preRplChecklist.driversLicenceExpiry && `Expires ${formatDate(record.student.preRplChecklist.driversLicenceExpiry)}`].filter(Boolean).join(' · ') || 'Provided'
       : 'Not recorded'],
