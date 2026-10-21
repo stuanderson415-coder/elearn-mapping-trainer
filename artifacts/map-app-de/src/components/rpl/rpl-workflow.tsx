@@ -639,12 +639,9 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
       </section>
       <aside className="rounded-xl border border-purple-950 bg-purple-900 p-4 text-purple-50 shadow-sm">
         <span className="text-xs font-bold uppercase tracking-[0.16em] text-purple-300">RPL record</span>
-        <p className="mt-3 text-base font-semibold leading-6">Evidence is recorded once, then mapped to every requirement it supports.</p>
-        <ol className="mt-5 space-y-3 text-sm leading-5 text-purple-100">
-          <li><span className="mr-2 font-mono text-purple-300">01</span>Add the student's details.</li>
-          <li><span className="mr-2 font-mono text-purple-300">02</span>Log each piece of evidence and its reference.</li>
-          <li><span className="mr-2 font-mono text-purple-300">03</span>Map evidence, resolve gaps, then export the final record.</li>
-        </ol>
+        <p className="mt-3 text-base font-semibold leading-6">
+          Evidence is recorded once, then mapped to Elements, PC, PE, KE, Foundation Skills and Conditions.
+        </p>
       </aside>
     </div>
   );
