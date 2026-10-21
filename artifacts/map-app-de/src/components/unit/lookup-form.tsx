@@ -152,7 +152,7 @@ export function LookupForm({ onUnitLoaded, isPending }: Props) {
             <strong className="font-bold">RPL is an assessment only process</strong>.
           </CardDescription>
         </div>
-        <div className="hidden rounded-lg bg-green-600 px-3 py-2 text-right text-xs font-semibold leading-5 text-white sm:block">
+        <div className="hidden min-w-[160px] rounded-lg bg-green-600 px-3 py-2 text-center text-xs font-semibold leading-5 text-white sm:block">
           <span>RPL Initial Interview</span>
         </div>
       </CardHeader>
