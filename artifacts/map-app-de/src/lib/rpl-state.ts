@@ -199,6 +199,8 @@ export type StudentDetails = {
   trainerName: string;
   organisation: string;
   assessmentDate: string;
+  evidencePresentationSessionDate: string;
+  gapsAssessmentSessionDate: string;
   studentInformed: boolean;
   preRplChecklist: PreRplChecklist;
 };
@@ -272,6 +274,8 @@ export function createEmptyRplRecord(): RplRecord {
       trainerName: '',
       organisation: '',
       assessmentDate: '',
+      evidencePresentationSessionDate: '',
+      gapsAssessmentSessionDate: '',
       studentInformed: false,
       preRplChecklist: createEmptyPreRplChecklist(),
     },
@@ -328,6 +332,8 @@ export function loadRplRecordForStudent(unitCode: string, studentNumber: string)
         trainerName: parsed.student?.trainerName ?? '',
         organisation: parsed.student?.organisation ?? '',
         assessmentDate: parsed.student?.assessmentDate ?? '',
+        evidencePresentationSessionDate: parsed.student?.evidencePresentationSessionDate ?? '',
+        gapsAssessmentSessionDate: parsed.student?.gapsAssessmentSessionDate ?? '',
         studentInformed: parsed.student?.studentInformed ?? false,
         preRplChecklist: {
           ...createEmptyPreRplChecklist(),
@@ -374,7 +380,13 @@ export function hasRplRecord(unitCode: string, studentNumber: string) {
 export function listRplStudents(unitCode: string): StudentRecordSummary[] {
   try {
     const saved = localStorage.getItem(studentIndexKey(unitCode));
-    return saved ? JSON.parse(saved) as StudentRecordSummary[] : [];
+    return saved
+      ? (JSON.parse(saved) as Array<Partial<StudentRecordSummary>>).map(student => ({
+          ...student,
+          evidencePresentationSessionDate: student.evidencePresentationSessionDate ?? '',
+          gapsAssessmentSessionDate: student.gapsAssessmentSessionDate ?? '',
+        }) as StudentRecordSummary)
+      : [];
   } catch {
     return [];
   }
@@ -450,6 +462,8 @@ export function persistRplRecord(unitCode: string, record: RplRecord, recordStud
         trainerName: record.student.trainerName,
         organisation: record.student.organisation,
         assessmentDate: record.student.assessmentDate,
+        evidencePresentationSessionDate: record.student.evidencePresentationSessionDate,
+        gapsAssessmentSessionDate: record.student.gapsAssessmentSessionDate,
         studentInformed: record.student.studentInformed,
         preRplChecklist: record.student.preRplChecklist,
         updatedAt: new Date().toISOString(),

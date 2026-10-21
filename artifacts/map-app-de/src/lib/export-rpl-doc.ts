@@ -102,6 +102,8 @@ export async function exportRplToWord(unit: UnitOfCompetency, record: RplRecord)
     ['Trainer / assessor', record.student.trainerName],
     ['Parent Qualification', record.student.organisation],
     ['RPL Start Date', formatDate(record.student.assessmentDate)],
+    ['Evidence Presentation Session Booked', formatDate(record.student.evidencePresentationSessionDate)],
+    ['Gaps Assessment Session Booked', formatDate(record.student.gapsAssessmentSessionDate)],
     ['Date of Interview', formatDate(record.student.preRplChecklist.interviewDate)],
     ['Assessment Only Process discussed', record.student.preRplChecklist.assessmentOnlyProcess ? 'Yes' : 'No'],
     ['Timeframe for RPL discussed', record.student.preRplChecklist.rplTimeframeExplained ? 'Yes' : 'No'],

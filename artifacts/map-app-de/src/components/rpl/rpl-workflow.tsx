@@ -561,6 +561,24 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
               className="bg-zinc-50"
             />
           </div>
+          <div>
+            <FieldLabel>Evidence Presentation Session Booked</FieldLabel>
+            <DatePickerInput
+              value={record.student.evidencePresentationSessionDate}
+              onChange={evidencePresentationSessionDate => updateRecord(current => ({ ...current, student: { ...current.student, evidencePresentationSessionDate } }))}
+              ariaLabel="Evidence Presentation Session Booked"
+              className="bg-zinc-50"
+            />
+          </div>
+          <div>
+            <FieldLabel>Gaps Assessment Session Booked</FieldLabel>
+            <DatePickerInput
+              value={record.student.gapsAssessmentSessionDate}
+              onChange={gapsAssessmentSessionDate => updateRecord(current => ({ ...current, student: { ...current.student, gapsAssessmentSessionDate } }))}
+              ariaLabel="Gaps Assessment Session Booked"
+              className="bg-zinc-50"
+            />
+          </div>
         </div>
         {recordConflict && (
           <div className="mt-4 rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm text-amber-950">
@@ -573,7 +591,7 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
         )}
 
         <div className="mt-5 rounded-lg border-l-4 border-purple-600 bg-purple-50 p-4 text-purple-900">
-          <p className="text-sm font-medium">Assessor can commence the RPL application now by commencing a purple CIT Recognition form.</p>
+          <p className="text-sm font-medium">The assessor should check that all student details are correct. The RPL Start Date marks when the candidate can begin collecting evidence.</p>
         </div>
 
         <div className="mt-4 flex items-start gap-3 rounded-lg border border-zinc-200 bg-zinc-50 p-4">
@@ -1015,6 +1033,8 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
             <span><strong>Student number:</strong> {record.student.studentNumber || 'Not recorded'}</span>
             <span><strong>Trainer / assessor:</strong> {record.student.trainerName || 'Not recorded'}</span>
             <span><strong>RPL Start Date:</strong> {record.student.assessmentDate || 'Not recorded'}</span>
+            <span><strong>Evidence Presentation Session Booked:</strong> {record.student.evidencePresentationSessionDate || 'Not recorded'}</span>
+            <span><strong>Gaps Assessment Session Booked:</strong> {record.student.gapsAssessmentSessionDate || 'Not recorded'}</span>
             <span><strong>Evidence items:</strong> {record.evidence.length}</span>
             <span><strong>Direct mappings:</strong> {coveredRows} of {requirementRows.length}</span>
           </div>

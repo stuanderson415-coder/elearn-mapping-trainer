@@ -97,6 +97,8 @@ export function LookupForm({ onUnitLoaded, isPending }: Props) {
     trainerName: '',
     organisation: '',
     assessmentDate: today(),
+    evidencePresentationSessionDate: '',
+    gapsAssessmentSessionDate: '',
     studentInformed: false,
     preRplChecklist: createEmptyPreRplChecklist(),
   });

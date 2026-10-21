@@ -181,6 +181,8 @@ export default function Home() {
       trainerName: 'Preview Assessor',
       organisation: 'Preview Qualification',
       assessmentDate: new Date().toLocaleDateString('en-CA'),
+      evidencePresentationSessionDate: '',
+      gapsAssessmentSessionDate: '',
       studentInformed: true,
       preRplChecklist: {
         assessmentOnlyProcess: true,
