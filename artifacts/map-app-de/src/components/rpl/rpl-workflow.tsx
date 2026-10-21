@@ -642,7 +642,7 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
         <p className="mt-3 text-base font-semibold leading-6">
           Your evidence will now be logged into a register of your evidence and then mapped against the unit of competence.
         </p>
-        <div className="mt-4 border-t border-purple-700 pt-4">
+        <div className="mt-4">
           <div className="mt-2 flex items-start gap-2">
             <Checkbox
               id="assessment-principles-informed"
@@ -654,14 +654,14 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
               Applicant has been informed of the principles of assessment.
             </label>
           </div>
-          <ul className="mt-2 list-disc space-y-1.5 pl-4 text-xs leading-4">
-            <li><span className="font-bold text-white">Fair:</span> Clear expectations, support provided, appeals process, reasonable adjustment.</li>
-            <li><span className="font-bold text-white">Flexible:</span> Adaptable to need, independent of how skills were gained.</li>
-            <li><span className="font-bold text-white">Valid:</span> Assessment tool measures skills and knowledge in the UOC.</li>
-            <li><span className="font-bold text-white">Reliable:</span> Assessment is accurate, consistent between assessors and contexts.</li>
+          <ul className="mt-2 grid gap-1.5 sm:grid-cols-2">
+            <li className="rounded-md border border-[#022c22] bg-[#064e3b] p-2 text-xs leading-4 text-white"><span className="font-bold">Fair:</span> Clear expectations, support provided, appeals process, reasonable adjustment.</li>
+            <li className="rounded-md border border-[#022c22] bg-[#064e3b] p-2 text-xs leading-4 text-white"><span className="font-bold">Flexible:</span> Adaptable to need, independent of how skills were gained.</li>
+            <li className="rounded-md border border-[#022c22] bg-[#064e3b] p-2 text-xs leading-4 text-white"><span className="font-bold">Valid:</span> Assessment tool measures skills and knowledge in the UOC.</li>
+            <li className="rounded-md border border-[#022c22] bg-[#064e3b] p-2 text-xs leading-4 text-white"><span className="font-bold">Reliable:</span> Assessment is accurate, consistent between assessors and contexts.</li>
           </ul>
         </div>
-        <div className="mt-4 border-t border-purple-700 pt-4">
+        <div className="mt-4">
           <div className="mt-2 flex items-start gap-2">
             <Checkbox
               id="evidence-rules-informed"
@@ -673,11 +673,11 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
               Applicant has been informed of the rules of evidence.
             </label>
           </div>
-          <ul className="mt-3 list-disc space-y-1.5 pl-4 text-xs leading-4">
-            <li><span className="font-bold text-white">Valid:</span> Evidence aligns directly to the UOC.</li>
-            <li><span className="font-bold text-white">Sufficient:</span> Evidence is enough in terms of quality and quantity to make the assessment decision.</li>
-            <li><span className="font-bold text-white">Authentic:</span> Evidence is clearly the candidate’s own work.</li>
-            <li><span className="font-bold text-white">Currency:</span> Evidence matches current industry standards and practice.</li>
+          <ul className="mt-2 grid gap-1.5 sm:grid-cols-2">
+            <li className="rounded-md border border-[#022c22] bg-[#064e3b] p-2 text-xs leading-4 text-white"><span className="font-bold">Valid:</span> Evidence aligns directly to the UOC.</li>
+            <li className="rounded-md border border-[#022c22] bg-[#064e3b] p-2 text-xs leading-4 text-white"><span className="font-bold">Sufficient:</span> Evidence is enough in terms of quality and quantity to make the assessment decision.</li>
+            <li className="rounded-md border border-[#022c22] bg-[#064e3b] p-2 text-xs leading-4 text-white"><span className="font-bold">Authentic:</span> Evidence is clearly the candidate’s own work.</li>
+            <li className="rounded-md border border-[#022c22] bg-[#064e3b] p-2 text-xs leading-4 text-white"><span className="font-bold">Currency:</span> Evidence matches current industry standards and practice.</li>
           </ul>
         </div>
       </aside>
