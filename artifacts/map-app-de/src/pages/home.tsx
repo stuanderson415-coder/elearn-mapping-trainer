@@ -154,6 +154,8 @@ export default function Home() {
     setCurrentUnit(null);
     setSelectedRplStudent(undefined);
     setIntakeDetails(undefined);
+    setWorkspaceMode('rpl');
+    setDevPreviewStage('student');
   };
 
   const openDevPreview = (stage: 'intake' | RplStage) => {
@@ -328,7 +330,7 @@ export default function Home() {
               ) : currentUnit ? (
                  <div className="mt-2">
                   {workspaceMode === 'rpl'
-                    ? <RplWorkflow key={`${currentUnit.code}:${selectedRplStudent ?? intakeDetails?.studentNumber ?? 'last'}`} unit={currentUnit} studentNumber={selectedRplStudent} prefill={intakeDetails} initialStage={devPreviewStage} stageRequest={devPreviewRequest} onOpenAssessmentMapping={() => setWorkspaceMode('assessment')} />
+                    ? <RplWorkflow key={`${currentUnit.code}:${selectedRplStudent ?? intakeDetails?.studentNumber ?? 'last'}`} unit={currentUnit} studentNumber={selectedRplStudent} prefill={intakeDetails} initialStage={devPreviewStage} stageRequest={devPreviewRequest} onFinish={startAnotherRpl} />
                      : <div className="space-y-4">
                        <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-zinc-200 bg-white px-3 py-2 shadow-sm">
                         <div>

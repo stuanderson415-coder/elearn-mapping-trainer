@@ -305,7 +305,7 @@ function withPreRplEvidence(current: RplRecord): RplRecord {
   return additions.length ? { ...current, evidence: [...current.evidence, ...additions] } : current;
 }
 
-export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'student', stageRequest = 0, onOpenAssessmentMapping }: { unit: UnitOfCompetency; studentNumber?: string; prefill?: StudentDetails; initialStage?: RplStage; stageRequest?: number; onOpenAssessmentMapping?: () => void }) {
+export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'student', stageRequest = 0, onFinish }: { unit: UnitOfCompetency; studentNumber?: string; prefill?: StudentDetails; initialStage?: RplStage; stageRequest?: number; onFinish: () => void }) {
   const hasPrefill = Boolean(prefill?.surname || prefill?.givenNames || prefill?.studentNumber);
   const [record, setRecord] = useState<RplRecord>(() => {
     const loaded = studentNumber
@@ -453,6 +453,10 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
   };
 
   const goNext = () => {
+    if (stage === 'final') {
+      onFinish();
+      return;
+    }
     if (stage === 'student') {
       saveStudentAndContinue();
       return;
@@ -1249,7 +1253,7 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
            className="mt-4 bg-purple-800 hover:bg-purple-700"
         >
           {exported ? <Check className="mr-2 h-4 w-4" /> : <Download className="mr-2 h-4 w-4" />}
-          {exported ? 'Downloaded RPL mapping' : 'Download landscape Word document'}
+          {exported ? 'Downloaded RPL Mapping Report' : 'Download RPL Mapping Report'}
         </Button>
         {!hasStudent && <p className="mt-2 text-xs text-rose-700">Add the student name and student number before finalising.</p>}
       </section>
@@ -1292,11 +1296,6 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
             <span className="block font-semibold text-zinc-700">{studentName || 'No student selected'}</span>
             <span>{record.student.studentNumber || 'Student number required'}</span>
           </div>
-          {onOpenAssessmentMapping && (
-            <button type="button" onClick={onOpenAssessmentMapping} className="rounded-md border border-zinc-300 px-2.5 py-1.5 text-xs font-semibold text-zinc-600 transition hover:border-zinc-500 hover:text-zinc-900">
-              Assessment mapping
-            </button>
-          )}
         </div>
       </header>
 
@@ -1336,8 +1335,8 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
           </Button>
           <span className="hidden text-xs font-medium text-zinc-500 sm:inline">Step {stageIndex + 1} of {STAGES.length}</span>
         </div>
-        <Button onClick={goNext} disabled={stageIndex === STAGES.length - 1 || (stage === 'student' && !hasStudent)} className="bg-zinc-900 hover:bg-zinc-700">
-          Next <ArrowRight className="ml-2 h-4 w-4" />
+        <Button onClick={goNext} disabled={stage === 'student' && !hasStudent} className="bg-zinc-900 hover:bg-zinc-700">
+          {stage === 'final' ? <>Finish <Check className="ml-2 h-4 w-4" /></> : <>Next <ArrowRight className="ml-2 h-4 w-4" /></>}
         </Button>
       </footer>
     </div>
