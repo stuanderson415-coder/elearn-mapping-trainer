@@ -133,6 +133,7 @@ export default function Home() {
   const [selectedRplStudent, setSelectedRplStudent] = useState<string | undefined>();
   const [intakeDetails, setIntakeDetails] = useState<StudentDetails | undefined>();
   const [devPreviewStage, setDevPreviewStage] = useState<RplStage>('student');
+  const [devPreviewRequest, setDevPreviewRequest] = useState(0);
 
   const setNumTasks = (n: number) => {
     setNumTasksRaw(n);
@@ -172,6 +173,7 @@ export default function Home() {
       return;
     }
     setDevPreviewStage(stage);
+    setDevPreviewRequest(request => request + 1);
     const previewStudent: StudentDetails = {
       surname: 'Preview',
       givenNames: 'Developer',
@@ -337,7 +339,7 @@ export default function Home() {
               ) : currentUnit ? (
                  <div className="mt-2">
                   {workspaceMode === 'rpl'
-                    ? <RplWorkflow key={`${currentUnit.code}:${selectedRplStudent ?? intakeDetails?.studentNumber ?? 'last'}`} unit={currentUnit} studentNumber={selectedRplStudent} prefill={intakeDetails} initialStage={devPreviewStage} onOpenAssessmentMapping={() => setWorkspaceMode('assessment')} />
+                    ? <RplWorkflow key={`${currentUnit.code}:${selectedRplStudent ?? intakeDetails?.studentNumber ?? 'last'}`} unit={currentUnit} studentNumber={selectedRplStudent} prefill={intakeDetails} initialStage={devPreviewStage} stageRequest={devPreviewRequest} onOpenAssessmentMapping={() => setWorkspaceMode('assessment')} />
                      : <div className="space-y-4">
                        <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-zinc-200 bg-white px-3 py-2 shadow-sm">
                         <div>

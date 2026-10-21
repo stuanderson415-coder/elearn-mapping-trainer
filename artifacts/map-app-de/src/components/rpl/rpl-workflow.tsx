@@ -251,7 +251,7 @@ function withPreRplEvidence(current: RplRecord): RplRecord {
   return additions.length ? { ...current, evidence: [...current.evidence, ...additions] } : current;
 }
 
-export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'student', onOpenAssessmentMapping }: { unit: UnitOfCompetency; studentNumber?: string; prefill?: StudentDetails; initialStage?: RplStage; onOpenAssessmentMapping?: () => void }) {
+export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'student', stageRequest = 0, onOpenAssessmentMapping }: { unit: UnitOfCompetency; studentNumber?: string; prefill?: StudentDetails; initialStage?: RplStage; stageRequest?: number; onOpenAssessmentMapping?: () => void }) {
   const hasPrefill = Boolean(prefill?.surname || prefill?.givenNames || prefill?.studentNumber);
   const [record, setRecord] = useState<RplRecord>(() => {
     const loaded = studentNumber
@@ -288,7 +288,7 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
 
   useEffect(() => {
     if (import.meta.env.DEV) setStage(initialStage);
-  }, [initialStage]);
+  }, [initialStage, stageRequest]);
 
   const rows = useMemo(() => buildRows(unit), [unit]);
   const requirementRows = useMemo(
