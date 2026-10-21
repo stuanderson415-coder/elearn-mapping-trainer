@@ -33,7 +33,7 @@ export const EVIDENCE_COLOURS = [
 export type EvidenceColour = typeof EVIDENCE_COLOURS[number]['value'];
 
 export const EVIDENCE_STORAGE_LOCATIONS = [
-  { name: 'eLearn', value: 'elearn' },
+  { name: 'LMS', value: 'elearn' },
   { name: 'SharePoint', value: 'sharepoint' },
 ] as const;
 
