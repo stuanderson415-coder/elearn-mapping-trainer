@@ -41,7 +41,7 @@ function WelcomePanel() {
           <p className="mt-1 max-w-3xl text-xs leading-5 text-zinc-600">
             RTO Standard 1.6 requires registered training organisations to support VET students with prior skills and knowledge to seek Recognition of Prior Learning (RPL). Providers must offer clear policy awareness, base RPL decisions on valid evidence, and maintain fair, consistent assessment standards.
           </p>
-          <p className="mt-1 max-w-3xl text-xs leading-5 font-bold text-green-800">
+          <p className="mt-2 max-w-3xl rounded-lg border border-emerald-300 bg-emerald-50/70 px-3 py-2 text-xs leading-5 font-bold text-green-800">
             This tool is designed to help you describe and log RPL evidence pieces, map them using a dynamic mapping interface and identify gaps.
           </p>
         </div>
