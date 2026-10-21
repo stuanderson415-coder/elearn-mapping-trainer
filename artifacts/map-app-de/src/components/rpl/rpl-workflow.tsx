@@ -269,7 +269,7 @@ function withPreRplEvidence(current: RplRecord): RplRecord {
     { provided: checklist.forkliftLicenceProvided, title: 'Forklift licence', reference: [checklist.forkliftLicenceNumber, checklist.forkliftLicenceExpiry && `Expires ${displayDate(checklist.forkliftLicenceExpiry)}`].filter(Boolean).join(' · '), sourceKey: 'pre-rpl-forklift' },
     { provided: checklist.rsaProvided, title: 'RSA', reference: [checklist.rsaNumber, checklist.rsaExpiry && `Expires ${displayDate(checklist.rsaExpiry)}`].filter(Boolean).join(' · '), sourceKey: 'pre-rpl-rsa' },
     { provided: checklist.asbestosSilicaProvided, title: 'Asbestos / Silica', reference: [checklist.asbestosSilicaNumber, checklist.asbestosSilicaExpiry && `Expires ${displayDate(checklist.asbestosSilicaExpiry)}`].filter(Boolean).join(' · '), sourceKey: 'pre-rpl-asbestos-silica' },
-    { provided: checklist.wwvpProvided, title: 'WWVP', reference: [checklist.wwvpNumber, checklist.wwvpExpiry && `Expires ${displayDate(checklist.wwvpExpiry)}`].filter(Boolean).join(' · '), sourceKey: 'pre-rpl-wwvp' },
+    { provided: checklist.wwvpProvided, title: 'WWVP/WWCC/Ochre/Pink Card', reference: [checklist.wwvpNumber, checklist.wwvpExpiry && `Expires ${displayDate(checklist.wwvpExpiry)}`].filter(Boolean).join(' · '), sourceKey: 'pre-rpl-wwvp' },
   ];
   const additions = candidates
     .filter(candidate => candidate.provided && !current.evidence.some(item => item.sourceKey === candidate.sourceKey))

@@ -130,7 +130,7 @@ export async function exportRplToWord(unit: UnitOfCompetency, record: RplRecord)
     ['Forklift licence', record.student.preRplChecklist.forkliftLicenceProvided ? [record.student.preRplChecklist.forkliftLicenceNumber, record.student.preRplChecklist.forkliftLicenceExpiry && `Expires ${formatDate(record.student.preRplChecklist.forkliftLicenceExpiry)}`].filter(Boolean).join(' · ') || 'Provided' : 'Not recorded'],
     ['RSA', record.student.preRplChecklist.rsaProvided ? [record.student.preRplChecklist.rsaNumber, record.student.preRplChecklist.rsaExpiry && `Expires ${formatDate(record.student.preRplChecklist.rsaExpiry)}`].filter(Boolean).join(' · ') || 'Provided' : 'Not recorded'],
     ['Asbestos / Silica', record.student.preRplChecklist.asbestosSilicaProvided ? [record.student.preRplChecklist.asbestosSilicaNumber, record.student.preRplChecklist.asbestosSilicaExpiry && `Expires ${formatDate(record.student.preRplChecklist.asbestosSilicaExpiry)}`].filter(Boolean).join(' · ') || 'Provided' : 'Not recorded'],
-    ['WWVP', record.student.preRplChecklist.wwvpProvided ? [record.student.preRplChecklist.wwvpNumber, record.student.preRplChecklist.wwvpExpiry && `Expires ${formatDate(record.student.preRplChecklist.wwvpExpiry)}`].filter(Boolean).join(' · ') || 'Provided' : 'Not recorded'],
+    ['WWVP/WWCC/Ochre/Pink Card', record.student.preRplChecklist.wwvpProvided ? [record.student.preRplChecklist.wwvpNumber, record.student.preRplChecklist.wwvpExpiry && `Expires ${formatDate(record.student.preRplChecklist.wwvpExpiry)}`].filter(Boolean).join(' · ') || 'Provided' : 'Not recorded'],
     ['RPL outcome', outcomeLabel(record.finalisation.outcome)],
     ['Outcome notes / conditions', record.finalisation.outcomeNotes],
   ];
