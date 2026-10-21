@@ -543,7 +543,7 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
               className="h-10 w-full rounded-md border border-zinc-300 bg-zinc-50 px-2.5 text-sm outline-none transition focus:border-purple-700 focus:ring-2 focus:ring-purple-100"
             />
           </div>
-          <div>
+          <div className="sm:col-span-2 lg:col-span-3">
             <FieldLabel>Parent Qualification</FieldLabel>
             <input
               value={record.student.organisation}
@@ -552,33 +552,58 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
               className="h-10 w-full rounded-md border border-zinc-300 bg-zinc-50 px-2.5 text-sm outline-none transition focus:border-purple-700 focus:ring-2 focus:ring-purple-100"
             />
           </div>
-          <div>
-            <FieldLabel>RPL Start Date (DD/MM/YYYY)</FieldLabel>
-            <DatePickerInput
-              value={record.student.assessmentDate}
-              onChange={assessmentDate => updateRecord(current => ({ ...current, student: { ...current.student, assessmentDate } }))}
-              ariaLabel="RPL Start Date"
-              className="bg-zinc-50"
-            />
+          <div className="grid gap-3 sm:col-span-2 sm:grid-cols-3 lg:col-span-3">
+            <div>
+              <FieldLabel>RPL Start Date (DD/MM/YYYY)</FieldLabel>
+              <DatePickerInput
+                value={record.student.assessmentDate}
+                onChange={assessmentDate => updateRecord(current => ({ ...current, student: { ...current.student, assessmentDate } }))}
+                ariaLabel="RPL Start Date"
+                className="bg-zinc-50"
+              />
+            </div>
+            <div>
+              <FieldLabel>Evidence Presentation Session Booked</FieldLabel>
+              <DatePickerInput
+                value={record.student.evidencePresentationSessionDate}
+                onChange={evidencePresentationSessionDate => updateRecord(current => ({ ...current, student: { ...current.student, evidencePresentationSessionDate } }))}
+                ariaLabel="Evidence Presentation Session Booked"
+                className="bg-zinc-50"
+              />
+            </div>
+            <div>
+              <FieldLabel>Gaps Assessment Session Booked</FieldLabel>
+              <DatePickerInput
+                value={record.student.gapsAssessmentSessionDate}
+                onChange={gapsAssessmentSessionDate => updateRecord(current => ({ ...current, student: { ...current.student, gapsAssessmentSessionDate } }))}
+                ariaLabel="Gaps Assessment Session Booked"
+                className="bg-zinc-50"
+              />
+            </div>
           </div>
-          <div>
-            <FieldLabel>Evidence Presentation Session Booked</FieldLabel>
-            <DatePickerInput
-              value={record.student.evidencePresentationSessionDate}
-              onChange={evidencePresentationSessionDate => updateRecord(current => ({ ...current, student: { ...current.student, evidencePresentationSessionDate } }))}
-              ariaLabel="Evidence Presentation Session Booked"
-              className="bg-zinc-50"
+        </div>
+        <div className="mt-4 grid gap-3 rounded-lg border border-purple-200 bg-purple-50/50 p-3 sm:grid-cols-[minmax(0,0.7fr)_minmax(0,1.3fr)] sm:items-start">
+          <div className="flex items-start gap-2">
+            <Checkbox
+              id="disability-access-plan"
+              checked={record.student.disabilityAccessPlan}
+              onCheckedChange={checked => updateRecord(current => ({ ...current, student: { ...current.student, disabilityAccessPlan: checked === true } }))}
+              className="mt-0.5"
             />
+            <label htmlFor="disability-access-plan" className="cursor-pointer text-sm font-semibold text-zinc-800">
+              Disability Access Plan (DAP)
+            </label>
           </div>
-          <div>
-            <FieldLabel>Gaps Assessment Session Booked</FieldLabel>
-            <DatePickerInput
-              value={record.student.gapsAssessmentSessionDate}
-              onChange={gapsAssessmentSessionDate => updateRecord(current => ({ ...current, student: { ...current.student, gapsAssessmentSessionDate } }))}
-              ariaLabel="Gaps Assessment Session Booked"
-              className="bg-zinc-50"
+          <label className="grid gap-1">
+            <FieldLabel>Record reasonable adjustments negotiated here</FieldLabel>
+            <textarea
+              value={record.student.reasonableAdjustments}
+              onChange={event => updateRecord(current => ({ ...current, student: { ...current.student, reasonableAdjustments: event.target.value } }))}
+              rows={5}
+              placeholder="Record reasonable adjustments negotiated here"
+              className="w-full resize-y rounded-md border border-zinc-300 bg-white px-3 py-2.5 text-sm leading-5 outline-none transition focus:border-purple-700 focus:ring-2 focus:ring-purple-100"
             />
-          </div>
+          </label>
         </div>
         {recordConflict && (
           <div className="mt-4 rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm text-amber-950">
@@ -1035,6 +1060,8 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
             <span><strong>RPL Start Date:</strong> {record.student.assessmentDate || 'Not recorded'}</span>
             <span><strong>Evidence Presentation Session Booked:</strong> {record.student.evidencePresentationSessionDate || 'Not recorded'}</span>
             <span><strong>Gaps Assessment Session Booked:</strong> {record.student.gapsAssessmentSessionDate || 'Not recorded'}</span>
+            <span><strong>Disability Access Plan (DAP):</strong> {record.student.disabilityAccessPlan ? 'Yes' : 'No'}</span>
+            <span><strong>Reasonable adjustments:</strong> {record.student.reasonableAdjustments || 'Not recorded'}</span>
             <span><strong>Evidence items:</strong> {record.evidence.length}</span>
             <span><strong>Direct mappings:</strong> {coveredRows} of {requirementRows.length}</span>
           </div>

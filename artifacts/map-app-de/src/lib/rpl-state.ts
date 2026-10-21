@@ -201,6 +201,8 @@ export type StudentDetails = {
   assessmentDate: string;
   evidencePresentationSessionDate: string;
   gapsAssessmentSessionDate: string;
+  disabilityAccessPlan: boolean;
+  reasonableAdjustments: string;
   studentInformed: boolean;
   preRplChecklist: PreRplChecklist;
 };
@@ -276,6 +278,8 @@ export function createEmptyRplRecord(): RplRecord {
       assessmentDate: '',
       evidencePresentationSessionDate: '',
       gapsAssessmentSessionDate: '',
+      disabilityAccessPlan: false,
+      reasonableAdjustments: '',
       studentInformed: false,
       preRplChecklist: createEmptyPreRplChecklist(),
     },
@@ -334,6 +338,8 @@ export function loadRplRecordForStudent(unitCode: string, studentNumber: string)
         assessmentDate: parsed.student?.assessmentDate ?? '',
         evidencePresentationSessionDate: parsed.student?.evidencePresentationSessionDate ?? '',
         gapsAssessmentSessionDate: parsed.student?.gapsAssessmentSessionDate ?? '',
+        disabilityAccessPlan: parsed.student?.disabilityAccessPlan ?? false,
+        reasonableAdjustments: parsed.student?.reasonableAdjustments ?? '',
         studentInformed: parsed.student?.studentInformed ?? false,
         preRplChecklist: {
           ...createEmptyPreRplChecklist(),
@@ -385,6 +391,8 @@ export function listRplStudents(unitCode: string): StudentRecordSummary[] {
           ...student,
           evidencePresentationSessionDate: student.evidencePresentationSessionDate ?? '',
           gapsAssessmentSessionDate: student.gapsAssessmentSessionDate ?? '',
+          disabilityAccessPlan: student.disabilityAccessPlan ?? false,
+          reasonableAdjustments: student.reasonableAdjustments ?? '',
         }) as StudentRecordSummary)
       : [];
   } catch {
@@ -464,6 +472,8 @@ export function persistRplRecord(unitCode: string, record: RplRecord, recordStud
         assessmentDate: record.student.assessmentDate,
         evidencePresentationSessionDate: record.student.evidencePresentationSessionDate,
         gapsAssessmentSessionDate: record.student.gapsAssessmentSessionDate,
+        disabilityAccessPlan: record.student.disabilityAccessPlan,
+        reasonableAdjustments: record.student.reasonableAdjustments,
         studentInformed: record.student.studentInformed,
         preRplChecklist: record.student.preRplChecklist,
         updatedAt: new Date().toISOString(),

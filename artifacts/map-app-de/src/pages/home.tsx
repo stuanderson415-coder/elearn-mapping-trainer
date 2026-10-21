@@ -183,6 +183,8 @@ export default function Home() {
       assessmentDate: new Date().toLocaleDateString('en-CA'),
       evidencePresentationSessionDate: '',
       gapsAssessmentSessionDate: '',
+      disabilityAccessPlan: false,
+      reasonableAdjustments: '',
       studentInformed: true,
       preRplChecklist: {
         assessmentOnlyProcess: true,

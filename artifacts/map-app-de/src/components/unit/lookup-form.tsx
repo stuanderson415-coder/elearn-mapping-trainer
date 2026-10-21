@@ -99,6 +99,8 @@ export function LookupForm({ onUnitLoaded, isPending }: Props) {
     assessmentDate: today(),
     evidencePresentationSessionDate: '',
     gapsAssessmentSessionDate: '',
+    disabilityAccessPlan: false,
+    reasonableAdjustments: '',
     studentInformed: false,
     preRplChecklist: createEmptyPreRplChecklist(),
   });
