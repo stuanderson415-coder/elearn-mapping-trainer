@@ -154,7 +154,7 @@ export function LookupForm({ onUnitLoaded, isPending }: Props) {
           </CardDescription>
         </div>
         <div className="hidden min-w-[160px] rounded-lg bg-green-600 px-3 py-2 text-center text-xs font-semibold leading-5 text-white sm:block">
-          <span>RPL Initial Interview</span>
+          <span>Pre-Assessment</span>
         </div>
       </CardHeader>
 
