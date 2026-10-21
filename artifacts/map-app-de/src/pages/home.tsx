@@ -183,7 +183,9 @@ export default function Home() {
       assessmentDate: new Date().toLocaleDateString('en-CA'),
       studentInformed: true,
       preRplChecklist: {
-        interviewCompleted: true,
+        assessmentOnlyProcess: true,
+        rplTimeframeExplained: true,
+        evidenceTypesExplained: true,
         interviewDate: new Date().toLocaleDateString('en-CA'),
         interviewNotes: 'Candidate advised of the RPL process, evidence expectations, and next steps.',
         cvResumeProvided: true,
@@ -192,6 +194,7 @@ export default function Home() {
         academicTranscriptFileName: 'preview-transcript.pdf',
         positionDescriptionProvided: true,
         positionDescriptionFileName: 'preview-position-description.pdf',
+        jobCardProvided: true,
         driversLicenceProvided: false,
         driversLicenceNumber: '',
         driversLicenceState: '',

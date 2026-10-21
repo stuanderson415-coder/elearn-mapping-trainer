@@ -102,9 +102,14 @@ export async function exportRplToWord(unit: UnitOfCompetency, record: RplRecord)
     ['Trainer / assessor', record.student.trainerName],
     ['Parent Qualification', record.student.organisation],
     ['RPL Start Date', formatDate(record.student.assessmentDate)],
-    ['Pre-assessment interview notes', record.student.preRplChecklist.interviewNotes],
-    ['SharePoint evidence repository', record.student.preRplChecklist.sharePointRepositoryCreated ? record.student.preRplChecklist.sharePointPath || 'Created' : 'Not recorded'],
-    ['eLearn storage', record.student.preRplChecklist.elearnStorageCreated ? record.student.preRplChecklist.elearnUrl || 'Created' : 'Not recorded'],
+    ['Date of Interview', formatDate(record.student.preRplChecklist.interviewDate)],
+    ['Assessment Only Process discussed', record.student.preRplChecklist.assessmentOnlyProcess ? 'Yes' : 'No'],
+    ['Timeframe for RPL discussed', record.student.preRplChecklist.rplTimeframeExplained ? 'Yes' : 'No'],
+    ['Types of Evidence Required discussed', record.student.preRplChecklist.evidenceTypesExplained ? 'Yes' : 'No'],
+    ['Pre-RPL Interview notes', record.student.preRplChecklist.interviewNotes],
+    ['Job Card provided', record.student.preRplChecklist.jobCardProvided ? 'Yes' : 'No'],
+    ['SharePoint evidence repository', record.student.preRplChecklist.sharePointPath || (record.student.preRplChecklist.sharePointRepositoryCreated ? 'Created' : 'Not recorded')],
+    ['eLearn storage', record.student.preRplChecklist.elearnUrl || (record.student.preRplChecklist.elearnStorageCreated ? 'Created' : 'Not recorded')],
     ['Driver licence', record.student.preRplChecklist.driversLicenceProvided
       ? [record.student.preRplChecklist.driversLicenceNumber, record.student.preRplChecklist.driversLicenceState, record.student.preRplChecklist.driversLicenceExpiry && `Expires ${formatDate(record.student.preRplChecklist.driversLicenceExpiry)}`].filter(Boolean).join(' · ') || 'Provided'
       : 'Not recorded'],

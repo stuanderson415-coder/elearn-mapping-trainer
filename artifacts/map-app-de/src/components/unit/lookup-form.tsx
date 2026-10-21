@@ -230,34 +230,64 @@ export function LookupForm({ onUnitLoaded, isPending }: Props) {
                   className="h-8 text-xs"
                 />
               </label>
-              <div className="flex items-center gap-2 lg:col-span-2">
-                <Checkbox
-                  id="pre-rpl-interview"
-                  checked={intake.preRplChecklist.interviewCompleted}
-                  onCheckedChange={value => updateChecklist({ interviewCompleted: value === true })}
-                  disabled={loading}
-                />
-                <label htmlFor="pre-rpl-interview" className="cursor-pointer text-[11px] font-semibold text-zinc-800">Pre-RPL interview completed</label>
+              <div className="grid gap-2 sm:grid-cols-3 lg:col-span-2">
+                <div className="flex min-h-10 items-center gap-2 rounded-lg border border-zinc-200 bg-white px-2.5 py-2">
+                  <Checkbox
+                    id="assessment-only-process"
+                    checked={intake.preRplChecklist.assessmentOnlyProcess}
+                    onCheckedChange={value => updateChecklist({ assessmentOnlyProcess: value === true })}
+                    disabled={loading}
+                  />
+                  <label htmlFor="assessment-only-process" className="cursor-pointer text-xs font-semibold text-zinc-800">Assessment Only Process</label>
+                </div>
+                <div className="flex min-h-10 items-center gap-2 rounded-lg border border-zinc-200 bg-white px-2.5 py-2">
+                  <Checkbox
+                    id="rpl-timeframe-explained"
+                    checked={intake.preRplChecklist.rplTimeframeExplained}
+                    onCheckedChange={value => updateChecklist({ rplTimeframeExplained: value === true })}
+                    disabled={loading}
+                  />
+                  <label htmlFor="rpl-timeframe-explained" className="cursor-pointer text-xs font-semibold text-zinc-800">Timeframe for RPL</label>
+                </div>
+                <div className="flex min-h-10 items-center gap-2 rounded-lg border border-zinc-200 bg-white px-2.5 py-2">
+                  <Checkbox
+                    id="evidence-types-explained"
+                    checked={intake.preRplChecklist.evidenceTypesExplained}
+                    onCheckedChange={value => updateChecklist({ evidenceTypesExplained: value === true })}
+                    disabled={loading}
+                  />
+                  <label htmlFor="evidence-types-explained" className="cursor-pointer text-xs font-semibold text-zinc-800">Types of Evidence Required</label>
+                </div>
               </div>
+              <label className="grid max-w-xs gap-1 lg:col-span-2">
+                <span className="text-[11px] font-semibold text-zinc-700">Date of Interview</span>
+                <DatePickerInput
+                  value={intake.preRplChecklist.interviewDate}
+                  onChange={interviewDate => updateChecklist({ interviewDate })}
+                  disabled={loading}
+                  ariaLabel="Date of Interview"
+                  className="h-8 text-xs"
+                />
+              </label>
             </section>
             <label className="grid gap-1">
-              <span className="text-[11px] font-semibold text-zinc-700">Pre-assessment interview notes</span>
+              <span className="text-sm font-bold text-zinc-800">Pre-RPL Interview notes</span>
               <textarea
                 value={intake.preRplChecklist.interviewNotes}
                 onChange={event => updateChecklist({ interviewNotes: event.target.value })}
                 disabled={loading}
-                rows={3}
+                rows={6}
                 placeholder="Record key discussion points, candidate circumstances, and agreed next steps"
-                className="w-full resize-y rounded-md border border-zinc-300 bg-white px-2.5 py-2 text-xs outline-none transition focus:border-purple-700 focus:ring-2 focus:ring-purple-100"
+                className="w-full resize-y rounded-md border border-zinc-300 bg-white px-3 py-3 text-sm leading-6 outline-none transition focus:border-purple-700 focus:ring-2 focus:ring-purple-100"
               />
             </label>
 
             <section className="border-t border-zinc-200 pt-2.5">
               <div className="mb-1.5">
-                <h3 className="text-xs font-semibold text-zinc-900">Initial documents provided</h3>
+                <h3 className="text-sm font-bold text-zinc-900">Initial Evidence Provided</h3>
                 <p className="mt-0.5 text-[11px] text-zinc-500">Tick each item received. Documents remain in the nominated evidence repository.</p>
               </div>
-              <div className="grid gap-2 sm:grid-cols-3">
+              <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
                 <ChecklistDocument
                   id="cv-resume"
                   label="CV / résumé"
@@ -278,6 +308,13 @@ export function LookupForm({ onUnitLoaded, isPending }: Props) {
                   checked={intake.preRplChecklist.positionDescriptionProvided}
                   disabled={loading}
                   onCheckedChange={checked => updateChecklist({ positionDescriptionProvided: checked })}
+                />
+                <ChecklistDocument
+                  id="job-card"
+                  label="Job Card"
+                  checked={intake.preRplChecklist.jobCardProvided}
+                  disabled={loading}
+                  onCheckedChange={checked => updateChecklist({ jobCardProvided: checked })}
                 />
               </div>
             </section>
@@ -334,17 +371,9 @@ export function LookupForm({ onUnitLoaded, isPending }: Props) {
               </div>
             </section>
 
-            <section className="grid gap-2.5 border-t border-zinc-200 pt-2.5">
-              <div className="grid gap-2.5 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)] lg:items-end">
-                <div className="flex items-center gap-2">
-                  <Checkbox
-                    id="sharepoint-repository"
-                    checked={intake.preRplChecklist.sharePointRepositoryCreated}
-                    onCheckedChange={value => updateChecklist({ sharePointRepositoryCreated: value === true })}
-                    disabled={loading}
-                  />
-                  <label htmlFor="sharepoint-repository" className="cursor-pointer text-xs font-semibold text-zinc-800">SharePoint Evidence Repository</label>
-                </div>
+            <section className="border-t border-zinc-200 pt-2.5">
+              <h3 className="mb-2 text-sm font-bold text-zinc-900">Evidence Storage Location</h3>
+              <div className="grid gap-2.5 sm:grid-cols-2">
                 <label className="grid gap-1">
                   <span className="text-[11px] font-semibold text-zinc-700">SharePoint path</span>
                   <Input
@@ -355,17 +384,6 @@ export function LookupForm({ onUnitLoaded, isPending }: Props) {
                     className="h-8 bg-white text-xs"
                   />
                 </label>
-              </div>
-              <div className="grid gap-2.5 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)] lg:items-end">
-                <div className="flex items-center gap-2">
-                  <Checkbox
-                    id="elearn-storage"
-                    checked={intake.preRplChecklist.elearnStorageCreated}
-                    onCheckedChange={value => updateChecklist({ elearnStorageCreated: value === true })}
-                    disabled={loading}
-                  />
-                  <label htmlFor="elearn-storage" className="cursor-pointer text-xs font-semibold text-zinc-800">eLearn Storage Repository</label>
-                </div>
                 <label className="grid gap-1">
                   <span className="text-[11px] font-semibold text-zinc-700">eLearn URL</span>
                   <Input
@@ -373,7 +391,7 @@ export function LookupForm({ onUnitLoaded, isPending }: Props) {
                     placeholder="https://…"
                     value={intake.preRplChecklist.elearnUrl}
                     onChange={event => updateChecklist({ elearnUrl: event.target.value })}
-                    disabled={loading || !intake.preRplChecklist.elearnStorageCreated}
+                    disabled={loading}
                     className="h-8 bg-white text-xs"
                   />
                 </label>

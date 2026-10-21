@@ -216,6 +216,7 @@ function withPreRplEvidence(current: RplRecord): RplRecord {
     { provided: checklist.cvResumeProvided, title: 'CV / résumé', reference: checklist.cvResumeFileName, sourceKey: 'pre-rpl-cv' },
     { provided: checklist.academicTranscriptProvided, title: 'Academic transcript', reference: checklist.academicTranscriptFileName, sourceKey: 'pre-rpl-transcript' },
     { provided: checklist.positionDescriptionProvided, title: 'Current position description', reference: checklist.positionDescriptionFileName, sourceKey: 'pre-rpl-position-description' },
+    { provided: checklist.jobCardProvided, title: 'Job Card', reference: '', sourceKey: 'pre-rpl-job-card' },
     { provided: checklist.driversLicenceProvided, title: 'Driver licence', reference: [checklist.driversLicenceNumber, checklist.driversLicenceState, checklist.driversLicenceExpiry && `Expires ${displayDate(checklist.driversLicenceExpiry)}`].filter(Boolean).join(' · '), sourceKey: 'pre-rpl-drivers-licence' },
     { provided: checklist.whiteCardProvided, title: 'White Card', reference: [checklist.whiteCardNumber, checklist.whiteCardExpiry && `Expires ${displayDate(checklist.whiteCardExpiry)}`].filter(Boolean).join(' · '), sourceKey: 'pre-rpl-white-card' },
     { provided: checklist.forkliftLicenceProvided, title: 'Forklift licence', reference: [checklist.forkliftLicenceNumber, checklist.forkliftLicenceExpiry && `Expires ${displayDate(checklist.forkliftLicenceExpiry)}`].filter(Boolean).join(' · '), sourceKey: 'pre-rpl-forklift' },
@@ -236,9 +237,13 @@ function withPreRplEvidence(current: RplRecord): RplRecord {
           ? 'academic-transcript' as const
           : candidate.sourceKey === 'pre-rpl-position-description'
             ? 'position-description' as const
+            : candidate.sourceKey === 'pre-rpl-job-card'
+              ? 'job-card' as const
             : 'other' as const,
       colour: 'teal' as const,
-      location: checklist.sharePointRepositoryCreated || checklist.elearnStorageCreated ? 'digital-sharepoint' as const : 'sighted-logged' as const,
+      location: checklist.sharePointRepositoryCreated || checklist.elearnStorageCreated || checklist.sharePointPath.trim() || checklist.elearnUrl.trim()
+        ? 'digital-sharepoint' as const
+        : 'sighted-logged' as const,
       classifications: ['indirect'] as EvidenceClassification[],
       subtypes: ['work-sample-portfolio'] as EvidenceSubtype[],
       sourceKey: candidate.sourceKey,

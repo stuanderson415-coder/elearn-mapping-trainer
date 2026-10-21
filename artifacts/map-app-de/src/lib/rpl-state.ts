@@ -113,7 +113,9 @@ export function studentDisplayName(student: Partial<Pick<StudentDetails, 'surnam
 export type InterviewOutcome = 'pending' | 'resolved' | 'not-resolved';
 
 export type PreRplChecklist = {
-  interviewCompleted: boolean;
+  assessmentOnlyProcess: boolean;
+  rplTimeframeExplained: boolean;
+  evidenceTypesExplained: boolean;
   interviewDate: string;
   interviewNotes: string;
   cvResumeProvided: boolean;
@@ -122,6 +124,7 @@ export type PreRplChecklist = {
   academicTranscriptFileName: string;
   positionDescriptionProvided: boolean;
   positionDescriptionFileName: string;
+  jobCardProvided: boolean;
   driversLicenceProvided: boolean;
   driversLicenceNumber: string;
   driversLicenceState: string;
@@ -149,7 +152,9 @@ export type PreRplChecklist = {
 
 export function createEmptyPreRplChecklist(): PreRplChecklist {
   return {
-    interviewCompleted: false,
+    assessmentOnlyProcess: false,
+    rplTimeframeExplained: false,
+    evidenceTypesExplained: false,
     interviewDate: '',
     interviewNotes: '',
     cvResumeProvided: false,
@@ -158,6 +163,7 @@ export function createEmptyPreRplChecklist(): PreRplChecklist {
     academicTranscriptFileName: '',
     positionDescriptionProvided: false,
     positionDescriptionFileName: '',
+    jobCardProvided: false,
     driversLicenceProvided: false,
     driversLicenceNumber: '',
     driversLicenceState: '',
@@ -207,7 +213,7 @@ export type EvidenceItem = {
   location: EvidenceLocation;
   classifications: EvidenceClassification[];
   subtypes: EvidenceSubtype[];
-  sourceKey?: 'pre-rpl-cv' | 'pre-rpl-transcript' | 'pre-rpl-position-description' | 'pre-rpl-drivers-licence' | 'pre-rpl-white-card' | 'pre-rpl-forklift' | 'pre-rpl-rsa' | 'pre-rpl-asbestos-silica' | 'pre-rpl-wwvp';
+  sourceKey?: 'pre-rpl-cv' | 'pre-rpl-transcript' | 'pre-rpl-position-description' | 'pre-rpl-job-card' | 'pre-rpl-drivers-licence' | 'pre-rpl-white-card' | 'pre-rpl-forklift' | 'pre-rpl-rsa' | 'pre-rpl-asbestos-silica' | 'pre-rpl-wwvp';
 };
 
 export type InterviewRecord = {
