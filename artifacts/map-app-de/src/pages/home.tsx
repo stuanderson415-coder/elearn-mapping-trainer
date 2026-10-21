@@ -39,6 +39,9 @@ function WelcomePanel() {
           <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-purple-700">Welcome</p>
           <h2 className="mt-0.5 text-xl font-bold tracking-tight text-zinc-900">Welcome to RPL Mapping Trainer</h2>
           <p className="mt-1 max-w-3xl text-xs leading-5 text-zinc-600">
+            RTO Standard 1.6 requires registered training organisations to support VET students with prior skills and knowledge to seek Recognition of Prior Learning (RPL). Providers must offer clear policy awareness, base RPL decisions on valid evidence, and maintain fair, consistent assessment standards.
+          </p>
+          <p className="mt-1 max-w-3xl text-xs leading-5 text-zinc-600">
             This tool is designed to help you describe and log RPL evidence pieces, map them using a dynamic mapping interface and identify gaps. You will then devise gap questions. You will then be able to look at a report and check your evidence collected vs the Unit of Competence.
           </p>
         </div>
