@@ -640,8 +640,29 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
       <aside className="rounded-xl border border-purple-950 bg-purple-900 p-4 text-purple-50 shadow-sm">
         <span className="text-xs font-bold uppercase tracking-[0.16em] text-purple-300">RPL record</span>
         <p className="mt-3 text-base font-semibold leading-6">
-          Evidence is recorded once, then mapped to Elements, PC, PE, KE, Foundation Skills and Conditions.
+          Your evidence will now be logged into a register of your evidence and then mapped against the unit of competence.
         </p>
+        <div className="mt-4 border-t border-purple-700 pt-4">
+          <h3 className="text-sm font-bold text-white">ASQA requires the assessment process be:</h3>
+          <p className="mt-3 text-xs font-bold uppercase tracking-wide text-purple-200">Confirmation by assessor</p>
+          <ul className="mt-2 space-y-2 text-sm leading-5">
+            <li>Principles of Assessment have been explained to the applicant.</li>
+            <li className="font-medium">This RPL Assessment process is:</li>
+            <li><span className="font-bold text-white">Fair:</span> Clear expectations, support provided, appeals process, reasonable adjustment.</li>
+            <li><span className="font-bold text-white">Flexible:</span> Adaptable to need, independent of how skills were gained.</li>
+            <li><span className="font-bold text-white">Valid:</span> Assessment tool measures skills and knowledge in the UOC.</li>
+            <li><span className="font-bold text-white">Reliable:</span> Assessment is accurate, consistent between assessors and contexts.</li>
+          </ul>
+        </div>
+        <div className="mt-4 border-t border-purple-700 pt-4">
+          <h3 className="text-sm font-bold text-white">And your evidence abides by the rules of evidence:</h3>
+          <ul className="mt-2 space-y-2 text-sm leading-5">
+            <li><span className="font-bold text-white">Valid:</span> Evidence aligns directly to the UOC.</li>
+            <li><span className="font-bold text-white">Sufficient:</span> Evidence is enough in terms of quality and quantity to make the assessment decision.</li>
+            <li><span className="font-bold text-white">Authentic:</span> Evidence is clearly the candidate’s own work.</li>
+            <li><span className="font-bold text-white">Currency:</span> Evidence matches current industry standards and practice.</li>
+          </ul>
+        </div>
       </aside>
     </div>
   );
