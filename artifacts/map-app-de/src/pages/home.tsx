@@ -255,27 +255,38 @@ export default function Home() {
             <div className="absolute inset-0 bg-gradient-to-r from-[#064e3b] via-[#064e3b]/25 to-transparent" />
             <div className="absolute inset-0 bg-gradient-to-l from-[#052e16] via-[#052e16]/25 to-transparent" />
           </div>
-          <div className="pointer-events-none absolute left-1/2 hidden -translate-x-1/2 flex-col items-center lg:flex">
+          <div className="pointer-events-none absolute left-1/2 hidden -translate-x-1/2 items-center lg:flex">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#b0c6d6]">
-              Developer Demonstration Version
+              Formative Assessment Resource
             </p>
-            <TooltipProvider delayDuration={200}>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <button type="button" className="pointer-events-auto mt-1 cursor-help text-[10px] font-medium tracking-wide text-[#b0c6d6] underline decoration-[#7b97aa] underline-offset-2 transition hover:text-white">
-                    © Stuart Anderson, Fastigiata Lab
-                  </button>
-                </TooltipTrigger>
-                <TooltipContent side="bottom" className="max-w-md border border-[#7b97aa] bg-[#161618] px-3 py-2 text-center text-xs leading-5 text-[#b0c6d6] shadow-xl">
-                  RPL Mapping Trainer © 2026 Stuart Anderson / Fastigiata Lab. Licensed under GNU AGPL v3.0. Dynamic Card Mapping™ conceived and developed by Stuart Anderson. See repository LICENSE and NOTICE for details.
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
           </div>
           <div className="hidden shrink-0 items-center gap-2 md:flex">
-            <a href="https://github.com/stuanderson415-coder/Unit-Scraper-Pro" target="_blank" rel="noopener noreferrer">
-              <img src="https://img.shields.io/badge/Source-GitHub-181717?logo=github" alt="Source on GitHub" className="h-5" />
-            </a>
+            <div className="flex flex-col items-end justify-center gap-0.5">
+              <a
+                href="https://github.com/stuanderson415-coder/Unit-Scraper-Pro"
+                target="_blank"
+                rel="noopener noreferrer"
+                data-testid="link-source-github"
+              >
+                <img src="https://img.shields.io/badge/Source-GitHub-181717?logo=github" alt="Source on GitHub" className="h-5" />
+              </a>
+              <TooltipProvider delayDuration={200}>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      type="button"
+                      data-testid="button-copyright-notice"
+                      className="cursor-help text-[8px] leading-[10px] font-medium tracking-wide text-[#b0c6d6] underline decoration-[#7b97aa] underline-offset-1 transition hover:text-white"
+                    >
+                      © Stuart Anderson, Fastigiata Lab
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent side="bottom" className="max-w-md border border-[#7b97aa] bg-[#161618] px-3 py-2 text-center text-xs leading-5 text-[#b0c6d6] shadow-xl">
+                    RPL Mapping Trainer © 2026 Stuart Anderson / Fastigiata Lab. Licensed under GNU AGPL v3.0. Dynamic Card Mapping™ conceived and developed by Stuart Anderson. See repository LICENSE and NOTICE for details.
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
             {currentUnit && (
               <button type="button" onClick={startAnotherRpl} className="rounded-md border border-slate-400/60 bg-white px-3 py-1.5 text-xs font-semibold text-zinc-800 shadow-sm transition hover:bg-slate-100">
                 Start another RPL
