@@ -313,6 +313,12 @@ export default function Home() {
                 <>
                   <WelcomePanel />
                   <LookupForm onUnitLoaded={handleUnitLoaded} isPending={lookupUnit.isPending} />
+                  <p className="text-center text-[11px] text-emerald-800">
+                    PWA by FastigiataLab{' '}
+                    <a href="mailto:fastigiatalab@proton.me" className="underline underline-offset-2">
+                      fastigiatalab@proton.me
+                    </a>
+                  </p>
                 </>
               )}
 
