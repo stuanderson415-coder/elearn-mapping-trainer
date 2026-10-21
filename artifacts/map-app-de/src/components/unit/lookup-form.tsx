@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Loader2, UserRound } from 'lucide-react';
+import { Info, Loader2, UserRound } from 'lucide-react';
 import { useLookupUnit, type UnitOfCompetency } from '@workspace/api-client-react';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -152,7 +152,8 @@ export function LookupForm({ onUnitLoaded, isPending }: Props) {
             <strong className="font-bold">RPL is an assessment only process</strong>.
           </CardDescription>
         </div>
-        <div className="hidden min-w-[160px] rounded-lg bg-green-600 px-3 py-2 text-center text-sm font-extrabold leading-5 text-white sm:block">
+        <div className="hidden min-w-[160px] items-center justify-center gap-1.5 rounded-lg bg-green-600 px-3 py-2 text-center text-sm font-extrabold leading-5 text-white sm:flex">
+          <Info aria-hidden="true" className="h-4 w-4 shrink-0" />
           <span>Pre-Assessment</span>
         </div>
       </CardHeader>
