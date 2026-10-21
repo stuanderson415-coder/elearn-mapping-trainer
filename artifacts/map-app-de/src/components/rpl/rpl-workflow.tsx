@@ -650,7 +650,7 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
               onCheckedChange={checked => updateRecord(current => ({ ...current, assessmentPrinciplesInformed: checked === true }))}
               className="mt-0.5 border-purple-300 data-[state=checked]:border-purple-200"
             />
-            <label htmlFor="assessment-principles-informed" className="cursor-pointer text-xs font-medium leading-4 text-purple-50">
+            <label htmlFor="assessment-principles-informed" className="cursor-pointer text-sm font-bold leading-5 text-purple-50">
               Applicant has been informed of the principles of assessment.
             </label>
           </div>
@@ -669,7 +669,7 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
               onCheckedChange={checked => updateRecord(current => ({ ...current, evidenceRulesInformed: checked === true }))}
               className="mt-0.5 border-purple-300 data-[state=checked]:border-purple-200"
             />
-            <label htmlFor="evidence-rules-informed" className="cursor-pointer text-xs font-medium leading-4 text-purple-50">
+            <label htmlFor="evidence-rules-informed" className="cursor-pointer text-sm font-bold leading-5 text-purple-50">
               Applicant has been informed of the rules of evidence.
             </label>
           </div>
