@@ -232,7 +232,7 @@ export default function Home() {
   return (
     <>
       <header className="fixed inset-x-0 top-0 z-50 h-16 border-b border-green-950 bg-gradient-to-r from-[#022c22] via-[#064e3b] to-[#052e16] text-white shadow-md">
-        <div className="flex h-full w-full items-center justify-between gap-3 px-4 md:px-6">
+        <div className="relative flex h-full w-full items-center gap-3 px-4 md:px-6">
           <div className="flex min-w-0 items-center gap-3">
             <div className="w-12 shrink-0">
               <img
@@ -245,6 +245,15 @@ export default function Home() {
               <h1 className="truncate text-xl font-semibold tracking-tight text-white sm:text-2xl">RPL Mapping Trainer</h1>
               <p className="hidden truncate text-xs text-[#b0c6d6] sm:block">Recognition of Prior Learning Learning Space</p>
             </div>
+          </div>
+          <div aria-hidden="true" className="relative hidden h-full min-w-0 flex-1 overflow-hidden md:block">
+            <img
+              src={`${import.meta.env.BASE_URL}images/learner-header-strip.jpg`}
+              alt=""
+              className="absolute inset-0 h-full w-full object-cover object-center"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#064e3b] via-[#064e3b]/25 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-l from-[#052e16] via-[#052e16]/25 to-transparent" />
           </div>
           <div className="pointer-events-none absolute left-1/2 hidden -translate-x-1/2 flex-col items-center lg:flex">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#b0c6d6]">
@@ -263,17 +272,10 @@ export default function Home() {
               </Tooltip>
             </TooltipProvider>
           </div>
-          <div className="flex shrink-0 items-center gap-2">
-            <div className="hidden items-center gap-2 md:flex">
-              <img
-                src={`${import.meta.env.BASE_URL}images/adult-learner-feature.png`}
-                alt="Adult learner reviewing vocational study materials"
-                className="hidden h-10 w-24 rounded-md border border-white/25 object-cover lg:block xl:h-11 xl:w-28"
-              />
-              <a href="https://github.com/stuanderson415-coder/Unit-Scraper-Pro" target="_blank" rel="noopener noreferrer">
-                <img src="https://img.shields.io/badge/Source-GitHub-181717?logo=github" alt="Source on GitHub" className="h-5" />
-              </a>
-            </div>
+          <div className="hidden shrink-0 items-center gap-2 md:flex">
+            <a href="https://github.com/stuanderson415-coder/Unit-Scraper-Pro" target="_blank" rel="noopener noreferrer">
+              <img src="https://img.shields.io/badge/Source-GitHub-181717?logo=github" alt="Source on GitHub" className="h-5" />
+            </a>
             {currentUnit && (
               <button type="button" onClick={startAnotherRpl} className="rounded-md border border-slate-400/60 bg-white px-3 py-1.5 text-xs font-semibold text-zinc-800 shadow-sm transition hover:bg-slate-100">
                 Start another RPL
