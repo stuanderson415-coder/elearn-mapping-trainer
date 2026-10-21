@@ -655,10 +655,10 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
             </label>
           </div>
           <ul className="mt-2 grid gap-1.5 sm:grid-cols-2">
-            <li className="rounded-md border border-[#022c22] bg-[#064e3b] p-2 text-xs leading-4 text-white"><span className="font-bold">Fair:</span> Clear expectations, support provided, appeals process, reasonable adjustment.</li>
-            <li className="rounded-md border border-[#022c22] bg-[#064e3b] p-2 text-xs leading-4 text-white"><span className="font-bold">Flexible:</span> Adaptable to need, independent of how skills were gained.</li>
-            <li className="rounded-md border border-[#022c22] bg-[#064e3b] p-2 text-xs leading-4 text-white"><span className="font-bold">Valid:</span> Assessment tool measures skills and knowledge in the UOC.</li>
-            <li className="rounded-md border border-[#022c22] bg-[#064e3b] p-2 text-xs leading-4 text-white"><span className="font-bold">Reliable:</span> Assessment is accurate, consistent between assessors and contexts.</li>
+            <li className="rounded-md border border-[#022c22] bg-[#033b2f] p-2 text-xs leading-4 text-white"><span className="font-bold">Fair:</span> Clear expectations, support provided, appeals process, reasonable adjustment.</li>
+            <li className="rounded-md border border-[#022c22] bg-[#033b2f] p-2 text-xs leading-4 text-white"><span className="font-bold">Flexible:</span> Adaptable to need, independent of how skills were gained.</li>
+            <li className="rounded-md border border-[#022c22] bg-[#033b2f] p-2 text-xs leading-4 text-white"><span className="font-bold">Valid:</span> Assessment tool measures skills and knowledge in the UOC.</li>
+            <li className="rounded-md border border-[#022c22] bg-[#033b2f] p-2 text-xs leading-4 text-white"><span className="font-bold">Reliable:</span> Assessment is accurate, consistent between assessors and contexts.</li>
           </ul>
         </div>
         <div className="mt-4">
@@ -674,10 +674,10 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
             </label>
           </div>
           <ul className="mt-2 grid gap-1.5 sm:grid-cols-2">
-            <li className="rounded-md border border-[#022c22] bg-[#064e3b] p-2 text-xs leading-4 text-white"><span className="font-bold">Valid:</span> Evidence aligns directly to the UOC.</li>
-            <li className="rounded-md border border-[#022c22] bg-[#064e3b] p-2 text-xs leading-4 text-white"><span className="font-bold">Sufficient:</span> Evidence is enough in terms of quality and quantity to make the assessment decision.</li>
-            <li className="rounded-md border border-[#022c22] bg-[#064e3b] p-2 text-xs leading-4 text-white"><span className="font-bold">Authentic:</span> Evidence is clearly the candidate’s own work.</li>
-            <li className="rounded-md border border-[#022c22] bg-[#064e3b] p-2 text-xs leading-4 text-white"><span className="font-bold">Currency:</span> Evidence matches current industry standards and practice.</li>
+            <li className="rounded-md border border-[#022c22] bg-[#033b2f] p-2 text-xs leading-4 text-white"><span className="font-bold">Valid:</span> Evidence aligns directly to the UOC.</li>
+            <li className="rounded-md border border-[#022c22] bg-[#033b2f] p-2 text-xs leading-4 text-white"><span className="font-bold">Sufficient:</span> Evidence is enough in terms of quality and quantity to make the assessment decision.</li>
+            <li className="rounded-md border border-[#022c22] bg-[#033b2f] p-2 text-xs leading-4 text-white"><span className="font-bold">Authentic:</span> Evidence is clearly the candidate’s own work.</li>
+            <li className="rounded-md border border-[#022c22] bg-[#033b2f] p-2 text-xs leading-4 text-white"><span className="font-bold">Currency:</span> Evidence matches current industry standards and practice.</li>
           </ul>
         </div>
       </aside>
