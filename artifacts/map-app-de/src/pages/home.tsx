@@ -3,6 +3,7 @@ import { ClipboardCheck, FileCheck2 } from 'lucide-react';
 import { useLookupUnit, type UnitOfCompetency } from '@workspace/api-client-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { useToast } from '@/hooks/use-toast';
 import { HistorySidebar } from '@/components/layout/history-sidebar';
 import { LookupForm } from '@/components/unit/lookup-form';
@@ -40,6 +41,48 @@ function WelcomePanel() {
           <h2 className="mt-0.5 text-xl font-bold tracking-tight text-zinc-900">Welcome to RPL Mapping Trainer</h2>
           <p className="mt-1 max-w-3xl text-xs leading-5 text-zinc-600">
             RTO Standard 1.6 requires registered training organisations to support VET students with prior skills and knowledge to seek Recognition of Prior Learning (RPL). Providers must offer clear policy awareness, base RPL decisions on valid evidence, and maintain fair, consistent assessment standards.
+            {' '}
+            <Popover>
+              <PopoverTrigger asChild>
+                <button
+                  type="button"
+                  data-testid="button-more-rto-standard"
+                  className="inline-flex items-center rounded-full border border-green-200 bg-green-50 px-2 py-0.5 align-baseline text-[10px] font-semibold text-green-800 transition-colors hover:bg-green-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-600 focus-visible:ring-offset-1"
+                >
+                  more
+                </button>
+              </PopoverTrigger>
+              <PopoverContent
+                align="start"
+                side="bottom"
+                sideOffset={8}
+                aria-labelledby="rto-core-requirements-title"
+                data-testid="panel-rto-core-requirements"
+                className="max-h-[min(80vh,32rem)] w-[calc(100vw-2rem)] overflow-y-auto border-green-200 bg-white p-4 shadow-lg sm:w-96"
+              >
+                <h3 id="rto-core-requirements-title" className="text-sm font-semibold text-green-950">
+                  Core Requirements for RTOs
+                </h3>
+                <ul className="mt-3 space-y-2 text-xs leading-5 text-zinc-700">
+                  <li>
+                    <strong className="font-semibold text-zinc-900">Student Support &amp; Awareness:</strong>{' '}
+                    Inform students about RPL options and provide accessible policies before and during enrollment.
+                  </li>
+                  <li>
+                    <strong className="font-semibold text-zinc-900">Evidence-Based Decisions:</strong>{' '}
+                    Base RPL assessments on verifiable proof of prior work, life experience, or training rather than self-assessments.
+                  </li>
+                  <li>
+                    <strong className="font-semibold text-zinc-900">Assessment Rigor:</strong>{' '}
+                    Apply the same quality, validity, and fairness rules used in standard course assessments.
+                  </li>
+                  <li>
+                    <strong className="font-semibold text-zinc-900">Fair &amp; Consistent Process:</strong>{' '}
+                    Document all RPL evaluations transparently and ensure decisions protect the integrity of the ASQA Standards for RTOs.
+                  </li>
+                </ul>
+              </PopoverContent>
+            </Popover>
           </p>
           <p className="mt-2 max-w-3xl rounded-lg border border-emerald-300 bg-emerald-50/70 px-3 py-2 text-xs leading-5 font-bold text-green-800">
             This tool is designed to help you describe and log RPL evidence pieces, map them using a dynamic mapping interface and identify gaps.
