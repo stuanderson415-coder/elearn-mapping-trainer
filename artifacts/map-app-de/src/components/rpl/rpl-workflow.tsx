@@ -654,7 +654,6 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
               Applicant has been informed of the principles of assessment.
             </label>
           </div>
-          <p className="mt-3 text-xs font-medium leading-4">This RPL Assessment process is:</p>
           <ul className="mt-2 list-disc space-y-1.5 pl-4 text-xs leading-4">
             <li><span className="font-bold text-white">Fair:</span> Clear expectations, support provided, appeals process, reasonable adjustment.</li>
             <li><span className="font-bold text-white">Flexible:</span> Adaptable to need, independent of how skills were gained.</li>
@@ -663,7 +662,6 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
           </ul>
         </div>
         <div className="mt-4 border-t border-purple-700 pt-4">
-          <h3 className="text-sm font-bold text-white">And your evidence abides by the rules of evidence:</h3>
           <div className="mt-2 flex items-start gap-2">
             <Checkbox
               id="evidence-rules-informed"
