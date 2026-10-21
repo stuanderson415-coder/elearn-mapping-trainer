@@ -638,13 +638,11 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
         </div>
       </section>
       <aside className="rounded-xl border border-purple-950 bg-purple-900 p-4 text-purple-50 shadow-sm">
-        <span className="text-xs font-bold uppercase tracking-[0.16em] text-purple-300">RPL record</span>
+        <h3 className="text-xs font-bold uppercase tracking-[0.16em] text-purple-200">CONFIRMATION BY ASSESSOR</h3>
         <p className="mt-3 text-base font-semibold leading-6">
           Your evidence will now be logged into a register of your evidence and then mapped against the unit of competence.
         </p>
         <div className="mt-4 border-t border-purple-700 pt-4">
-          <h3 className="text-sm font-bold text-white">ASQA requires the assessment process be:</h3>
-          <p className="mt-3 text-xs font-bold uppercase tracking-wide text-purple-200">Confirmation by assessor</p>
           <div className="mt-2 flex items-start gap-2">
             <Checkbox
               id="assessment-principles-informed"
@@ -656,8 +654,8 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
               Applicant has been informed of the principles of assessment.
             </label>
           </div>
-          <ul className="mt-3 space-y-1.5 text-xs leading-4">
-            <li className="font-medium">This RPL Assessment process is:</li>
+          <p className="mt-3 text-xs font-medium leading-4">This RPL Assessment process is:</p>
+          <ul className="mt-2 list-disc space-y-1.5 pl-4 text-xs leading-4">
             <li><span className="font-bold text-white">Fair:</span> Clear expectations, support provided, appeals process, reasonable adjustment.</li>
             <li><span className="font-bold text-white">Flexible:</span> Adaptable to need, independent of how skills were gained.</li>
             <li><span className="font-bold text-white">Valid:</span> Assessment tool measures skills and knowledge in the UOC.</li>
@@ -677,7 +675,7 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
               Applicant has been informed of the rules of evidence.
             </label>
           </div>
-          <ul className="mt-3 space-y-1.5 text-xs leading-4">
+          <ul className="mt-3 list-disc space-y-1.5 pl-4 text-xs leading-4">
             <li><span className="font-bold text-white">Valid:</span> Evidence aligns directly to the UOC.</li>
             <li><span className="font-bold text-white">Sufficient:</span> Evidence is enough in terms of quality and quantity to make the assessment decision.</li>
             <li><span className="font-bold text-white">Authentic:</span> Evidence is clearly the candidate’s own work.</li>
