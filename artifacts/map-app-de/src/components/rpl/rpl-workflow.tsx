@@ -645,8 +645,18 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
         <div className="mt-4 border-t border-purple-700 pt-4">
           <h3 className="text-sm font-bold text-white">ASQA requires the assessment process be:</h3>
           <p className="mt-3 text-xs font-bold uppercase tracking-wide text-purple-200">Confirmation by assessor</p>
-          <ul className="mt-2 space-y-2 text-sm leading-5">
-            <li>Principles of Assessment have been explained to the applicant.</li>
+          <div className="mt-2 flex items-start gap-2">
+            <Checkbox
+              id="assessment-principles-informed"
+              checked={record.assessmentPrinciplesInformed}
+              onCheckedChange={checked => updateRecord(current => ({ ...current, assessmentPrinciplesInformed: checked === true }))}
+              className="mt-0.5 border-purple-300 data-[state=checked]:border-purple-200"
+            />
+            <label htmlFor="assessment-principles-informed" className="cursor-pointer text-xs font-medium leading-4 text-purple-50">
+              Applicant has been informed of the principles of assessment.
+            </label>
+          </div>
+          <ul className="mt-3 space-y-1.5 text-xs leading-4">
             <li className="font-medium">This RPL Assessment process is:</li>
             <li><span className="font-bold text-white">Fair:</span> Clear expectations, support provided, appeals process, reasonable adjustment.</li>
             <li><span className="font-bold text-white">Flexible:</span> Adaptable to need, independent of how skills were gained.</li>
@@ -656,7 +666,18 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
         </div>
         <div className="mt-4 border-t border-purple-700 pt-4">
           <h3 className="text-sm font-bold text-white">And your evidence abides by the rules of evidence:</h3>
-          <ul className="mt-2 space-y-2 text-sm leading-5">
+          <div className="mt-2 flex items-start gap-2">
+            <Checkbox
+              id="evidence-rules-informed"
+              checked={record.evidenceRulesInformed}
+              onCheckedChange={checked => updateRecord(current => ({ ...current, evidenceRulesInformed: checked === true }))}
+              className="mt-0.5 border-purple-300 data-[state=checked]:border-purple-200"
+            />
+            <label htmlFor="evidence-rules-informed" className="cursor-pointer text-xs font-medium leading-4 text-purple-50">
+              Applicant has been informed of the rules of evidence.
+            </label>
+          </div>
+          <ul className="mt-3 space-y-1.5 text-xs leading-4">
             <li><span className="font-bold text-white">Valid:</span> Evidence aligns directly to the UOC.</li>
             <li><span className="font-bold text-white">Sufficient:</span> Evidence is enough in terms of quality and quantity to make the assessment decision.</li>
             <li><span className="font-bold text-white">Authentic:</span> Evidence is clearly the candidate’s own work.</li>

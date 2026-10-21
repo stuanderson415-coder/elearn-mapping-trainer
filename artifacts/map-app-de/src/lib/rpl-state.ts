@@ -255,6 +255,8 @@ export type RplRecord = {
   mappings: Record<string, string[]>;
   interviews: Record<string, InterviewRecord>;
   finalisation: RplFinalisation;
+  assessmentPrinciplesInformed: boolean;
+  evidenceRulesInformed: boolean;
 };
 
 export type StudentRecordSummary = StudentDetails & {
@@ -287,6 +289,8 @@ export function createEmptyRplRecord(): RplRecord {
     mappings: {},
     interviews: {},
     finalisation: createEmptyRplFinalisation(),
+    assessmentPrinciplesInformed: false,
+    evidenceRulesInformed: false,
   };
 }
 
