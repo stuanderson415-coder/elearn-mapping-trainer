@@ -94,18 +94,7 @@ function WelcomePanel() {
           <FileCheck2 className="h-5 w-5 text-green-100" />
           <h3 className="mt-2 text-sm font-semibold text-white">Important:</h3>
           <p className="mt-1 text-xs leading-5 text-green-50">
-            This formative assessment resource is about you learning skills as part of TAEASS411 or as part of your development as an educator.{' '}
-            <strong className="font-bold text-white">It is not a formal assessment tool for use at CIT.</strong>{' '}
-            You can find information on policy and process{' '}
-            <a
-              href="https://cit.edu.au/study/apply/status/recognition-of-prior-learning"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-semibold text-white underline underline-offset-2 hover:text-green-200"
-            >
-              here
-            </a>
-            .
+            RPL Mapping Trainer is a web-based learning resource designed to help you learn to describe, classify, and map RPL evidence as part of a learning activity, either inside a unit such as TAEASS412 or as part of your own professional growth. This resource is aimed at the human assessor and uses no Generative AI. It is offered as a free, open-source compliance resource for VET educators Australia-wide.
           </p>
         </aside>
       </div>
