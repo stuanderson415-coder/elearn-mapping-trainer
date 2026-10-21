@@ -49,7 +49,7 @@ function WelcomePanel() {
 
       <div className="mt-3 grid gap-3 lg:grid-cols-[minmax(0,1.35fr)_minmax(280px,0.65fr)]">
         <div>
-          <h3 className="text-xs font-bold uppercase tracking-[0.12em] text-zinc-700">Follow these steps</h3>
+          <h3 className="text-xs font-bold uppercase tracking-[0.12em] text-zinc-700">You will progress by following these steps</h3>
            <ol className="mt-2 grid gap-1 sm:grid-cols-2">
             {steps.map((step, index) => (
               <li key={step} className="flex gap-2 rounded-lg border border-zinc-100 bg-zinc-50 px-2.5 py-1.5 text-xs leading-4 text-zinc-700">
