@@ -39,7 +39,7 @@ export function HistorySidebar({ onSelect }: { onSelect: (code: string, studentN
       <div className="flex items-center justify-between border-b border-emerald-950 bg-emerald-900 p-2">
         <div className="flex items-center gap-1.5 text-xs font-medium text-emerald-50">
           <History className="h-3.5 w-3.5 text-emerald-100" />
-          Training in progress
+          Assessments in progress
         </div>
       </div>
       <ScrollArea className="flex-1">

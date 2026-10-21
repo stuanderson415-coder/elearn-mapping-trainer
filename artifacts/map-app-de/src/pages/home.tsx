@@ -255,7 +255,7 @@ export default function Home() {
           </div>
           <div className="pointer-events-none absolute left-1/2 hidden -translate-x-1/2 items-center lg:flex">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#b0c6d6]">
-              Formative Assessment Resource
+              COMPLIANCE SUPPORT RESOURCE
             </p>
           </div>
           <div className="hidden shrink-0 items-center gap-2 md:flex">
