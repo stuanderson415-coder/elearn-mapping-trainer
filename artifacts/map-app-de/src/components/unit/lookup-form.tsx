@@ -144,9 +144,9 @@ export function LookupForm({ onUnitLoaded, isPending }: Props) {
       <CardHeader className="flex-row items-start justify-between gap-3 space-y-0 border-b border-zinc-100 pb-3">
         <div>
           <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-purple-700">
-            <UserRound className="h-4 w-4" /> RPL intake
+            <UserRound className="h-4 w-4" /> Getting Started
           </div>
-          <CardTitle className="mt-1 text-lg font-semibold tracking-tight text-zinc-900">Start an RPL assessment</CardTitle>
+          <CardTitle className="mt-1 text-lg font-semibold tracking-tight text-zinc-900">The Initial Interview</CardTitle>
           <CardDescription className="mt-1 max-w-4xl text-xs leading-5">
             Your RPL mapping process starts here at the pre-RPL interview. You will be entering the applicant&apos;s details at this stage. Typically, this would be an interview where you will inform your applicant of the process, the timeframes, and importantly that{' '}
             <strong className="font-bold">RPL is an assessment only process</strong>.
@@ -158,6 +158,9 @@ export function LookupForm({ onUnitLoaded, isPending }: Props) {
       </CardHeader>
 
       <CardContent className="pt-4">
+        <p className="mb-3 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs leading-5 text-emerald-900">
+          Enter the applicant&apos;s name, details, and Unit of Competency (UOC), or use the selections provided on eLearn.
+        </p>
         <form onSubmit={handleCodeSubmit} className="grid min-w-0 gap-3 sm:grid-cols-2 lg:grid-cols-6">
           <label className="grid min-w-0 gap-1">
             <span className="text-xs font-semibold text-zinc-700">Surname <span className="text-rose-600">*</span></span>
