@@ -9,6 +9,7 @@ import { LookupForm } from '@/components/unit/lookup-form';
 import { RplWorkflow, type RplStage } from '@/components/rpl/rpl-workflow';
 import { UnitDisplay } from '@/components/unit/unit-display';
 import type { StudentDetails } from '@/lib/rpl-state';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
 const NUM_KEY    = 'map-app-de:numtasks:global';
 const TITLE_KEY  = 'map-app-de:doctitle:global';
@@ -96,6 +97,30 @@ function WelcomePanel() {
           <p className="mt-1 text-xs leading-5 text-green-50">
             RPL Mapping Trainer is a web-based learning resource designed to help you learn to describe, classify, and map RPL evidence as part of a learning activity, either inside a unit such as TAEASS412 or as part of your own professional growth. This resource is aimed at the human assessor and uses no Generative AI. It is offered as a free, open-source compliance resource for VET educators Australia-wide.
           </p>
+          <div className="mt-3 flex justify-end">
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button
+                  type="button"
+                  data-testid="button-installation-tooltip"
+                  className="rounded-full border border-green-100/60 bg-white/10 px-2.5 py-1 text-[10px] font-semibold text-white transition-colors hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-100 focus-visible:ring-offset-2 focus-visible:ring-offset-green-900"
+                >
+                  Installation
+                </button>
+              </TooltipTrigger>
+              <TooltipContent
+                side="top"
+                align="end"
+                sideOffset={8}
+                data-testid="tooltip-installation"
+                className="w-80 max-w-[calc(100vw-2rem)] whitespace-normal rounded-lg border border-emerald-200 bg-white p-3 text-left text-xs leading-5 text-zinc-800 shadow-lg"
+              >
+                <p>
+                  This website is also a Progressive Web App that can be installed on a computer, tablet, or phone. Open the website in Chrome, then either <strong>click the Install button</strong> in the address bar to install it. For mobile devices or other browsers, <strong>click Share</strong> and select the option to <strong>Add to Home Screen</strong>.
+                </p>
+              </TooltipContent>
+            </Tooltip>
+          </div>
         </aside>
       </div>
 
