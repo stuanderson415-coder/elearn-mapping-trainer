@@ -1097,17 +1097,17 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
       {uncoveredRows.length ? (
         <div className="space-y-2">
           {gapGroups.map(group => (
-            <details key={group.key} className="group overflow-hidden rounded-xl border border-purple-200 bg-white shadow-sm">
-              <summary className="flex cursor-pointer list-none items-center gap-2 bg-purple-50 px-4 py-3 text-sm font-bold text-purple-950 [&::-webkit-details-marker]:hidden">
+            <details key={group.key} className="group overflow-hidden rounded-xl border border-green-700/40 bg-white shadow-sm">
+              <summary className="flex cursor-pointer list-none items-center gap-2 bg-green-700 px-4 py-3 text-sm font-bold text-white hover:bg-green-800 [&::-webkit-details-marker]:hidden">
                 <ChevronRight className="h-4 w-4 shrink-0 transition-transform group-open:rotate-90" />
                 <span className="min-w-0 flex-1">{group.label}</span>
-                <Badge variant="outline" className="border-purple-300 bg-white text-purple-800">{group.rows.length} gap{group.rows.length === 1 ? '' : 's'}</Badge>
+                <Badge variant="outline" className="border-white/60 bg-white text-green-800">{group.rows.length} gap{group.rows.length === 1 ? '' : 's'}</Badge>
               </summary>
-              <div className="space-y-2 border-t border-purple-100 p-3">
+              <div className="space-y-2 border-t border-green-100 bg-white p-3">
                 {group.rows.map(row => {
                   const interview = record.interviews[row.key] ?? { question: '', studentResponse: '', assessorNotes: '', outcome: 'pending' as const };
                   return (
-                    <article key={row.key} className="rounded-lg border border-purple-100 bg-purple-50/40 p-3">
+                    <article key={row.key} className="rounded-lg border border-green-100 bg-white p-3">
                       <div className="flex flex-wrap items-start justify-between gap-3">
                         <p className="max-w-3xl text-sm font-semibold leading-6 text-zinc-900">{row.label}</p>
                         <select value={interview.outcome} onChange={event => updateInterview(row.key, { outcome: event.target.value as InterviewOutcome })} className="h-9 rounded-md border border-zinc-300 bg-white px-2 text-xs font-medium outline-none focus:border-purple-700">
