@@ -26,8 +26,12 @@ import {
   EVIDENCE_TYPES,
   EVIDENCE_COLOURS,
   EVIDENCE_LOCATIONS,
+  EVIDENCE_STORAGE_LOCATIONS,
+  EVIDENCE_MODES,
+  EVIDENCE_FILE_FORMATS,
   EVIDENCE_CLASSIFICATIONS,
   createEmptyRplRecord,
+  evidenceColourForClassification,
   evidenceCode,
   hasRplRecord,
   listRplStudents,
@@ -64,8 +68,12 @@ const DEFAULT_NEW_EVIDENCE: NewEvidenceDraft = {
   reference: '',
   notes: '',
   type: EVIDENCE_TYPES[0].value,
-  colour: EVIDENCE_COLOURS[0].value,
+  colour: 'blue',
+  locationIdentifier: '',
   location: EVIDENCE_LOCATIONS[0].value,
+  storageLocations: [],
+  evidenceModes: [],
+  fileFormats: [],
   classifications: [],
   subtypes: [],
 };
@@ -76,9 +84,12 @@ function statusForOutcome(outcome: InterviewOutcome) {
   return 'Pending';
 }
 
-function tileStyle(item: Pick<EvidenceItem, 'colour'>) {
-  const palette = EVIDENCE_COLOURS.find(option => option.value === item.colour) ?? EVIDENCE_COLOURS[0];
-  return { backgroundColor: palette.soft, borderColor: palette.color, color: palette.color };
+function tileStyle(item: Pick<EvidenceItem, 'classifications'>, expanded = false) {
+  const colour = evidenceColourForClassification(item.classifications[0]);
+  const palette = EVIDENCE_COLOURS.find(option => option.value === colour) ?? EVIDENCE_COLOURS[1];
+  return expanded
+    ? { backgroundColor: '#ffffff', borderColor: palette.color, color: '#18181b' }
+    : { backgroundColor: palette.color, borderColor: palette.color, color: '#ffffff' };
 }
 
 function displayDate(value: string) {
@@ -131,7 +142,7 @@ function EvidenceTile({
           {tile}
           <span className="mt-1 flex flex-wrap gap-1">
             {evidence.classifications.map(value => (
-              <span key={value} className="rounded bg-white/70 px-1 py-0.5 text-[9px] font-bold uppercase">
+              <span key={value} className="rounded bg-black/20 px-1 py-0.5 text-[9px] font-bold uppercase text-white">
                 {EVIDENCE_CLASSIFICATIONS.find(group => group.value === value)?.name}
               </span>
             ))}
@@ -156,27 +167,63 @@ function FieldLabel({ children }: { children: string }) {
   return <label className="mb-1 block text-xs font-bold uppercase tracking-[0.11em] text-zinc-600">{children}</label>;
 }
 
+function EvidenceOptionCheckboxes({
+  legend,
+  options,
+  selectedValues,
+  onChange,
+}: {
+  legend: string;
+  options: readonly { name: string; value: string }[];
+  selectedValues: string[];
+  onChange: (values: string[]) => void;
+}) {
+  return (
+    <fieldset className="min-w-0">
+      <legend className="mb-1 block text-xs font-bold uppercase tracking-[0.11em] text-zinc-600">{legend}</legend>
+      <div className="flex flex-wrap gap-1.5">
+        {options.map(option => {
+          const checked = selectedValues.includes(option.value);
+          return (
+            <label key={option.value} className={`flex cursor-pointer items-center gap-1.5 rounded-md border px-2 py-1 text-xs font-medium ${checked ? 'border-purple-400 bg-purple-50 text-purple-900' : 'border-zinc-200 bg-white text-zinc-700 hover:border-purple-300'}`}>
+              <input
+                type="checkbox"
+                checked={checked}
+                onChange={() => onChange(checked ? selectedValues.filter(value => value !== option.value) : [...selectedValues, option.value])}
+                className="accent-purple-700"
+              />
+              {option.name}
+            </label>
+          );
+        })}
+      </div>
+    </fieldset>
+  );
+}
+
 function EvidenceClassificationFields({
   classifications,
   subtypes,
   onChange,
   compact = false,
+  radioName,
 }: {
   classifications: EvidenceClassification[];
   subtypes: EvidenceSubtype[];
   onChange: (patch: Pick<EvidenceItem, 'classifications' | 'subtypes'>) => void;
   compact?: boolean;
+  radioName: string;
 }) {
-  const toggleClassification = (classification: EvidenceClassification) => {
-    const selected = classifications.includes(classification)
-      ? classifications.filter(item => item !== classification)
-      : [...classifications, classification];
+  const selectClassification = (classification: EvidenceClassification) => {
     const allowedSubtypes = new Set(
       EVIDENCE_CLASSIFICATIONS
-        .filter(group => selected.includes(group.value))
+        .filter(group => group.value === classification)
         .flatMap(group => group.subtypes.map(subtype => subtype.value)),
     );
-    onChange({ classifications: selected, subtypes: subtypes.filter(subtype => allowedSubtypes.has(subtype)) });
+    onChange({
+      classifications: [classification],
+      subtypes: subtypes.filter(subtype => allowedSubtypes.has(subtype)),
+    });
   };
   const toggleSubtype = (subtype: EvidenceSubtype) => {
     onChange({
@@ -189,7 +236,7 @@ function EvidenceClassificationFields({
       <div className="flex flex-wrap gap-2">
         {EVIDENCE_CLASSIFICATIONS.map(group => (
           <label key={group.value} title={group.description} className={`flex cursor-pointer items-center gap-1.5 rounded-md border px-2 py-1 text-xs font-semibold transition ${classifications.includes(group.value) ? 'border-purple-600 bg-purple-50 text-purple-900' : 'border-zinc-200 bg-white text-zinc-600 hover:border-purple-300'}`}>
-            <input type="checkbox" checked={classifications.includes(group.value)} onChange={() => toggleClassification(group.value)} className="accent-purple-700" />
+            <input type="radio" name={radioName} checked={classifications.includes(group.value)} onChange={() => selectClassification(group.value)} className="accent-purple-700" />
             {group.name}
           </label>
         ))}
@@ -240,10 +287,17 @@ function withPreRplEvidence(current: RplRecord): RplRecord {
             : candidate.sourceKey === 'pre-rpl-job-card'
               ? 'job-card' as const
             : 'other' as const,
-      colour: 'teal' as const,
+      colour: 'blue' as const,
+      locationIdentifier: '',
       location: checklist.sharePointRepositoryCreated || checklist.elearnStorageCreated || checklist.sharePointPath.trim() || checklist.elearnUrl.trim()
         ? 'digital-sharepoint' as const
         : 'sighted-logged' as const,
+      storageLocations: [
+        ...(checklist.elearnStorageCreated || checklist.elearnUrl.trim() ? ['elearn' as const] : []),
+        ...(checklist.sharePointRepositoryCreated || checklist.sharePointPath.trim() ? ['sharepoint' as const] : []),
+      ],
+      evidenceModes: [],
+      fileFormats: [],
       classifications: ['indirect'] as EvidenceClassification[],
       subtypes: ['work-sample-portfolio'] as EvidenceSubtype[],
       sourceKey: candidate.sourceKey,
@@ -340,7 +394,7 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
   };
 
   const addEvidence = () => {
-    if (!newEvidence.title.trim()) return;
+    if (!newEvidence.title.trim() || newEvidence.classifications.length === 0) return;
     updateRecord(current => ({
       ...current,
       evidence: [...current.evidence, { ...newEvidence, id: newEvidenceId(), title: newEvidence.title.trim() }],
@@ -694,72 +748,102 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
           </div>
           <Badge variant="outline" className="border-purple-200 bg-purple-50 text-purple-800">{record.evidence.length} logged</Badge>
         </div>
-        <div className="mt-4 grid gap-2.5 sm:grid-cols-2 xl:grid-cols-[minmax(170px,1.15fr)_minmax(150px,0.9fr)_minmax(145px,0.85fr)_auto_145px_auto]">
-          <input
-            value={newEvidence.title}
-            onChange={event => setNewEvidence(current => ({ ...current, title: event.target.value }))}
-            onKeyDown={event => { if (event.key === 'Enter') addEvidence(); }}
-            placeholder="Evidence title"
-             className="h-9 rounded-md border border-zinc-300 px-2.5 text-sm outline-none focus:border-purple-700 focus:ring-2 focus:ring-purple-100"
-          />
-          <select
-            value={newEvidence.type}
-            onChange={event => setNewEvidence(current => ({ ...current, type: event.target.value as EvidenceItem['type'] }))}
-            aria-label="Evidence type"
-            className="h-9 rounded-md border border-zinc-300 bg-white px-2.5 text-sm outline-none focus:border-purple-700 focus:ring-2 focus:ring-purple-100"
-          >
-            {EVIDENCE_TYPES.map(type => <option key={type.value} value={type.value}>{type.name}</option>)}
-          </select>
-          <select
-            value={newEvidence.location}
-            onChange={event => setNewEvidence(current => ({ ...current, location: event.target.value as EvidenceItem['location'] }))}
-            aria-label="Evidence location"
-            className="h-9 rounded-md border border-zinc-300 bg-white px-2.5 text-sm outline-none focus:border-purple-700 focus:ring-2 focus:ring-purple-100"
-          >
-            {EVIDENCE_LOCATIONS.map(location => <option key={location.value} value={location.value}>{location.name}</option>)}
-          </select>
-          <fieldset aria-label="Evidence card colour" className="flex h-9 items-center gap-1 rounded-md border border-zinc-300 bg-white px-2">
-            <legend className="sr-only">Evidence card colour</legend>
-            {EVIDENCE_COLOURS.map(colour => (
-              <button
-                key={colour.value}
-                type="button"
-                title={`${colour.name} card`}
-                aria-label={`${colour.name} evidence card`}
-                aria-pressed={newEvidence.colour === colour.value}
-                onClick={() => setNewEvidence(current => ({ ...current, colour: colour.value }))}
-                className={`h-4 w-4 shrink-0 rounded-full border-2 transition focus:outline-none focus:ring-2 focus:ring-purple-300 focus:ring-offset-1 ${newEvidence.colour === colour.value ? 'scale-110 border-zinc-900' : 'border-white ring-1 ring-zinc-300'}`}
-                style={{ backgroundColor: colour.color }}
-              />
-            ))}
-          </fieldset>
-          <input
-            type="date"
-            value={newEvidence.reference}
-            onChange={event => setNewEvidence(current => ({ ...current, reference: event.target.value }))}
-            aria-label="Reference date"
-            title="Reference date"
-            className="h-9 min-w-0 rounded-md border border-zinc-300 px-2 text-sm outline-none focus:border-purple-700 focus:ring-2 focus:ring-purple-100"
-          />
-          <Button onClick={addEvidence} disabled={!newEvidence.title.trim()} className="h-9 whitespace-nowrap bg-purple-800 hover:bg-purple-700">
-            <Plus className="mr-1.5 h-4 w-4" />Add evidence
-          </Button>
+        <div className="mt-4 grid gap-2.5 sm:grid-cols-2 xl:grid-cols-[minmax(170px,1.1fr)_minmax(155px,0.9fr)_minmax(210px,1.2fr)_160px]">
+          <label className="grid gap-1 text-xs font-semibold text-zinc-600">
+            Evidence title
+            <input
+              value={newEvidence.title}
+              onChange={event => setNewEvidence(current => ({ ...current, title: event.target.value }))}
+              placeholder="Evidence title"
+              className="h-9 rounded-md border border-zinc-300 px-2.5 text-sm font-normal outline-none focus:border-purple-700 focus:ring-2 focus:ring-purple-100"
+            />
+          </label>
+          <label className="grid gap-1 text-xs font-semibold text-zinc-600">
+            Evidence type
+            <select
+              value={newEvidence.type}
+              onChange={event => setNewEvidence(current => ({ ...current, type: event.target.value as EvidenceItem['type'] }))}
+              className="h-9 rounded-md border border-zinc-300 bg-white px-2.5 text-sm font-normal outline-none focus:border-purple-700 focus:ring-2 focus:ring-purple-100"
+            >
+              {EVIDENCE_TYPES.map(type => <option key={type.value} value={type.value}>{type.name}</option>)}
+            </select>
+          </label>
+          <label className="grid gap-1 text-xs font-semibold text-zinc-600">
+            Location / Workplace Identifier
+            <input
+              value={newEvidence.locationIdentifier}
+              onChange={event => setNewEvidence(current => ({ ...current, locationIdentifier: event.target.value }))}
+              placeholder="Location, workplace or identifier"
+              className="h-9 rounded-md border border-zinc-300 px-2.5 text-sm font-normal outline-none focus:border-purple-700 focus:ring-2 focus:ring-purple-100"
+            />
+          </label>
+          <label className="grid gap-1 text-xs font-semibold text-zinc-600">
+            Reference date
+            <input
+              type="date"
+              value={newEvidence.reference}
+              onChange={event => setNewEvidence(current => ({ ...current, reference: event.target.value }))}
+              className="h-9 min-w-0 rounded-md border border-zinc-300 px-2 text-sm font-normal outline-none focus:border-purple-700 focus:ring-2 focus:ring-purple-100"
+            />
+          </label>
         </div>
-        <div className="grid gap-2.5 lg:grid-cols-[auto_minmax(260px,1fr)] lg:items-start">
-          <EvidenceClassificationFields
-            classifications={newEvidence.classifications}
-            subtypes={newEvidence.subtypes}
-            onChange={patch => setNewEvidence(current => ({ ...current, ...patch }))}
-            compact
-          />
+        <label className="mt-3 grid gap-1 text-xs font-semibold text-zinc-600">
+          Description
+          <span className="font-normal text-zinc-500">Assessor to describe the evidence provided fully.</span>
           <textarea
             value={newEvidence.notes}
             onChange={event => setNewEvidence(current => ({ ...current, notes: event.target.value }))}
-            placeholder="Brief notes (optional)"
-            aria-label="Brief evidence notes"
-            rows={2}
-            className="mt-2 min-h-10 resize-y rounded-md border border-zinc-300 px-2.5 py-2 text-sm outline-none focus:border-purple-700 focus:ring-2 focus:ring-purple-100"
+            placeholder="Describe the evidence provided"
+            aria-label="Evidence description"
+            rows={4}
+            className="min-h-24 resize-y rounded-md border border-zinc-300 px-2.5 py-2 text-sm font-normal outline-none focus:border-purple-700 focus:ring-2 focus:ring-purple-100"
           />
+        </label>
+        <div className="mt-3 grid gap-3 lg:grid-cols-2">
+          <EvidenceOptionCheckboxes
+            legend="Storage"
+            options={EVIDENCE_STORAGE_LOCATIONS}
+            selectedValues={newEvidence.storageLocations}
+            onChange={values => setNewEvidence(current => ({ ...current, storageLocations: values as EvidenceItem['storageLocations'] }))}
+          />
+          <EvidenceOptionCheckboxes
+            legend="Evidence form"
+            options={EVIDENCE_MODES}
+            selectedValues={newEvidence.evidenceModes}
+            onChange={values => setNewEvidence(current => ({ ...current, evidenceModes: values as EvidenceItem['evidenceModes'] }))}
+          />
+        </div>
+        <div className="mt-3">
+          <EvidenceOptionCheckboxes
+            legend="File format"
+            options={EVIDENCE_FILE_FORMATS}
+            selectedValues={newEvidence.fileFormats}
+            onChange={values => setNewEvidence(current => ({ ...current, fileFormats: values as EvidenceItem['fileFormats'] }))}
+          />
+        </div>
+        <div className="mt-3">
+          <FieldLabel>Evidence classification</FieldLabel>
+          <EvidenceClassificationFields
+            classifications={newEvidence.classifications}
+            subtypes={newEvidence.subtypes}
+            radioName="new-evidence-classification"
+            onChange={patch => setNewEvidence(current => ({
+              ...current,
+              ...patch,
+              colour: evidenceColourForClassification(patch.classifications[0]),
+            }))}
+            compact
+          />
+          <p className="mt-1 text-[11px] text-zinc-500">Choose one classification; the card colour is assigned automatically.</p>
+        </div>
+        <div className="mt-4 flex justify-end">
+          <Button
+            onClick={addEvidence}
+            disabled={!newEvidence.title.trim() || newEvidence.classifications.length === 0}
+            className="whitespace-nowrap bg-purple-800 hover:bg-purple-700"
+          >
+            <Plus className="mr-1.5 h-4 w-4" />Add evidence
+          </Button>
         </div>
       </section>
 
@@ -768,10 +852,14 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
           {record.evidence.map((evidence, index) => {
             const expanded = expandedEvidenceIds.has(evidence.id);
             const typeName = EVIDENCE_TYPES.find(type => type.value === evidence.type)?.name ?? 'Other';
-            const locationName = EVIDENCE_LOCATIONS.find(location => location.value === evidence.location)?.name ?? 'Sighted / Logged';
+            const evidenceLocationSummary = [
+              evidence.locationIdentifier,
+              evidence.storageLocations.map(value => EVIDENCE_STORAGE_LOCATIONS.find(option => option.value === value)?.name).filter(Boolean).join(', '),
+              evidence.evidenceModes.map(value => EVIDENCE_MODES.find(option => option.value === value)?.name).filter(Boolean).join(', '),
+            ].filter(Boolean).join(' · ') || 'Location not recorded';
             return (
               <article key={evidence.id} className="overflow-hidden rounded-lg border border-zinc-200 bg-white shadow-sm">
-                <div className="flex items-center gap-2 border-l-4 px-3 py-2" style={tileStyle(evidence)}>
+                <div className="flex items-center gap-2 border-l-4 px-3 py-2" style={tileStyle(evidence, expanded)}>
                   <button
                     type="button"
                     onClick={() => setExpandedEvidenceIds(current => {
@@ -785,19 +873,34 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
                     {expanded ? <ChevronDown className="h-4 w-4 shrink-0" /> : <ChevronRight className="h-4 w-4 shrink-0" />}
                     <span className="font-mono text-xs font-bold">{evidenceCode(index)}</span>
                     <span className="truncate text-sm font-semibold">{evidence.title}</span>
-                    {evidence.sourceKey && <Badge variant="outline" className="bg-white/60 text-[9px]">Core</Badge>}
+                    {evidence.sourceKey && (
+                      <Badge
+                        variant="outline"
+                        className={`text-[9px] ${expanded ? 'border-zinc-200 bg-zinc-100 text-zinc-700' : 'border-white/40 bg-black/20 text-white'}`}
+                      >
+                        BASELINE
+                      </Badge>
+                    )}
                   </button>
                   <span className="hidden text-[11px] font-medium md:inline">{typeName}</span>
-                  <span className="hidden text-[11px] opacity-80 lg:inline">{locationName}</span>
+                  <span className="hidden max-w-56 truncate text-[11px] opacity-80 lg:inline" title={evidenceLocationSummary}>{evidenceLocationSummary}</span>
                   <div className="hidden flex-wrap gap-1 sm:flex">
-                    {evidence.classifications.map(value => <Badge key={value} variant="outline" className="bg-white/60 text-[9px] uppercase">{value}</Badge>)}
+                    {evidence.classifications.map(value => (
+                      <Badge
+                        key={value}
+                        variant="outline"
+                        className={`text-[9px] uppercase ${expanded ? 'border-zinc-200 bg-zinc-100 text-zinc-700' : 'border-white/40 bg-black/20 text-white'}`}
+                      >
+                        {value}
+                      </Badge>
+                    ))}
                   </div>
                   <button type="button" onClick={() => deleteEvidence(evidence.id)} className="rounded p-1 opacity-60 hover:bg-white/70 hover:text-rose-700" aria-label={`Delete ${evidence.title}`}>
                     <Trash2 className="h-4 w-4" />
                   </button>
                 </div>
                 {expanded && (
-                  <div className="grid gap-2.5 border-t border-zinc-200 p-3 sm:grid-cols-2 lg:grid-cols-3">
+                  <div className="grid gap-3 border-t border-zinc-200 p-3 sm:grid-cols-2 lg:grid-cols-3">
                     <label className="grid gap-1 text-xs font-semibold text-zinc-600">
                       Evidence title
                       <input value={evidence.title} onChange={event => updateEvidence(evidence.id, { title: event.target.value })} className="h-9 rounded-md border border-zinc-300 px-2.5 text-sm font-normal outline-none focus:border-purple-700" />
@@ -809,27 +912,52 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
                       </select>
                     </label>
                     <label className="grid gap-1 text-xs font-semibold text-zinc-600">
-                      Evidence location
-                      <select value={evidence.location} onChange={event => updateEvidence(evidence.id, { location: event.target.value as EvidenceItem['location'] })} className="h-9 rounded-md border border-zinc-300 bg-white px-2.5 text-sm font-normal outline-none focus:border-purple-700">
-                        {EVIDENCE_LOCATIONS.map(location => <option key={location.value} value={location.value}>{location.name}</option>)}
-                      </select>
+                      Location / Workplace Identifier
+                      <input value={evidence.locationIdentifier} onChange={event => updateEvidence(evidence.id, { locationIdentifier: event.target.value })} className="h-9 rounded-md border border-zinc-300 px-2.5 text-sm font-normal outline-none focus:border-purple-700" />
                     </label>
                     <label className="grid gap-1 text-xs font-semibold text-zinc-600">
                       Reference / date
                       <input value={evidence.reference} onChange={event => updateEvidence(evidence.id, { reference: event.target.value })} className="h-9 rounded-md border border-zinc-300 px-2.5 text-sm font-normal outline-none focus:border-purple-700" />
                     </label>
-                    <label className="grid gap-1 text-xs font-semibold text-zinc-600">
-                      Card colour
-                      <select value={evidence.colour} disabled={Boolean(evidence.sourceKey)} onChange={event => updateEvidence(evidence.id, { colour: event.target.value as EvidenceItem['colour'] })} className="h-9 rounded-md border border-zinc-300 bg-white px-2.5 text-sm font-normal outline-none focus:border-purple-700 disabled:bg-zinc-100">
-                        {EVIDENCE_COLOURS.map(colour => <option key={colour.value} value={colour.value}>{colour.name}</option>)}
-                      </select>
+                    <label className="grid gap-1 text-xs font-semibold text-zinc-600 sm:col-span-2 lg:col-span-3">
+                      Description
+                      <span className="font-normal text-zinc-500">Assessor to describe the evidence provided fully.</span>
+                      <textarea value={evidence.notes} onChange={event => updateEvidence(evidence.id, { notes: event.target.value })} rows={4} className="min-h-24 resize-y rounded-md border border-zinc-300 p-2 text-sm font-normal outline-none focus:border-purple-700" />
                     </label>
-                    <label className="grid gap-1 text-xs font-semibold text-zinc-600 sm:col-span-2 lg:col-span-1">
-                      Assessor notes
-                      <textarea value={evidence.notes} onChange={event => updateEvidence(evidence.id, { notes: event.target.value })} rows={2} className="resize-y rounded-md border border-zinc-300 p-2 text-sm font-normal outline-none focus:border-purple-700" />
-                    </label>
+                    <div className="sm:col-span-2 lg:col-span-3 grid gap-3 md:grid-cols-2">
+                      <EvidenceOptionCheckboxes
+                        legend="Storage"
+                        options={EVIDENCE_STORAGE_LOCATIONS}
+                        selectedValues={evidence.storageLocations}
+                        onChange={values => updateEvidence(evidence.id, { storageLocations: values as EvidenceItem['storageLocations'] })}
+                      />
+                      <EvidenceOptionCheckboxes
+                        legend="Evidence form"
+                        options={EVIDENCE_MODES}
+                        selectedValues={evidence.evidenceModes}
+                        onChange={values => updateEvidence(evidence.id, { evidenceModes: values as EvidenceItem['evidenceModes'] })}
+                      />
+                    </div>
                     <div className="sm:col-span-2 lg:col-span-3">
-                      <EvidenceClassificationFields compact classifications={evidence.classifications} subtypes={evidence.subtypes} onChange={patch => updateEvidence(evidence.id, patch)} />
+                      <EvidenceOptionCheckboxes
+                        legend="File format"
+                        options={EVIDENCE_FILE_FORMATS}
+                        selectedValues={evidence.fileFormats}
+                        onChange={values => updateEvidence(evidence.id, { fileFormats: values as EvidenceItem['fileFormats'] })}
+                      />
+                    </div>
+                    <div className="sm:col-span-2 lg:col-span-3">
+                      <FieldLabel>Evidence classification</FieldLabel>
+                      <EvidenceClassificationFields
+                        compact
+                        radioName={`evidence-${evidence.id}-classification`}
+                        classifications={evidence.classifications}
+                        subtypes={evidence.subtypes}
+                        onChange={patch => updateEvidence(evidence.id, {
+                          ...patch,
+                          colour: evidenceColourForClassification(patch.classifications[0]),
+                        })}
+                      />
                     </div>
                   </div>
                 )}

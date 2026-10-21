@@ -16,7 +16,16 @@ import {
 import { saveAs } from 'file-saver';
 import type { UnitOfCompetency } from '@workspace/api-client-react';
 import { buildRows } from './unit-rows';
-import { EVIDENCE_CLASSIFICATIONS, EVIDENCE_LOCATIONS, EVIDENCE_TYPES, evidenceCode, studentDisplayName, type RplRecord } from './rpl-state';
+import {
+  EVIDENCE_CLASSIFICATIONS,
+  EVIDENCE_FILE_FORMATS,
+  EVIDENCE_MODES,
+  EVIDENCE_STORAGE_LOCATIONS,
+  EVIDENCE_TYPES,
+  evidenceCode,
+  studentDisplayName,
+  type RplRecord,
+} from './rpl-state';
 
 const PAGE_WIDTH = 15138;
 const MARGIN = 720;
@@ -126,21 +135,32 @@ export async function exportRplToWord(unit: UnitOfCompetency, record: RplRecord)
     ['Outcome notes / conditions', record.finalisation.outcomeNotes],
   ];
 
-  const evidenceWidths = [700, 1700, 1700, 2200, 3000, PAGE_WIDTH - 9300];
+  const evidenceWidths = [650, 2350, 2800, 1900, 3800, PAGE_WIDTH - 11500];
   const evidenceRows = record.evidence.length
-    ? record.evidence.map((item, index) => new TableRow({
-      children: [
-        cell(evidenceCode(index), evidenceWidths[0]),
-        cell(EVIDENCE_TYPES.find(type => type.value === item.type)?.name ?? 'Reports', evidenceWidths[1]),
-        cell(EVIDENCE_LOCATIONS.find(location => location.value === item.location)?.name ?? 'Sighted / Logged', evidenceWidths[2]),
-        cell([
-          item.classifications.map(value => EVIDENCE_CLASSIFICATIONS.find(group => group.value === value)?.name).filter(Boolean).join(', '),
-          item.subtypes.map(evidenceSubtypeName).join(', '),
-        ].filter(Boolean).join('\n'), evidenceWidths[3]),
-        cell(`${item.title}${item.reference ? `\n${item.reference}` : ''}`, evidenceWidths[4]),
-        cell(item.notes, evidenceWidths[5]),
-      ],
-    }))
+    ? record.evidence.map((item, index) => {
+      const storageNames = item.storageLocations.map(value => EVIDENCE_STORAGE_LOCATIONS.find(option => option.value === value)?.name).filter(Boolean).join(', ');
+      const modeNames = item.evidenceModes.map(value => EVIDENCE_MODES.find(option => option.value === value)?.name).filter(Boolean).join(', ');
+      const formatNames = item.fileFormats.map(value => EVIDENCE_FILE_FORMATS.find(option => option.value === value)?.name).filter(Boolean).join(', ');
+      return new TableRow({
+        children: [
+          cell(evidenceCode(index), evidenceWidths[0]),
+          cell([
+            EVIDENCE_TYPES.find(type => type.value === item.type)?.name ?? 'Reports',
+            item.sourceKey ? 'BASELINE' : '',
+            item.classifications.map(value => EVIDENCE_CLASSIFICATIONS.find(group => group.value === value)?.name).filter(Boolean).join(', '),
+            item.subtypes.map(evidenceSubtypeName).join(', '),
+          ].filter(Boolean).join('\n'), evidenceWidths[1]),
+          cell(`${item.title}${item.reference ? `\n${item.reference}` : ''}`, evidenceWidths[2]),
+          cell(item.locationIdentifier, evidenceWidths[3]),
+          cell([
+            storageNames ? `Storage: ${storageNames}` : '',
+            modeNames ? `Evidence form: ${modeNames}` : '',
+            formatNames ? `File format: ${formatNames}` : '',
+          ].filter(Boolean).join('\n'), evidenceWidths[4]),
+          cell(item.notes, evidenceWidths[5]),
+        ],
+      });
+    })
     : [new TableRow({ children: [cell('No evidence items logged.', undefined, { span: 6 })] })];
 
   const mappingWidths = [7000, 4400, PAGE_WIDTH - 11400];
@@ -212,7 +232,7 @@ export async function exportRplToWord(unit: UnitOfCompetency, record: RplRecord)
         table(details.map(([label, value]) => new TableRow({ children: [cell(label, detailWidths[0], { bold: true, fill: 'E2E8F0' }), cell(value, detailWidths[1])] })), detailWidths),
         heading('Evidence log'),
         table([
-          new TableRow({ tableHeader: true, children: ['Code', 'Evidence type', 'Location', 'Evidence class / subtype', 'Evidence piece / reference', 'Assessor notes'].map((label, index) => cell(label, evidenceWidths[index], { bold: true, fill: 'CCFBF1' })) }),
+          new TableRow({ tableHeader: true, children: ['Code', 'Evidence type / class', 'Evidence piece / reference', 'Location / workplace', 'Storage / form / file format', 'Description'].map((label, index) => cell(label, evidenceWidths[index], { bold: true, fill: 'CCFBF1' })) }),
           ...evidenceRows,
         ], evidenceWidths),
         heading('RPL evidence mapping'),

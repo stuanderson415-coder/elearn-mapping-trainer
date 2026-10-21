@@ -25,16 +25,45 @@ export const EVIDENCE_TYPES = [
 export type EvidenceType = typeof EVIDENCE_TYPES[number]['value'];
 
 export const EVIDENCE_COLOURS = [
-  { name: 'Teal', value: 'teal', color: '#0f766e', soft: '#ccfbf1' },
-  { name: 'Blue', value: 'blue', color: '#0369a1', soft: '#e0f2fe' },
-  { name: 'Indigo', value: 'indigo', color: '#4338ca', soft: '#e0e7ff' },
-  { name: 'Purple', value: 'purple', color: '#7e22ce', soft: '#f3e8ff' },
-  { name: 'Rose', value: 'rose', color: '#be123c', soft: '#ffe4e6' },
-  { name: 'Green', value: 'green', color: '#047857', soft: '#d1fae5' },
-  { name: 'Amber', value: 'amber', color: '#b45309', soft: '#fef3c7' },
+  { name: 'Direct', value: 'red', color: '#dc2626', soft: '#fee2e2' },
+  { name: 'Indirect', value: 'blue', color: '#2563eb', soft: '#dbeafe' },
+  { name: 'Supplementary', value: 'purple', color: '#9333ea', soft: '#f3e8ff' },
 ] as const;
 
 export type EvidenceColour = typeof EVIDENCE_COLOURS[number]['value'];
+
+export const EVIDENCE_STORAGE_LOCATIONS = [
+  { name: 'eLearn', value: 'elearn' },
+  { name: 'SharePoint', value: 'sharepoint' },
+] as const;
+
+export type EvidenceStorageLocation = typeof EVIDENCE_STORAGE_LOCATIONS[number]['value'];
+
+export const EVIDENCE_MODES = [
+  { name: 'Observation', value: 'observation' },
+  { name: 'Paper', value: 'paper' },
+  { name: 'Electronic', value: 'electronic' },
+] as const;
+
+export type EvidenceMode = typeof EVIDENCE_MODES[number]['value'];
+
+export const EVIDENCE_FILE_FORMATS = [
+  { name: 'PDF', value: 'pdf' },
+  { name: 'Word', value: 'word' },
+  { name: 'PowerPoint', value: 'powerpoint' },
+  { name: 'Excel', value: 'excel' },
+  { name: 'JPG/PNG Image', value: 'jpg-png-image' },
+  { name: 'Video (MP4)', value: 'video-mp4' },
+  { name: 'Audio (MP3)', value: 'audio-mp3' },
+  { name: 'HTML/Web', value: 'html-web' },
+  { name: 'Codebase', value: 'codebase' },
+  { name: 'CAD/3D', value: 'cad-3d' },
+  { name: 'Adobe PS', value: 'adobe-ps' },
+  { name: 'SVG', value: 'svg' },
+  { name: 'Other', value: 'other' },
+] as const;
+
+export type EvidenceFileFormat = typeof EVIDENCE_FILE_FORMATS[number]['value'];
 
 export const EVIDENCE_LOCATIONS = [
   { name: 'Sighted / Logged', value: 'sighted-logged' },
@@ -80,6 +109,12 @@ export const EVIDENCE_CLASSIFICATIONS = [
 
 export type EvidenceClassification = typeof EVIDENCE_CLASSIFICATIONS[number]['value'];
 export type EvidenceSubtype = typeof EVIDENCE_CLASSIFICATIONS[number]['subtypes'][number]['value'];
+
+export function evidenceColourForClassification(classification?: EvidenceClassification): EvidenceColour {
+  if (classification === 'direct') return 'red';
+  if (classification === 'supplementary') return 'purple';
+  return 'blue';
+}
 
 const LEGACY_EVIDENCE_TYPE_BY_COLOUR: Record<string, EvidenceType> = {
   '#0f766e': 'written-reference',
@@ -214,7 +249,11 @@ export type EvidenceItem = {
   notes: string;
   type: EvidenceType;
   colour: EvidenceColour;
+  locationIdentifier: string;
   location: EvidenceLocation;
+  storageLocations: EvidenceStorageLocation[];
+  evidenceModes: EvidenceMode[];
+  fileFormats: EvidenceFileFormat[];
   classifications: EvidenceClassification[];
   subtypes: EvidenceSubtype[];
   sourceKey?: 'pre-rpl-cv' | 'pre-rpl-transcript' | 'pre-rpl-position-description' | 'pre-rpl-job-card' | 'pre-rpl-drivers-licence' | 'pre-rpl-white-card' | 'pre-rpl-forklift' | 'pre-rpl-rsa' | 'pre-rpl-asbestos-silica' | 'pre-rpl-wwvp';
@@ -350,18 +389,34 @@ export function loadRplRecordForStudent(unitCode: string, studentNumber: string)
           ...parsed.student?.preRplChecklist,
         },
       },
-      evidence: (parsed.evidence ?? []).map(item => ({
-        id: item.id ?? newEvidenceId(),
-        title: item.title ?? '',
-        reference: item.reference ?? '',
-        notes: item.notes ?? '',
-        type: migrateEvidenceType(item.type, item.color),
-        colour: item.colour ?? 'teal',
-        location: item.location ?? 'sighted-logged',
-        classifications: item.classifications ?? [],
-        subtypes: item.subtypes ?? [],
-        sourceKey: item.sourceKey,
-      })),
+      evidence: (parsed.evidence ?? []).map(item => {
+        const classifications = (item.classifications ?? [])
+          .filter(value => EVIDENCE_CLASSIFICATIONS.some(group => group.value === value))
+          .slice(0, 1);
+        const allowedSubtypes = new Set(
+          EVIDENCE_CLASSIFICATIONS
+            .filter(group => classifications.includes(group.value))
+            .flatMap(group => group.subtypes.map(subtype => subtype.value)),
+        );
+        const legacyStorageLocations = item.location === 'digital-sharepoint' ? ['sharepoint' as const] : [];
+        const legacyEvidenceModes = item.location === 'hard-copy-file' ? ['paper' as const] : [];
+        return {
+          id: item.id ?? newEvidenceId(),
+          title: item.title ?? '',
+          reference: item.reference ?? '',
+          notes: item.notes ?? '',
+          type: migrateEvidenceType(item.type, item.color),
+          colour: evidenceColourForClassification(classifications[0]),
+          locationIdentifier: item.locationIdentifier ?? '',
+          location: item.location ?? 'sighted-logged',
+          storageLocations: item.storageLocations ?? legacyStorageLocations,
+          evidenceModes: item.evidenceModes ?? legacyEvidenceModes,
+          fileFormats: item.fileFormats ?? [],
+          classifications,
+          subtypes: (item.subtypes ?? []).filter(subtype => allowedSubtypes.has(subtype)),
+          sourceKey: item.sourceKey,
+        };
+      }),
       mappings: parsed.mappings ?? {},
       interviews: parsed.interviews ?? {},
       finalisation: {
