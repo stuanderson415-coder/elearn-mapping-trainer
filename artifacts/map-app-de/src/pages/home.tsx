@@ -238,7 +238,7 @@ export default function Home() {
         </div>
       </header>
 
-      <div className="mt-16 flex h-[calc(100vh-4rem)] w-full overflow-hidden bg-zinc-400 font-sans">
+      <div className="mt-16 flex h-[calc(100vh-4rem)] w-full overflow-hidden bg-[#a7bba9] font-sans">
         <HistorySidebar onSelect={handleHistorySelect} />
 
         <main className="relative flex h-full min-w-0 flex-1 flex-col">
