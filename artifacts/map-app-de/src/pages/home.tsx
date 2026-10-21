@@ -40,7 +40,7 @@ function WelcomePanel() {
             <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-purple-700">Welcome</p>
             <h2 className="mt-0.5 text-xl font-bold tracking-tight text-zinc-900">Welcome to RPL Mapping Trainer</h2>
             <p className="mt-1 text-xs leading-5 text-zinc-600">
-              RTO Standard 1.6 requires registered training organisations to support VET students with prior skills and knowledge to seek Recognition of Prior Learning (RPL). Providers must offer clear policy awareness, base RPL decisions on valid evidence, and maintain fair, consistent assessment standards.
+              <strong>RTO Standards 2025:</strong> Standard 1.6 requires registered training organisations to support VET students with prior skills and knowledge to seek Recognition of Prior Learning (RPL). Providers must offer clear policy awareness, base RPL decisions on valid evidence, and maintain fair, consistent assessment standards.
               {' '}
               <Popover>
                 <PopoverTrigger asChild>
