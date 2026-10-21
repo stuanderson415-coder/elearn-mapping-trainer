@@ -32,76 +32,65 @@ function WelcomePanel() {
 
   return (
     <section className="rounded-xl border border-purple-200 bg-white p-4 shadow-sm md:p-5">
-      <div className="flex items-start gap-3">
-        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-purple-50 text-purple-700">
-          <ClipboardCheck className="h-5 w-5" />
-        </div>
-        <div>
-          <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-purple-700">Welcome</p>
-          <h2 className="mt-0.5 text-xl font-bold tracking-tight text-zinc-900">Welcome to RPL Mapping Trainer</h2>
-          <p className="mt-1 max-w-3xl text-xs leading-5 text-zinc-600">
-            RTO Standard 1.6 requires registered training organisations to support VET students with prior skills and knowledge to seek Recognition of Prior Learning (RPL). Providers must offer clear policy awareness, base RPL decisions on valid evidence, and maintain fair, consistent assessment standards.
-            {' '}
-            <Popover>
-              <PopoverTrigger asChild>
-                <button
-                  type="button"
-                  data-testid="button-more-rto-standard"
-                  className="inline-flex items-center rounded-full border border-green-200 bg-green-50 px-2 py-0.5 align-baseline text-[10px] font-semibold text-green-800 transition-colors hover:bg-green-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-600 focus-visible:ring-offset-1"
+      <div className="grid min-w-0 gap-4 lg:grid-cols-[minmax(0,1.55fr)_minmax(290px,0.75fr)] lg:items-start xl:gap-6">
+        <div className="flex min-w-0 items-start gap-3">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-purple-50 text-purple-700">
+            <ClipboardCheck className="h-5 w-5" />
+          </div>
+          <div className="min-w-0">
+            <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-purple-700">Welcome</p>
+            <h2 className="mt-0.5 text-xl font-bold tracking-tight text-zinc-900">Welcome to RPL Mapping Trainer</h2>
+            <p className="mt-1 text-xs leading-5 text-zinc-600">
+              RTO Standard 1.6 requires registered training organisations to support VET students with prior skills and knowledge to seek Recognition of Prior Learning (RPL). Providers must offer clear policy awareness, base RPL decisions on valid evidence, and maintain fair, consistent assessment standards.
+              {' '}
+              <Popover>
+                <PopoverTrigger asChild>
+                  <button
+                    type="button"
+                    data-testid="button-more-rto-standard"
+                    className="inline-flex items-center rounded-full border border-green-200 bg-green-50 px-2 py-0.5 align-baseline text-[10px] font-semibold text-green-800 transition-colors hover:bg-green-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-600 focus-visible:ring-offset-1"
+                  >
+                    more
+                  </button>
+                </PopoverTrigger>
+                <PopoverContent
+                  align="start"
+                  side="bottom"
+                  sideOffset={8}
+                  aria-labelledby="rto-core-requirements-title"
+                  data-testid="panel-rto-core-requirements"
+                  className="max-h-[min(80vh,32rem)] w-[calc(100vw-2rem)] overflow-y-auto border-green-200 bg-white p-4 shadow-lg sm:w-96"
                 >
-                  more
-                </button>
-              </PopoverTrigger>
-              <PopoverContent
-                align="start"
-                side="bottom"
-                sideOffset={8}
-                aria-labelledby="rto-core-requirements-title"
-                data-testid="panel-rto-core-requirements"
-                className="max-h-[min(80vh,32rem)] w-[calc(100vw-2rem)] overflow-y-auto border-green-200 bg-white p-4 shadow-lg sm:w-96"
-              >
-                <h3 id="rto-core-requirements-title" className="text-sm font-semibold text-green-950">
-                  Core Requirements for RTOs
-                </h3>
-                <ul className="mt-3 space-y-2 text-xs leading-5 text-zinc-700">
-                  <li>
-                    <strong className="font-semibold text-zinc-900">Student Support &amp; Awareness:</strong>{' '}
-                    Inform students about RPL options and provide accessible policies before and during enrollment.
-                  </li>
-                  <li>
-                    <strong className="font-semibold text-zinc-900">Evidence-Based Decisions:</strong>{' '}
-                    Base RPL assessments on verifiable proof of prior work, life experience, or training rather than self-assessments.
-                  </li>
-                  <li>
-                    <strong className="font-semibold text-zinc-900">Assessment Rigor:</strong>{' '}
-                    Apply the same quality, validity, and fairness rules used in standard course assessments.
-                  </li>
-                  <li>
-                    <strong className="font-semibold text-zinc-900">Fair &amp; Consistent Process:</strong>{' '}
-                    Document all RPL evaluations transparently and ensure decisions protect the integrity of the ASQA Standards for RTOs.
-                  </li>
-                </ul>
-              </PopoverContent>
-            </Popover>
-          </p>
-          <p className="mt-2 max-w-3xl rounded-lg border border-emerald-300 bg-emerald-50/70 px-3 py-2 text-xs leading-5 font-bold text-green-800">
-            This tool is designed to help you describe and log RPL evidence pieces, map them using a dynamic mapping interface and identify gaps.
-          </p>
+                  <h3 id="rto-core-requirements-title" className="text-sm font-semibold text-green-950">
+                    Core Requirements for RTOs
+                  </h3>
+                  <ul className="mt-3 space-y-2 text-xs leading-5 text-zinc-700">
+                    <li>
+                      <strong className="font-semibold text-zinc-900">Student Support &amp; Awareness:</strong>{' '}
+                      Inform students about RPL options and provide accessible policies before and during enrollment.
+                    </li>
+                    <li>
+                      <strong className="font-semibold text-zinc-900">Evidence-Based Decisions:</strong>{' '}
+                      Base RPL assessments on verifiable proof of prior work, life experience, or training rather than self-assessments.
+                    </li>
+                    <li>
+                      <strong className="font-semibold text-zinc-900">Assessment Rigor:</strong>{' '}
+                      Apply the same quality, validity, and fairness rules used in standard course assessments.
+                    </li>
+                    <li>
+                      <strong className="font-semibold text-zinc-900">Fair &amp; Consistent Process:</strong>{' '}
+                      Document all RPL evaluations transparently and ensure decisions protect the integrity of the ASQA Standards for RTOs.
+                    </li>
+                  </ul>
+                </PopoverContent>
+              </Popover>
+            </p>
+            <p className="mt-2 rounded-lg border border-emerald-300 bg-emerald-50/70 px-3 py-2 text-xs font-bold leading-5 text-green-800">
+              This tool is designed to help you describe and log RPL evidence pieces, map them using a dynamic mapping interface and identify gaps.
+            </p>
+          </div>
         </div>
-      </div>
 
-      <div className="mt-3 grid gap-3 lg:grid-cols-[minmax(0,1.35fr)_minmax(280px,0.65fr)]">
-        <div>
-          <h3 className="text-xs font-bold uppercase tracking-[0.12em] text-zinc-700">You will progress by following these steps</h3>
-           <ol className="mt-2 grid gap-1 sm:grid-cols-2">
-            {steps.map((step, index) => (
-              <li key={step} className="flex gap-2 rounded-lg border border-zinc-100 bg-zinc-50 px-2.5 py-1.5 text-xs leading-4 text-zinc-700">
-                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-purple-600 text-[11px] font-bold text-white">{index + 1}</span>
-                <span>{step}</span>
-              </li>
-            ))}
-          </ol>
-        </div>
         <aside className="rounded-xl border border-green-950 bg-gradient-to-r from-[#022c22] via-[#064e3b] to-[#052e16] p-3 text-white">
           <FileCheck2 className="h-5 w-5 text-green-100" />
           <h3 className="mt-2 text-sm font-semibold text-white">Important:</h3>
@@ -120,6 +109,18 @@ function WelcomePanel() {
             .
           </p>
         </aside>
+      </div>
+
+      <div className="mt-4 lg:ml-10 xl:ml-14">
+        <h3 className="text-xs font-bold uppercase tracking-[0.12em] text-zinc-700">You will progress by following these steps</h3>
+        <ol className="mt-2 grid gap-1.5 sm:grid-cols-2 xl:grid-cols-3">
+          {steps.map((step, index) => (
+            <li key={step} className="flex min-w-0 items-start gap-2 rounded-lg border border-zinc-100 bg-zinc-50 px-2.5 py-2 text-xs leading-4 text-zinc-700">
+              <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-purple-600 text-[11px] font-bold text-white">{index + 1}</span>
+              <span className="min-w-0">{step}</span>
+            </li>
+          ))}
+        </ol>
       </div>
     </section>
   );

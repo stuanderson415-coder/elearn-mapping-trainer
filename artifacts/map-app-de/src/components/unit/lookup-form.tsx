@@ -6,7 +6,6 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { DatePickerInput } from '@/components/ui/date-picker-input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { useToast } from '@/hooks/use-toast';
 import { createEmptyPreRplChecklist, type StudentDetails } from '@/lib/rpl-state';
 
@@ -200,23 +199,14 @@ export function LookupForm({ onUnitLoaded, isPending }: Props) {
         </form>
 
         <details className="mt-3 border-t border-zinc-100 pt-2">
-          <TooltipProvider delayDuration={200}>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <summary data-testid="summary-pre-rpl-interview" className="cursor-pointer text-[11px]">
-                  <span className="inline-flex rounded-md bg-green-700 px-2.5 py-1 font-semibold text-white">
-                    Pre-RPL Interview
-                  </span>
-                  <span className="ml-2 text-zinc-600">
-                    Open here to record evidence of the initial RPL Interview.
-                  </span>
-                </summary>
-              </TooltipTrigger>
-              <TooltipContent side="top" className="max-w-xs border border-green-800 bg-green-950 px-3 py-2 text-xs leading-5 text-white">
-                Open here to record evidence of the initial RPL Interview.
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          <summary data-testid="summary-pre-rpl-interview" className="cursor-pointer text-[11px]">
+            <span className="inline-flex rounded-md bg-green-700 px-2.5 py-1 font-semibold text-white">
+              Pre-RPL Interview
+            </span>
+            <span className="ml-2 text-zinc-600">
+              Open here to record evidence of the initial RPL Interview.
+            </span>
+          </summary>
           <div className="mt-2 space-y-2.5 rounded-lg border border-zinc-200 bg-zinc-50 p-3">
             <h3 className="text-xs font-bold uppercase tracking-[0.1em] text-purple-800">RPL Pre-Assessment</h3>
             <section className="grid gap-2 lg:grid-cols-[minmax(0,1fr)_220px] lg:items-end">
