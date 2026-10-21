@@ -153,7 +153,7 @@ export function LookupForm({ onUnitLoaded, isPending }: Props) {
           <CardTitle className="mt-1 text-lg font-semibold tracking-tight text-zinc-900">The Initial Interview</CardTitle>
           <CardDescription className="mt-1 max-w-4xl text-xs leading-5">
             Your RPL mapping process starts here at the pre-RPL interview. You will be entering the applicant&apos;s details at this stage. Typically, this would be an interview where you will inform your applicant of the process, the timeframes, and importantly that{' '}
-            <strong className="font-bold">RPL is an assessment only process</strong>.
+            <strong className="font-bold">RPL is an assessment only process</strong>. Fill in the details below, then open the <strong className="font-bold">Pre-RPL</strong> Interview toggle beneath. Make a record of the interview, then click <strong className="font-bold">Start</strong>.
           </CardDescription>
         </div>
         <div className="hidden min-w-[160px] items-center justify-center gap-1.5 rounded-lg bg-green-600 px-3 py-2 text-center text-sm font-extrabold leading-5 text-white sm:flex">
