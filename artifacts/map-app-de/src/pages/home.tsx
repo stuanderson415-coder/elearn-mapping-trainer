@@ -56,7 +56,7 @@ function WelcomePanel() {
             ))}
           </ol>
         </div>
-        <aside className="rounded-xl border border-green-950 bg-green-950 p-3 text-white">
+        <aside className="rounded-xl border border-green-950 bg-gradient-to-r from-[#022c22] via-[#064e3b] to-[#052e16] p-3 text-white">
           <FileCheck2 className="h-5 w-5 text-green-100" />
           <h3 className="mt-2 text-sm font-semibold text-white">Important!</h3>
           <p className="mt-1 text-xs leading-5 text-green-50">
