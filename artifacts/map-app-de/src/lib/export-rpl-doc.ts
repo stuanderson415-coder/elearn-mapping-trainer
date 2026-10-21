@@ -219,7 +219,8 @@ export async function exportRplToWord(unit: UnitOfCompetency, record: RplRecord)
     sections: [{
       properties: {
         page: {
-          size: { orientation: PageOrientation.LANDSCAPE, width: 16838, height: 11906 },
+          // docx swaps width and height when LANDSCAPE is selected; pass portrait dimensions here.
+          size: { orientation: PageOrientation.LANDSCAPE, width: 11906, height: 16838 },
           margin: { top: MARGIN, bottom: MARGIN, left: MARGIN, right: MARGIN },
         },
       },
