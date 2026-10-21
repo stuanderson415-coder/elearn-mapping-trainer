@@ -104,9 +104,11 @@ function WelcomePanel() {
         </div>
         <aside className="rounded-xl border border-green-950 bg-gradient-to-r from-[#022c22] via-[#064e3b] to-[#052e16] p-3 text-white">
           <FileCheck2 className="h-5 w-5 text-green-100" />
-          <h3 className="mt-2 text-sm font-semibold text-white">Important!</h3>
+          <h3 className="mt-2 text-sm font-semibold text-white">Important:</h3>
           <p className="mt-1 text-xs leading-5 text-green-50">
-            This resource is about learning skills. It is not a formal tool for use at CIT. The processing of full learner RPL portfolios needs to follow CIT&apos;s process for RPL. You can find that information{' '}
+            This formative assessment resource is about you learning skills as part of TAEASS411 or as part of your development as an educator.{' '}
+            <strong className="font-bold text-white">It is not a formal assessment tool for use at CIT.</strong>{' '}
+            You can find information on policy and process{' '}
             <a
               href="https://cit.edu.au/study/apply/status/recognition-of-prior-learning"
               target="_blank"
