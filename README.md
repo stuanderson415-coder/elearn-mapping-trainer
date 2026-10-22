@@ -1,4 +1,4 @@
-@@ -0,0 +1,101 @@
+
 RPL Mapping Trainer and RPL Educator Companion (& ELearn Mapping Trainer)
 
 An open-source digital tool supporting Recognition of Prior Learning (RPL) assessment in the Australian Vocational Education and Training (VET) sector.
