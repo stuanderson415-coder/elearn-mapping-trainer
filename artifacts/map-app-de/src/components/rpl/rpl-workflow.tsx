@@ -779,7 +779,7 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
           alt="Infographic summarising the principles of assessment and rules of evidence"
           loading="lazy"
           decoding="async"
-          className="-mx-2 mt-3 block h-auto w-[calc(100%+1rem)] max-w-none rounded-lg object-contain"
+          className="-mx-5 mt-3 block h-auto w-[calc(100%+2.5rem)] max-w-none rounded-lg object-contain"
         />
         <div className="mt-3 flex items-start gap-2">
           <Checkbox
