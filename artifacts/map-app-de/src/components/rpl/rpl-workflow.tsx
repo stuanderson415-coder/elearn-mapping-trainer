@@ -1562,6 +1562,16 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
           </table>
         </div>
       </section>
+      <aside className="rounded-xl border border-green-700/30 bg-green-50 p-4 text-sm text-green-950">
+        <p className="font-semibold">
+          Recognition of Prior Learning is supported when the evidence obtained fully maps to the unit and is securely stored.
+        </p>
+        <p className="mt-2 font-medium">For compliance, RPL documentation comes down to:</p>
+        <ul className="mt-1 list-inside list-disc space-y-1">
+          <li>Pre-RPL interview evidence</li>
+          <li>An evidence log that records the storage location</li>
+        </ul>
+      </aside>
     </div>
   );
 
