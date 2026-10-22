@@ -164,8 +164,9 @@ function EvidenceTile({
   );
 }
 
-function FieldLabel({ children }: { children: string }) {
-  return <label className="mb-1 block text-xs font-bold uppercase tracking-[0.11em] text-zinc-600">{children}</label>;
+function FieldLabel({ children, compact = false }: { children: string; compact?: boolean }) {
+  const typography = compact ? 'text-[11px] tracking-[0.08em]' : 'text-xs tracking-[0.11em]';
+  return <label className={`mb-1 block font-bold uppercase ${typography} text-zinc-600`}>{children}</label>;
 }
 
 function EvidenceOptionCheckboxes({
@@ -532,17 +533,17 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
 
   const renderStudent = () => (
     <div className="grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
-      <section className="rounded-xl border border-zinc-200 bg-white p-4 shadow-sm">
-        <p className="text-sm font-semibold text-purple-800">Start an RPL record</p>
-        <h2 className="mt-1 text-xl font-bold tracking-tight text-zinc-900">Student details</h2>
-        <p className="mt-1 max-w-xl text-sm leading-5 text-zinc-600">
+      <section className="rounded-xl border border-zinc-200 bg-white p-3 shadow-sm">
+        <p className="text-xs font-semibold text-purple-800">Start an RPL record</p>
+        <h2 className="mt-1 text-lg font-bold tracking-tight text-zinc-900">Student details</h2>
+        <p className="mt-1 max-w-xl text-xs leading-4 text-zinc-600">
           This record is saved in this browser against the unit and student number, so you can return to the RPL assessment later.
         </p>
-        <p className="mt-2 text-xs font-medium text-amber-800">
+        <p className="mt-2 text-[11px] font-medium text-amber-800">
           Assessor to check all details before progressing to the evidence register.
         </p>
         {savedStudents.length > 0 && (
-          <div className="mb-4 flex flex-wrap items-center gap-1.5 rounded-lg border border-zinc-200 bg-zinc-50 p-2.5">
+          <div className="mb-3 flex flex-wrap items-center gap-1 rounded-lg border border-zinc-200 bg-zinc-50 p-2">
             <span className="mr-1 text-xs font-semibold text-zinc-600">Open a saved student:</span>
             {savedStudents.map(student => (
               <button key={student.studentNumber} type="button" onClick={() => openSavedStudent(student.studentNumber)} className={`rounded-full border px-2.5 py-1 text-xs font-medium ${student.studentNumber === activeRecordStudentNumber ? 'border-purple-700 bg-purple-100 text-purple-900' : 'border-zinc-300 bg-white text-zinc-700 hover:border-purple-400'}`}>
@@ -552,102 +553,102 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
             <button type="button" onClick={startNewStudent} className="rounded-full border border-dashed border-zinc-400 px-2.5 py-1 text-xs font-medium text-zinc-700 hover:border-purple-500 hover:text-purple-800">New record</button>
           </div>
         )}
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
           <div>
-            <FieldLabel>Surname</FieldLabel>
+            <FieldLabel compact>Surname</FieldLabel>
             <input
               value={record.student.surname}
               onChange={event => updateRecord(current => ({ ...current, student: { ...current.student, surname: event.target.value } }))}
               placeholder="e.g. Morgan"
-              className="h-10 w-full rounded-md border border-zinc-300 bg-zinc-50 px-2.5 text-sm outline-none transition focus:border-purple-700 focus:ring-2 focus:ring-purple-100"
+              className="h-9 w-full rounded-md border border-zinc-300 bg-zinc-50 px-2 text-xs outline-none transition focus:border-purple-700 focus:ring-2 focus:ring-purple-100"
             />
           </div>
           <div>
-            <FieldLabel>Given names</FieldLabel>
+            <FieldLabel compact>Given names</FieldLabel>
             <input
               value={record.student.givenNames}
               onChange={event => updateRecord(current => ({ ...current, student: { ...current.student, givenNames: event.target.value } }))}
               placeholder="e.g. Alex"
-              className="h-10 w-full rounded-md border border-zinc-300 bg-zinc-50 px-2.5 text-sm outline-none transition focus:border-purple-700 focus:ring-2 focus:ring-purple-100"
+              className="h-9 w-full rounded-md border border-zinc-300 bg-zinc-50 px-2 text-xs outline-none transition focus:border-purple-700 focus:ring-2 focus:ring-purple-100"
             />
           </div>
           <div>
-            <FieldLabel>Student number</FieldLabel>
+            <FieldLabel compact>Student number</FieldLabel>
             <input
               value={record.student.studentNumber}
               onChange={event => updateRecord(current => ({ ...current, student: { ...current.student, studentNumber: event.target.value } }))}
               placeholder="e.g. 12345678"
-              className="h-10 w-full rounded-md border border-zinc-300 bg-zinc-50 px-2.5 text-sm outline-none transition focus:border-purple-700 focus:ring-2 focus:ring-purple-100"
+              className="h-9 w-full rounded-md border border-zinc-300 bg-zinc-50 px-2 text-xs outline-none transition focus:border-purple-700 focus:ring-2 focus:ring-purple-100"
             />
           </div>
           <div>
-            <FieldLabel>USI</FieldLabel>
+            <FieldLabel compact>USI</FieldLabel>
             <input
               value={record.student.usi}
               onChange={event => updateRecord(current => ({ ...current, student: { ...current.student, usi: event.target.value.toUpperCase() } }))}
               placeholder="10-character USI"
               maxLength={10}
-              className="h-10 w-full rounded-md border border-zinc-300 bg-zinc-50 px-2.5 text-sm uppercase outline-none transition focus:border-purple-700 focus:ring-2 focus:ring-purple-100"
+              className="h-9 w-full rounded-md border border-zinc-300 bg-zinc-50 px-2 text-xs uppercase outline-none transition focus:border-purple-700 focus:ring-2 focus:ring-purple-100"
             />
           </div>
           <div>
-            <FieldLabel>Date of birth</FieldLabel>
+            <FieldLabel compact>Date of birth</FieldLabel>
             <DatePickerInput
               value={record.student.dateOfBirth}
               onChange={dateOfBirth => updateRecord(current => ({ ...current, student: { ...current.student, dateOfBirth } }))}
               ariaLabel="Date of birth"
-              className="h-10"
+              className="h-9 px-2 text-xs"
             />
           </div>
           <div>
-            <FieldLabel>Trainer / assessor</FieldLabel>
+            <FieldLabel compact>Trainer / assessor</FieldLabel>
             <input
               value={record.student.trainerName}
               onChange={event => updateRecord(current => ({ ...current, student: { ...current.student, trainerName: event.target.value } }))}
               placeholder="e.g. Jordan Lee"
-              className="h-10 w-full rounded-md border border-zinc-300 bg-zinc-50 px-2.5 text-sm outline-none transition focus:border-purple-700 focus:ring-2 focus:ring-purple-100"
+              className="h-9 w-full rounded-md border border-zinc-300 bg-zinc-50 px-2 text-xs outline-none transition focus:border-purple-700 focus:ring-2 focus:ring-purple-100"
             />
           </div>
           <div className="sm:col-span-2 lg:col-span-3">
-            <FieldLabel>Parent Qualification</FieldLabel>
+            <FieldLabel compact>Parent Qualification</FieldLabel>
             <input
               value={record.student.organisation}
               onChange={event => updateRecord(current => ({ ...current, student: { ...current.student, organisation: event.target.value } }))}
               placeholder="e.g. Your RTO"
-              className="h-10 w-full rounded-md border border-zinc-300 bg-zinc-50 px-2.5 text-sm outline-none transition focus:border-purple-700 focus:ring-2 focus:ring-purple-100"
+              className="h-9 w-full rounded-md border border-zinc-300 bg-zinc-50 px-2 text-xs outline-none transition focus:border-purple-700 focus:ring-2 focus:ring-purple-100"
             />
           </div>
-          <div className="grid gap-3 sm:col-span-2 sm:grid-cols-3 lg:col-span-3">
+          <div className="grid gap-2.5 sm:col-span-2 sm:grid-cols-3 lg:col-span-3">
             <div>
-              <FieldLabel>RPL Start Date (DD/MM/YYYY)</FieldLabel>
+              <FieldLabel compact>RPL Start Date (DD/MM/YYYY)</FieldLabel>
               <DatePickerInput
                 value={record.student.assessmentDate}
                 onChange={assessmentDate => updateRecord(current => ({ ...current, student: { ...current.student, assessmentDate } }))}
                 ariaLabel="RPL Start Date"
-                className="bg-zinc-50"
+                className="h-9 bg-zinc-50 px-2 text-xs"
               />
             </div>
             <div>
-              <FieldLabel>Evidence Presentation Session Booked</FieldLabel>
+              <FieldLabel compact>Evidence Presentation Session Booked</FieldLabel>
               <DatePickerInput
                 value={record.student.evidencePresentationSessionDate}
                 onChange={evidencePresentationSessionDate => updateRecord(current => ({ ...current, student: { ...current.student, evidencePresentationSessionDate } }))}
                 ariaLabel="Evidence Presentation Session Booked"
-                className="bg-zinc-50"
+                className="h-9 bg-zinc-50 px-2 text-xs"
               />
             </div>
             <div>
-              <FieldLabel>Gaps Assessment Session Booked</FieldLabel>
+              <FieldLabel compact>Gaps Assessment Session Booked</FieldLabel>
               <DatePickerInput
                 value={record.student.gapsAssessmentSessionDate}
                 onChange={gapsAssessmentSessionDate => updateRecord(current => ({ ...current, student: { ...current.student, gapsAssessmentSessionDate } }))}
                 ariaLabel="Gaps Assessment Session Booked"
-                className="bg-zinc-50"
+                className="h-9 bg-zinc-50 px-2 text-xs"
               />
             </div>
           </div>
         </div>
-        <div className="mt-4 grid gap-3 rounded-lg border border-purple-200 bg-purple-50/50 p-3 sm:grid-cols-[minmax(0,0.7fr)_minmax(0,1.3fr)] sm:items-start">
+        <div className="mt-3 grid gap-2.5 rounded-lg border border-purple-200 bg-purple-50/50 p-2.5 sm:grid-cols-[minmax(0,0.7fr)_minmax(0,1.3fr)] sm:items-start">
           <div className="flex flex-col items-start gap-2">
             <div className="flex items-start gap-2">
               <Checkbox
@@ -656,7 +657,7 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
                 onCheckedChange={checked => updateRecord(current => ({ ...current, student: { ...current.student, disabilityAccessPlan: checked === true } }))}
                 className="mt-0.5"
               />
-              <label htmlFor="disability-access-plan" className="cursor-pointer text-sm font-semibold text-zinc-800">
+              <label htmlFor="disability-access-plan" className="cursor-pointer text-xs font-semibold text-zinc-800">
                 Disability Access Plan (DAP)
               </label>
             </div>
@@ -726,18 +727,18 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
             </div>
           </div>
           <label className="grid gap-1">
-            <FieldLabel>Record reasonable adjustments negotiated here</FieldLabel>
+            <FieldLabel compact>Record reasonable adjustments negotiated here</FieldLabel>
             <textarea
               value={record.student.reasonableAdjustments}
               onChange={event => updateRecord(current => ({ ...current, student: { ...current.student, reasonableAdjustments: event.target.value } }))}
-              rows={5}
+              rows={4}
               placeholder="Record reasonable adjustments negotiated here"
-              className="w-full resize-y rounded-md border border-zinc-300 bg-white px-3 py-2.5 text-sm leading-5 outline-none transition focus:border-purple-700 focus:ring-2 focus:ring-purple-100"
+              className="w-full resize-y rounded-md border border-zinc-300 bg-white px-2.5 py-2 text-xs leading-4 outline-none transition focus:border-purple-700 focus:ring-2 focus:ring-purple-100"
             />
           </label>
         </div>
         {recordConflict && (
-          <div className="mt-4 rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm text-amber-950">
+          <div className="mt-3 rounded-lg border border-amber-300 bg-amber-50 p-2.5 text-xs text-amber-950">
             <p>A saved record already exists for student number <strong>{recordConflict}</strong>. Open the saved record to avoid overwriting it, or intentionally replace it with the details above.</p>
             <div className="mt-2 flex flex-wrap gap-2">
               <Button size="sm" variant="outline" onClick={() => openSavedStudent(recordConflict)}>Open saved record</Button>
@@ -746,24 +747,24 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
           </div>
         )}
 
-        <div className="mt-5 rounded-lg border-l-4 border-purple-600 bg-purple-50 p-4 text-purple-900">
-          <p className="text-sm font-medium">The assessor should check that all student details are correct. The RPL Start Date marks when the candidate can begin collecting evidence.</p>
+        <div className="mt-4 rounded-lg border-l-4 border-purple-600 bg-purple-50 p-3 text-purple-900">
+          <p className="text-xs font-medium leading-4">The assessor should check that all student details are correct. The RPL Start Date marks when the candidate can begin collecting evidence.</p>
         </div>
 
-        <div className="mt-4 flex items-start gap-3 rounded-lg border border-zinc-200 bg-zinc-50 p-4">
+        <div className="mt-3 flex items-start gap-2 rounded-lg border border-zinc-200 bg-zinc-50 p-3">
           <Checkbox
             id="student-informed"
             checked={record.student.studentInformed}
             onCheckedChange={(checked) => updateRecord(current => ({ ...current, student: { ...current.student, studentInformed: checked === true } }))}
             className="mt-0.5"
           />
-          <label htmlFor="student-informed" className="cursor-pointer text-sm font-medium leading-tight text-zinc-800">
+          <label htmlFor="student-informed" className="cursor-pointer text-xs font-medium leading-4 text-zinc-800">
             Student has been informed of the evidence they need to collect and provide as evidence to be assessed.
           </label>
         </div>
 
-        <div className="mt-5 flex justify-end">
-          <Button onClick={saveStudentAndContinue} disabled={!hasStudent} className="bg-purple-800 hover:bg-purple-700">
+        <div className="mt-4 flex justify-end">
+          <Button size="sm" onClick={saveStudentAndContinue} disabled={!hasStudent} className="bg-purple-800 hover:bg-purple-700">
             Save and continue <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
         </div>
