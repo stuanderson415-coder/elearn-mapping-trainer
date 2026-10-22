@@ -381,11 +381,14 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
   const [acceptableEvidencePinned, setAcceptableEvidencePinned] = useState(false);
   const [mappingGuidanceHovered, setMappingGuidanceHovered] = useState(false);
   const [mappingGuidancePinned, setMappingGuidancePinned] = useState(false);
+  const [gapAssessmentHovered, setGapAssessmentHovered] = useState(false);
+  const [gapAssessmentPinned, setGapAssessmentPinned] = useState(false);
   const paletteRef = useRef<HTMLDivElement>(null);
   const reasonableAdjustmentInfoOpen = reasonableAdjustmentHovered || reasonableAdjustmentPinned;
   const assessmentGuidanceOpen = assessmentGuidanceHovered || assessmentGuidancePinned;
   const acceptableEvidenceOpen = acceptableEvidenceHovered || acceptableEvidencePinned;
   const mappingGuidanceOpen = mappingGuidanceHovered || mappingGuidancePinned;
+  const gapAssessmentOpen = gapAssessmentHovered || gapAssessmentPinned;
 
   useEffect(() => {
     const currentStudentNumber = record.student.studentNumber.trim() || 'draft';
@@ -1460,6 +1463,59 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
           <p className="mt-1 text-sm text-emerald-800">Every requirement currently has at least one evidence tile mapped to it.</p>
         </div>
       )}
+      <div
+        className="relative w-fit"
+        onMouseEnter={() => setGapAssessmentHovered(true)}
+        onMouseLeave={() => setGapAssessmentHovered(false)}
+        onFocusCapture={() => setGapAssessmentHovered(true)}
+        onBlur={event => {
+          if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+            setGapAssessmentHovered(false);
+          }
+        }}
+        onKeyDown={event => {
+          if (event.key === 'Escape') {
+            setGapAssessmentHovered(false);
+            setGapAssessmentPinned(false);
+          }
+        }}
+      >
+        <button
+          type="button"
+          aria-label="Show Gap Assessment guidance"
+          aria-expanded={gapAssessmentOpen}
+          aria-controls="gap-assessment-guidance"
+          aria-haspopup="dialog"
+          onClick={() => {
+            if (gapAssessmentPinned) {
+              setGapAssessmentPinned(false);
+              setGapAssessmentHovered(false);
+            } else {
+              setGapAssessmentPinned(true);
+            }
+          }}
+          className="inline-flex h-8 items-center gap-1.5 rounded-lg bg-green-600 px-2.5 text-[11px] font-bold text-white transition hover:bg-green-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-700 focus-visible:ring-offset-2"
+        >
+          <Info aria-hidden="true" className="h-4 w-4" />
+          Gap Assessment
+        </button>
+        {gapAssessmentOpen && (
+          <div
+            id="gap-assessment-guidance"
+            role="dialog"
+            aria-label="Gap assessment guidance"
+            className="absolute bottom-full left-0 z-50 mb-2 max-h-[min(70vh,34rem)] w-[min(90vw,40rem)] overflow-y-auto rounded-xl border border-emerald-700 bg-[#052e24]/90 p-4 text-left text-[11px] leading-4 text-green-50 shadow-xl"
+          >
+            <h3 className="text-sm font-semibold text-white">Gap Assessment</h3>
+            <p className="mt-2">
+              When conducting a competency conversation for Recognition of Prior Learning (RPL), relying on simple “Yes/No” questions is a major compliance risk that fails to provide sufficient evidence. To identify genuine skills gaps, design RPL gap questions as open-ended, behavioural, and situational prompts that directly address the Knowledge Evidence and Performance Evidence of the unit.
+            </p>
+            <p className="mt-2">
+              Instead of asking a candidate if they know how to complete a task, use targeted phrasing like, “Walk me through a situation when you had to handle a hazard on-site; what did you do?” Cross-reference their response against the required benchmarks.
+            </p>
+          </div>
+        )}
+      </div>
     </div>
   );
 
