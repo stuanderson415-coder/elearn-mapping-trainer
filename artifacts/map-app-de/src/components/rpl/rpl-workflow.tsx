@@ -767,54 +767,38 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
       </section>
       <aside className="rounded-xl border border-purple-950 bg-purple-900 p-4 text-purple-50 shadow-sm">
         <h3 className="text-xs font-bold uppercase tracking-[0.16em] text-purple-200">CONFIRMATION BY ASSESSOR</h3>
-        <p className="mt-3 text-base font-semibold leading-6">
+        <p className="mt-2 text-sm font-medium leading-5">
           Your evidence will now be logged into a register of your evidence and then mapped against the unit of competence.
         </p>
-        <div className="mt-4">
-          <div className="mt-2 flex items-start gap-2">
-            <Checkbox
-              id="assessment-principles-informed"
-              checked={record.assessmentPrinciplesInformed}
-              onCheckedChange={checked => updateRecord(current => ({ ...current, assessmentPrinciplesInformed: checked === true }))}
-              className="mt-0.5 border-purple-300 data-[state=checked]:border-purple-200"
-            />
-            <label htmlFor="assessment-principles-informed" className="cursor-pointer text-sm font-bold leading-5 text-purple-50">
-              Applicant has been informed of the principles of assessment.
-            </label>
-          </div>
-          <ul className="mt-2 grid gap-1.5 sm:grid-cols-2">
-            <li className="rounded-md border border-[#022c22] bg-[#033b2f] p-2 text-xs leading-4 text-white"><span className="font-bold">Fair:</span> Clear expectations, support provided, appeals process, reasonable adjustment.</li>
-            <li className="rounded-md border border-[#022c22] bg-[#033b2f] p-2 text-xs leading-4 text-white"><span className="font-bold">Flexible:</span> Adaptable to need, independent of how skills were gained.</li>
-            <li className="rounded-md border border-[#022c22] bg-[#033b2f] p-2 text-xs leading-4 text-white"><span className="font-bold">Valid:</span> Assessment tool measures skills and knowledge in the UOC.</li>
-            <li className="rounded-md border border-[#022c22] bg-[#033b2f] p-2 text-xs leading-4 text-white"><span className="font-bold">Reliable:</span> Assessment is accurate, consistent between assessors and contexts.</li>
-          </ul>
-        </div>
-        <div className="mt-4">
-          <div className="mt-2 flex items-start gap-2">
-            <Checkbox
-              id="evidence-rules-informed"
-              checked={record.evidenceRulesInformed}
-              onCheckedChange={checked => updateRecord(current => ({ ...current, evidenceRulesInformed: checked === true }))}
-              className="mt-0.5 border-purple-300 data-[state=checked]:border-purple-200"
-            />
-            <label htmlFor="evidence-rules-informed" className="cursor-pointer text-sm font-bold leading-5 text-purple-50">
-              Applicant has been informed of the rules of evidence.
-            </label>
-          </div>
-          <ul className="mt-2 grid gap-1.5 sm:grid-cols-2">
-            <li className="rounded-md border border-[#022c22] bg-[#033b2f] p-2 text-xs leading-4 text-white"><span className="font-bold">Valid:</span> Evidence aligns directly to the UOC.</li>
-            <li className="rounded-md border border-[#022c22] bg-[#033b2f] p-2 text-xs leading-4 text-white"><span className="font-bold">Sufficient:</span> Evidence is enough in terms of quality and quantity to make the assessment decision.</li>
-            <li className="rounded-md border border-[#022c22] bg-[#033b2f] p-2 text-xs leading-4 text-white"><span className="font-bold">Authentic:</span> Evidence is clearly the candidate’s own work.</li>
-            <li className="rounded-md border border-[#022c22] bg-[#033b2f] p-2 text-xs leading-4 text-white"><span className="font-bold">Currency:</span> Evidence matches current industry standards and practice.</li>
-          </ul>
-        </div>
         <img
           src={`${import.meta.env.BASE_URL}images/assessment-principles-rules.png`}
           alt="Infographic summarising the principles of assessment and rules of evidence"
           loading="lazy"
           decoding="async"
-          className="mt-4 block h-auto w-full rounded-lg object-contain"
+          className="-mx-2 mt-3 block h-auto w-[calc(100%+1rem)] max-w-none rounded-lg object-contain"
         />
+        <div className="mt-3 flex items-start gap-2">
+          <Checkbox
+            id="assessment-principles-informed"
+            checked={record.assessmentPrinciplesInformed}
+            onCheckedChange={checked => updateRecord(current => ({ ...current, assessmentPrinciplesInformed: checked === true }))}
+            className="mt-0.5 border-purple-300 data-[state=checked]:border-purple-200"
+          />
+          <label htmlFor="assessment-principles-informed" className="cursor-pointer text-xs font-bold leading-4 text-purple-50">
+            Applicant has been informed of the principles of assessment.
+          </label>
+        </div>
+        <div className="mt-2 flex items-start gap-2">
+          <Checkbox
+            id="evidence-rules-informed"
+            checked={record.evidenceRulesInformed}
+            onCheckedChange={checked => updateRecord(current => ({ ...current, evidenceRulesInformed: checked === true }))}
+            className="mt-0.5 border-purple-300 data-[state=checked]:border-purple-200"
+          />
+          <label htmlFor="evidence-rules-informed" className="cursor-pointer text-xs font-bold leading-4 text-purple-50">
+            Applicant has been informed of the rules of evidence.
+          </label>
+        </div>
       </aside>
     </div>
   );
