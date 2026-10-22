@@ -9,13 +9,17 @@ import {
   ClipboardCheck,
   Download,
   FileCheck2,
+  FileSpreadsheet,
+  FileText,
   GripVertical,
+  Image,
   Info,
   ListPlus,
   MessageSquareText,
   Plus,
   Trash2,
   UserRound,
+  Video,
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -78,6 +82,43 @@ const DEFAULT_NEW_EVIDENCE: NewEvidenceDraft = {
   classifications: [],
   subtypes: [],
 };
+
+const ACCEPTABLE_EVIDENCE_GUIDE = [
+  {
+    title: 'Direct Evidence',
+    summary: 'Real-time workplace observation, assessor-led demonstrations or simulations, and structured competency conversations.',
+    bestFor: 'Confirming current performance, identity and skill execution.',
+    accent: 'border-rose-300',
+    formats: [
+      { label: 'MP4', Icon: Video },
+      { label: 'JPG / PNG', Icon: Image },
+      { label: 'PDF', Icon: FileText },
+    ],
+  },
+  {
+    title: 'Indirect Evidence',
+    summary: 'Work products and portfolios, photos or videos of completed work, plus completed tests, assignments and case studies.',
+    bestFor: 'Reviewing the quality of completed work and outcomes.',
+    accent: 'border-sky-300',
+    formats: [
+      { label: 'PDF', Icon: FileText },
+      { label: 'DOCX', Icon: FileText },
+      { label: 'XLSX', Icon: FileSpreadsheet },
+      { label: 'JPG / PNG', Icon: Image },
+    ],
+  },
+  {
+    title: 'Supplementary Evidence',
+    summary: 'Third-party reports and supervisor testimonials, formal documentation, and employment history.',
+    bestFor: 'Corroborating the applicant’s claims and showing consistency over time.',
+    accent: 'border-violet-300',
+    formats: [
+      { label: 'PDF', Icon: FileText },
+      { label: 'DOCX', Icon: FileText },
+      { label: 'JPG / PNG', Icon: Image },
+    ],
+  },
+];
 
 function statusForOutcome(outcome: InterviewOutcome) {
   if (outcome === 'resolved') return 'Resolved';
@@ -336,9 +377,12 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
   const [reasonableAdjustmentPinned, setReasonableAdjustmentPinned] = useState(false);
   const [assessmentGuidanceHovered, setAssessmentGuidanceHovered] = useState(false);
   const [assessmentGuidancePinned, setAssessmentGuidancePinned] = useState(false);
+  const [acceptableEvidenceHovered, setAcceptableEvidenceHovered] = useState(false);
+  const [acceptableEvidencePinned, setAcceptableEvidencePinned] = useState(false);
   const paletteRef = useRef<HTMLDivElement>(null);
   const reasonableAdjustmentInfoOpen = reasonableAdjustmentHovered || reasonableAdjustmentPinned;
   const assessmentGuidanceOpen = assessmentGuidanceHovered || assessmentGuidancePinned;
+  const acceptableEvidenceOpen = acceptableEvidenceHovered || acceptableEvidencePinned;
 
   useEffect(() => {
     const currentStudentNumber = record.student.studentNumber.trim() || 'draft';
@@ -971,6 +1015,78 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
             compact
           />
           <p className="mt-1 text-[11px] text-zinc-500">Choose one classification; the card colour is assigned automatically.</p>
+        </div>
+        <div
+          className="relative mt-2 w-fit"
+          onMouseEnter={() => setAcceptableEvidenceHovered(true)}
+          onMouseLeave={() => setAcceptableEvidenceHovered(false)}
+          onFocusCapture={() => setAcceptableEvidenceHovered(true)}
+          onBlur={event => {
+            if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+              setAcceptableEvidenceHovered(false);
+            }
+          }}
+          onKeyDown={event => {
+            if (event.key === 'Escape') {
+              setAcceptableEvidenceHovered(false);
+              setAcceptableEvidencePinned(false);
+            }
+          }}
+        >
+          <button
+            type="button"
+            aria-label="Show acceptable assessment evidence guidance"
+            aria-expanded={acceptableEvidenceOpen}
+            aria-controls="acceptable-evidence-guidance"
+            aria-haspopup="dialog"
+            onClick={() => {
+              if (acceptableEvidencePinned) {
+                setAcceptableEvidencePinned(false);
+                setAcceptableEvidenceHovered(false);
+              } else {
+                setAcceptableEvidencePinned(true);
+              }
+            }}
+            className="inline-flex h-8 items-center gap-1.5 rounded-lg bg-green-600 px-2.5 text-[11px] font-bold text-white transition hover:bg-green-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-700 focus-visible:ring-offset-2"
+          >
+            <Info aria-hidden="true" className="h-4 w-4" />
+            Acceptable Evidence
+          </button>
+          {acceptableEvidenceOpen && (
+            <div
+              id="acceptable-evidence-guidance"
+              role="dialog"
+              aria-label="Acceptable assessment evidence"
+              className="absolute left-0 top-full z-50 mt-2 max-h-[min(70vh,34rem)] w-[min(90vw,44rem)] overflow-y-auto rounded-xl border border-emerald-700 bg-[#052e24]/90 p-4 text-left text-[11px] leading-4 text-green-50 shadow-xl"
+            >
+              <h3 className="text-sm font-semibold text-white">Types of acceptable assessment evidence</h3>
+              <p className="mt-1 text-green-50/90">
+                Combine evidence types to build a holistic view of the learner&apos;s competence.
+              </p>
+              <div className="mt-3 grid gap-2 sm:grid-cols-3">
+                {ACCEPTABLE_EVIDENCE_GUIDE.map(item => (
+                  <section key={item.title} className={`rounded-lg border-l-4 ${item.accent} bg-white/10 p-3`}>
+                    <h4 className="font-bold text-white">{item.title}</h4>
+                    <p className="mt-1 text-[10px] leading-4 text-green-50/95">{item.summary}</p>
+                    <p className="mt-2 text-[10px] leading-4 text-green-50/90">
+                      <strong className="text-white">Best for:</strong> {item.bestFor}
+                    </p>
+                    <div className="mt-2 flex flex-wrap gap-1" aria-label={`${item.title} example file formats`}>
+                      {item.formats.map(({ label, Icon }) => (
+                        <span
+                          key={`${item.title}-${label}`}
+                          className="inline-flex items-center gap-1 rounded border border-white/20 bg-white/10 px-1.5 py-1 text-[9px] font-semibold text-white/95"
+                        >
+                          <Icon aria-hidden="true" className="h-3 w-3" />
+                          {label}
+                        </span>
+                      ))}
+                    </div>
+                  </section>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
         <div className="mt-4 flex justify-end">
           <Button
