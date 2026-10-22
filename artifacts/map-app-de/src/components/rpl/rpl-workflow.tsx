@@ -808,6 +808,13 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
             <li className="rounded-md border border-[#022c22] bg-[#033b2f] p-2 text-xs leading-4 text-white"><span className="font-bold">Currency:</span> Evidence matches current industry standards and practice.</li>
           </ul>
         </div>
+        <img
+          src={`${import.meta.env.BASE_URL}images/assessment-principles-rules.png`}
+          alt="Infographic summarising the principles of assessment and rules of evidence"
+          loading="lazy"
+          decoding="async"
+          className="mt-4 block h-auto w-full rounded-lg object-contain"
+        />
       </aside>
     </div>
   );
