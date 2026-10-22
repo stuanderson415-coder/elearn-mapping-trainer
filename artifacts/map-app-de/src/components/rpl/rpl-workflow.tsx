@@ -333,8 +333,11 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
   const [collapsedMappingSections, setCollapsedMappingSections] = useState<Set<string>>(new Set());
   const [reasonableAdjustmentHovered, setReasonableAdjustmentHovered] = useState(false);
   const [reasonableAdjustmentPinned, setReasonableAdjustmentPinned] = useState(false);
+  const [assessmentGuidanceHovered, setAssessmentGuidanceHovered] = useState(false);
+  const [assessmentGuidancePinned, setAssessmentGuidancePinned] = useState(false);
   const paletteRef = useRef<HTMLDivElement>(null);
   const reasonableAdjustmentInfoOpen = reasonableAdjustmentHovered || reasonableAdjustmentPinned;
+  const assessmentGuidanceOpen = assessmentGuidanceHovered || assessmentGuidancePinned;
 
   useEffect(() => {
     const currentStudentNumber = record.student.studentNumber.trim() || 'draft';
@@ -798,6 +801,92 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
           <label htmlFor="evidence-rules-informed" className="cursor-pointer text-xs font-bold leading-4 text-purple-50">
             Applicant has been informed of the rules of evidence.
           </label>
+        </div>
+        <div
+          className="relative mt-3 w-fit"
+          onMouseEnter={() => setAssessmentGuidanceHovered(true)}
+          onMouseLeave={() => setAssessmentGuidanceHovered(false)}
+          onFocusCapture={() => setAssessmentGuidanceHovered(true)}
+          onBlur={event => {
+            if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+              setAssessmentGuidanceHovered(false);
+            }
+          }}
+          onKeyDown={event => {
+            if (event.key === 'Escape') {
+              setAssessmentGuidanceHovered(false);
+              setAssessmentGuidancePinned(false);
+            }
+          }}
+        >
+          <button
+            type="button"
+            aria-label="Show principles of assessment and rules of evidence guidance"
+            aria-expanded={assessmentGuidanceOpen}
+            aria-controls="assessment-guidance-panel"
+            aria-haspopup="dialog"
+            onClick={() => {
+              if (assessmentGuidancePinned) {
+                setAssessmentGuidancePinned(false);
+                setAssessmentGuidanceHovered(false);
+              } else {
+                setAssessmentGuidancePinned(true);
+              }
+            }}
+            className="inline-flex h-8 items-center gap-1.5 rounded-lg bg-green-600 px-2.5 text-[11px] font-bold text-white transition hover:bg-green-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-700 focus-visible:ring-offset-2"
+          >
+            <Info aria-hidden="true" className="h-4 w-4" />
+            Principles &amp; Rules
+          </button>
+          {assessmentGuidanceOpen && (
+            <div
+              id="assessment-guidance-panel"
+              role="dialog"
+              aria-label="Principles of assessment and rules of evidence"
+              className="absolute right-0 top-full z-50 mt-2 max-h-[min(75vh,42rem)] w-[calc(100vw-2rem)] max-w-[40rem] overflow-y-auto rounded-xl border border-emerald-700 bg-[#052e24] p-4 text-left text-xs leading-5 text-green-50 shadow-xl"
+            >
+              <h4 className="text-base font-bold leading-5 text-white">Principles of Assessment &amp; Rules of Evidence</h4>
+              <p className="mt-2">
+                The <strong>2025 Standards for RTOs</strong> require assessments to be fair, consistent and supported by quality evidence that demonstrates a learner&apos;s competence.
+              </p>
+              <p className="mt-3">
+                <strong>Standard 1.3 – Assessment Systems</strong> requires assessment to be fit for purpose and aligned with the requirements of the relevant training product, including units of competency.
+              </p>
+              <p className="mt-3">
+                <strong>Standard 1.4 – Conducting Assessment</strong> establishes two essential requirements:
+              </p>
+              <p className="mt-3">
+                <strong>Principles of Assessment</strong> – focus on <em>how assessment is conducted</em>. Assessment must be:
+              </p>
+              <ul className="mt-1 list-disc space-y-1 pl-4">
+                <li><strong>Fair:</strong> considers individual learner needs.</li>
+                <li><strong>Flexible:</strong> recognises skills gained in different ways.</li>
+                <li><strong>Valid:</strong> allows learners to demonstrate practical skills and knowledge.</li>
+                <li><strong>Reliable:</strong> produces consistent judgements between assessors.</li>
+              </ul>
+              <p className="mt-3">
+                <strong>Rules of Evidence</strong> – focus on <em>the quality of evidence used to make assessment decisions</em>. Evidence must be:
+              </p>
+              <ul className="mt-1 list-disc space-y-1 pl-4">
+                <li><strong>Valid:</strong> demonstrates the required skills and knowledge.</li>
+                <li><strong>Authentic:</strong> is genuinely the learner&apos;s own work.</li>
+                <li><strong>Current:</strong> reflects the learner&apos;s present competence.</li>
+                <li><strong>Sufficient:</strong> provides enough relevant evidence to make a sound judgement.</li>
+              </ul>
+              <p className="mt-3">
+                <strong>Standard 1.5 – Validation</strong> requires regular review of assessment practices and judgements to maintain quality and consistency.
+              </p>
+              <p className="mt-3">
+                For <strong>Recognition of Prior Learning (RPL)</strong>, these requirements are particularly important. Assessors must evaluate existing skills, knowledge and experience against unit requirements, identify any evidence gaps and make defensible decisions about competence.
+              </p>
+              <p className="mt-3">
+                <strong>Standard 1.6 – Recognition of Prior Learning</strong> reinforces the requirement to support learners in seeking recognition of their existing capabilities.
+              </p>
+              <p className="mt-3 font-medium text-white">
+                Together, these Standards help ensure that assessment decisions are fair, evidence-based and trustworthy.
+              </p>
+            </div>
+          )}
         </div>
       </aside>
     </div>
