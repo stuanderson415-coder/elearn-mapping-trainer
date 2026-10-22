@@ -10,6 +10,7 @@ import {
   Download,
   FileCheck2,
   GripVertical,
+  Info,
   ListPlus,
   MessageSquareText,
   Plus,
@@ -330,7 +331,10 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
   const [savedFeedback, setSavedFeedback] = useState(false);
   const [expandedEvidenceIds, setExpandedEvidenceIds] = useState<Set<string>>(new Set());
   const [collapsedMappingSections, setCollapsedMappingSections] = useState<Set<string>>(new Set());
+  const [reasonableAdjustmentHovered, setReasonableAdjustmentHovered] = useState(false);
+  const [reasonableAdjustmentPinned, setReasonableAdjustmentPinned] = useState(false);
   const paletteRef = useRef<HTMLDivElement>(null);
+  const reasonableAdjustmentInfoOpen = reasonableAdjustmentHovered || reasonableAdjustmentPinned;
 
   useEffect(() => {
     const currentStudentNumber = record.student.studentNumber.trim() || 'draft';
@@ -641,16 +645,82 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
           </div>
         </div>
         <div className="mt-4 grid gap-3 rounded-lg border border-purple-200 bg-purple-50/50 p-3 sm:grid-cols-[minmax(0,0.7fr)_minmax(0,1.3fr)] sm:items-start">
-          <div className="flex items-start gap-2">
-            <Checkbox
-              id="disability-access-plan"
-              checked={record.student.disabilityAccessPlan}
-              onCheckedChange={checked => updateRecord(current => ({ ...current, student: { ...current.student, disabilityAccessPlan: checked === true } }))}
-              className="mt-0.5"
-            />
-            <label htmlFor="disability-access-plan" className="cursor-pointer text-sm font-semibold text-zinc-800">
-              Disability Access Plan (DAP)
-            </label>
+          <div className="flex flex-col items-start gap-2">
+            <div className="flex items-start gap-2">
+              <Checkbox
+                id="disability-access-plan"
+                checked={record.student.disabilityAccessPlan}
+                onCheckedChange={checked => updateRecord(current => ({ ...current, student: { ...current.student, disabilityAccessPlan: checked === true } }))}
+                className="mt-0.5"
+              />
+              <label htmlFor="disability-access-plan" className="cursor-pointer text-sm font-semibold text-zinc-800">
+                Disability Access Plan (DAP)
+              </label>
+            </div>
+            <div
+              className="relative"
+              onMouseEnter={() => setReasonableAdjustmentHovered(true)}
+              onMouseLeave={() => setReasonableAdjustmentHovered(false)}
+              onFocusCapture={() => setReasonableAdjustmentHovered(true)}
+              onBlur={event => {
+                if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+                  setReasonableAdjustmentHovered(false);
+                }
+              }}
+              onKeyDown={event => {
+                if (event.key === 'Escape') {
+                  setReasonableAdjustmentHovered(false);
+                  setReasonableAdjustmentPinned(false);
+                }
+              }}
+            >
+              <button
+                type="button"
+                aria-label="Show reasonable adjustment guidance"
+                aria-expanded={reasonableAdjustmentInfoOpen}
+                aria-controls="reasonable-adjustment-guidance"
+                aria-haspopup="dialog"
+                onClick={() => {
+                  if (reasonableAdjustmentPinned) {
+                    setReasonableAdjustmentPinned(false);
+                    setReasonableAdjustmentHovered(false);
+                  } else {
+                    setReasonableAdjustmentPinned(true);
+                  }
+                }}
+                className="inline-flex h-8 items-center gap-1.5 rounded-lg bg-green-600 px-2.5 text-[11px] font-bold text-white transition hover:bg-green-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-700 focus-visible:ring-offset-2"
+              >
+                <Info aria-hidden="true" className="h-4 w-4" />
+                Reasonable Adjustment
+              </button>
+              {reasonableAdjustmentInfoOpen && (
+                <div
+                  id="reasonable-adjustment-guidance"
+                  role="dialog"
+                  aria-label="Reasonable adjustment guidance"
+                  className="absolute left-0 top-full z-50 mt-2 max-h-[min(70vh,34rem)] w-[calc(100vw-2rem)] max-w-[28rem] overflow-y-auto rounded-xl border border-emerald-700 bg-[#052e24] p-4 text-left text-xs leading-5 text-green-50 shadow-xl"
+                >
+                  <p>
+                    A reasonable adjustment in the Australian Vocational Education and Training (VET) sector is a modification or measure made to training, learning, or assessment methods to help students with disability participate on the same basis as students without disability, as outlined by the{' '}
+                    <a
+                      href="https://www.asqa.gov.au/for-providers/standards-for-RTOs/practice-guides/quality-area-2-vet-student-support/training-support-practice-guide"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-semibold text-white underline decoration-green-300 underline-offset-2 hover:text-green-200"
+                    >
+                      Australian Skills Quality Authority (ASQA)
+                    </a>.
+                  </p>
+                  <p className="mt-3 font-semibold text-white">Core Principles</p>
+                  <ul className="mt-1 list-disc space-y-1.5 pl-4 text-[11px] leading-5 text-green-50/95">
+                    <li><strong>Equal Access:</strong> Adjustments change the pathway, not the destination or core competency requirements.</li>
+                    <li><strong>Legal Obligation:</strong> Registered Training Organisations (RTOs) must comply with Standard 2.4 and the Disability Standards for Education 2005 under the Disability Discrimination Act 1992.</li>
+                    <li><strong>No Unjustifiable Hardship:</strong> An adjustment is reasonable unless it imposes an unjustifiable hardship on the RTO or compromises the integrity of the training product.</li>
+                    <li><strong>Student Choice:</strong> Students have the right to choose whether to disclose a disability.</li>
+                  </ul>
+                </div>
+              )}
+            </div>
           </div>
           <label className="grid gap-1">
             <FieldLabel>Record reasonable adjustments negotiated here</FieldLabel>
