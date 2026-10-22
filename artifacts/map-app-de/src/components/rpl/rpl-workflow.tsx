@@ -383,12 +383,15 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
   const [mappingGuidancePinned, setMappingGuidancePinned] = useState(false);
   const [gapAssessmentHovered, setGapAssessmentHovered] = useState(false);
   const [gapAssessmentPinned, setGapAssessmentPinned] = useState(false);
+  const [finalComplianceHovered, setFinalComplianceHovered] = useState(false);
+  const [finalCompliancePinned, setFinalCompliancePinned] = useState(false);
   const paletteRef = useRef<HTMLDivElement>(null);
   const reasonableAdjustmentInfoOpen = reasonableAdjustmentHovered || reasonableAdjustmentPinned;
   const assessmentGuidanceOpen = assessmentGuidanceHovered || assessmentGuidancePinned;
   const acceptableEvidenceOpen = acceptableEvidenceHovered || acceptableEvidencePinned;
   const mappingGuidanceOpen = mappingGuidanceHovered || mappingGuidancePinned;
   const gapAssessmentOpen = gapAssessmentHovered || gapAssessmentPinned;
+  const finalComplianceOpen = finalComplianceHovered || finalCompliancePinned;
 
   useEffect(() => {
     const currentStudentNumber = record.student.studentNumber.trim() || 'draft';
@@ -1634,14 +1637,63 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
             <DatePickerInput value={record.finalisation.assessorSignatureDate} onChange={assessorSignatureDate => updateRecord(current => ({ ...current, finalisation: { ...current.finalisation, assessorSignatureDate } }))} ariaLabel="Assessor signature date" className="mt-2 h-9" />
           </div>
         </div>
-        <Button
-          onClick={async () => { await exportRplToWord(unit, record); setExported(true); }}
-          disabled={!hasStudent}
-           className="mt-4 bg-purple-800 hover:bg-purple-700"
-        >
-          {exported ? <Check className="mr-2 h-4 w-4" /> : <Download className="mr-2 h-4 w-4" />}
-          {exported ? 'Downloaded RPL Mapping Report' : 'Download RPL Mapping Report'}
-        </Button>
+        <div className="mt-4 flex flex-wrap items-center gap-3">
+          <Button
+            onClick={async () => { await exportRplToWord(unit, record); setExported(true); }}
+            disabled={!hasStudent}
+             className="bg-purple-800 hover:bg-purple-700"
+          >
+            {exported ? <Check className="mr-2 h-4 w-4" /> : <Download className="mr-2 h-4 w-4" />}
+            {exported ? 'Downloaded RPL Mapping Report' : 'Download RPL Mapping Report'}
+          </Button>
+          <div
+            className="relative"
+            onMouseEnter={() => setFinalComplianceHovered(true)}
+            onMouseLeave={() => setFinalComplianceHovered(false)}
+            onFocusCapture={() => setFinalComplianceHovered(true)}
+            onBlur={event => {
+              if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+                setFinalComplianceHovered(false);
+              }
+            }}
+            onKeyDown={event => {
+              if (event.key === 'Escape') {
+                setFinalComplianceHovered(false);
+                setFinalCompliancePinned(false);
+              }
+            }}
+          >
+            <button
+              type="button"
+              aria-label="Show final RPL evidence compliance guidance"
+              aria-expanded={finalComplianceOpen}
+              aria-controls="final-rpl-compliance-guidance"
+              aria-haspopup="dialog"
+              onClick={() => {
+                if (finalCompliancePinned) {
+                  setFinalCompliancePinned(false);
+                  setFinalComplianceHovered(false);
+                } else {
+                  setFinalCompliancePinned(true);
+                }
+              }}
+              className="inline-flex h-10 items-center gap-2 rounded-lg bg-green-600 px-3 text-xs font-bold text-white transition hover:bg-green-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-700 focus-visible:ring-offset-2"
+            >
+              <Info aria-hidden="true" className="h-4 w-4" />
+              Evidence &amp; storage
+            </button>
+            {finalComplianceOpen && (
+              <div
+                id="final-rpl-compliance-guidance"
+                role="dialog"
+                aria-label="Final RPL evidence compliance guidance"
+                className="absolute bottom-full left-0 z-50 mb-2 w-[min(90vw,34rem)] rounded-xl border border-emerald-700 bg-[#052e24]/90 p-4 text-left text-xs leading-5 text-green-50 shadow-xl"
+              >
+                At the end of evidence collection, mapping and gap assessment, RPL recognition is supported when the evidence obtained fully maps to the unit and is securely stored for audit purposes.
+              </div>
+            )}
+          </div>
+        </div>
         {!hasStudent && <p className="mt-2 text-xs text-rose-700">Add the student name and student number before finalising.</p>}
       </section>
       <aside className="rounded-xl border border-purple-900 bg-purple-950 p-4 text-purple-50 shadow-sm">
