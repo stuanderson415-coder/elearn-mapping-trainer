@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Info, Loader2, UserRound } from 'lucide-react';
+import { CircleHelp, Info, Loader2, UserRound } from 'lucide-react';
 import { useLookupUnit, type UnitOfCompetency } from '@workspace/api-client-react';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -90,6 +90,8 @@ export function LookupForm({ onUnitLoaded, isPending }: Props) {
   const [code, setCode] = useState('');
   const [preAssessmentHovered, setPreAssessmentHovered] = useState(false);
   const [preAssessmentPinned, setPreAssessmentPinned] = useState(false);
+  const [questionIdeasHovered, setQuestionIdeasHovered] = useState(false);
+  const [questionIdeasPinned, setQuestionIdeasPinned] = useState(false);
   const [intake, setIntake] = useState<StudentDetails>({
     surname: '',
     givenNames: '',
@@ -111,6 +113,7 @@ export function LookupForm({ onUnitLoaded, isPending }: Props) {
   const { toast } = useToast();
   const loading = lookupUnit.isPending || isPending;
   const preAssessmentInfoOpen = preAssessmentHovered || preAssessmentPinned;
+  const questionIdeasOpen = questionIdeasHovered || questionIdeasPinned;
   const hasRequiredIntake = Boolean(intake.surname.trim() && intake.givenNames.trim() && intake.studentNumber.trim());
   const updateIntake = (patch: Partial<StudentDetails>) => setIntake(current => ({ ...current, ...patch }));
   const updateChecklist = (patch: Partial<StudentDetails['preRplChecklist']>) => setIntake(current => ({
@@ -321,16 +324,73 @@ export function LookupForm({ onUnitLoaded, isPending }: Props) {
                   <label htmlFor="evidence-types-explained" className="cursor-pointer text-xs font-semibold text-zinc-800">Types of Evidence Required</label>
                 </div>
               </div>
-              <label className="grid max-w-xs gap-1 lg:col-span-2">
-                <span className="text-[11px] font-semibold text-zinc-700">Date of Interview</span>
-                <DatePickerInput
-                  value={intake.preRplChecklist.interviewDate}
-                  onChange={interviewDate => updateChecklist({ interviewDate })}
-                  disabled={loading}
-                  ariaLabel="Date of Interview"
-                  className="h-8 text-xs"
-                />
-              </label>
+              <div className="flex flex-wrap items-end gap-2 lg:col-span-2">
+                <label className="grid max-w-xs flex-1 gap-1">
+                  <span className="text-[11px] font-semibold text-zinc-700">Date of Interview</span>
+                  <DatePickerInput
+                    value={intake.preRplChecklist.interviewDate}
+                    onChange={interviewDate => updateChecklist({ interviewDate })}
+                    disabled={loading}
+                    ariaLabel="Date of Interview"
+                    className="h-8 text-xs"
+                  />
+                </label>
+                <div
+                  className="relative shrink-0"
+                  onMouseEnter={() => setQuestionIdeasHovered(true)}
+                  onMouseLeave={() => setQuestionIdeasHovered(false)}
+                >
+                  <button
+                    type="button"
+                    aria-label="Read question ideas for the initial RPL interview"
+                    aria-expanded={questionIdeasOpen}
+                    aria-controls="question-ideas-tooltip"
+                    aria-describedby={questionIdeasOpen ? 'question-ideas-tooltip' : undefined}
+                    onFocus={() => setQuestionIdeasHovered(true)}
+                    onBlur={() => setQuestionIdeasHovered(false)}
+                    onClick={() => {
+                      if (questionIdeasPinned) {
+                        setQuestionIdeasPinned(false);
+                        setQuestionIdeasHovered(false);
+                      } else {
+                        setQuestionIdeasPinned(true);
+                      }
+                    }}
+                    onKeyDown={event => {
+                      if (event.key === 'Escape') {
+                        setQuestionIdeasHovered(false);
+                        setQuestionIdeasPinned(false);
+                      }
+                    }}
+                    className="inline-flex h-8 items-center gap-1.5 rounded-lg bg-green-600 px-2.5 text-[11px] font-bold text-white transition hover:bg-green-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-700 focus-visible:ring-offset-2"
+                  >
+                    <CircleHelp aria-hidden="true" className="h-4 w-4" />
+                    Question Ideas
+                  </button>
+                  {questionIdeasOpen && (
+                    <div
+                      id="question-ideas-tooltip"
+                      role="tooltip"
+                      className="absolute left-0 top-full z-50 mt-2 max-h-[min(70vh,34rem)] w-[calc(100vw-2rem)] max-w-[26rem] overflow-y-auto rounded-xl border border-emerald-700 bg-[#052e24] p-4 text-left text-xs leading-5 text-green-50 shadow-xl"
+                    >
+                      <p className="font-semibold text-white">Ask Open Questions:</p>
+                      <ol className="mt-2 list-decimal space-y-1.5 pl-4 text-[11px] leading-5 text-green-50/95">
+                        <li>
+                          Yes/no questions will not drive a conversation. At this early stage, you want to get the applicant to describe their reasons for applying.
+                        </li>
+                        <li>Be curious: ask questions about timeframes, experiences, training, and qualifications.</li>
+                        <li>
+                          Turn the conversation to evidence early. Once the conversation is open, ask the applicant what they could bring to make their case.
+                        </li>
+                        <li>If you get lost for questions, go to the UOC and use it as a springboard.</li>
+                        <li>
+                          After all the questions, you should have a picture of possible success for the applicant. Be gentle, but remember you can advise against RPL if you think there is insufficient evidence.
+                        </li>
+                      </ol>
+                    </div>
+                  )}
+                </div>
+              </div>
             </section>
             <label className="grid gap-1">
               <span className="text-sm font-bold text-zinc-800">Pre-RPL Interview notes</span>
