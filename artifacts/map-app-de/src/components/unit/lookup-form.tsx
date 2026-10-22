@@ -88,6 +88,8 @@ function LicenceItem({
 
 export function LookupForm({ onUnitLoaded, isPending }: Props) {
   const [code, setCode] = useState('');
+  const [preAssessmentHovered, setPreAssessmentHovered] = useState(false);
+  const [preAssessmentPinned, setPreAssessmentPinned] = useState(false);
   const [intake, setIntake] = useState<StudentDetails>({
     surname: '',
     givenNames: '',
@@ -108,6 +110,7 @@ export function LookupForm({ onUnitLoaded, isPending }: Props) {
   const lookupUnit = useLookupUnit();
   const { toast } = useToast();
   const loading = lookupUnit.isPending || isPending;
+  const preAssessmentInfoOpen = preAssessmentHovered || preAssessmentPinned;
   const hasRequiredIntake = Boolean(intake.surname.trim() && intake.givenNames.trim() && intake.studentNumber.trim());
   const updateIntake = (patch: Partial<StudentDetails>) => setIntake(current => ({ ...current, ...patch }));
   const updateChecklist = (patch: Partial<StudentDetails['preRplChecklist']>) => setIntake(current => ({
@@ -156,9 +159,63 @@ export function LookupForm({ onUnitLoaded, isPending }: Props) {
             <strong className="font-bold">RPL is an assessment only process</strong>. Fill in the details below, then open the <strong className="font-bold">Pre-RPL</strong> Interview toggle beneath. Make a record of the interview, then click <strong className="font-bold">Start</strong>.
           </CardDescription>
         </div>
-        <div className="hidden min-w-[160px] items-center justify-center gap-1.5 rounded-lg bg-green-600 px-3 py-2 text-center text-sm font-extrabold leading-5 text-white sm:flex">
-          <Info aria-hidden="true" className="h-4 w-4 shrink-0" />
-          <span>Pre-Assessment</span>
+        <div
+          className="relative shrink-0"
+          onMouseEnter={() => setPreAssessmentHovered(true)}
+          onMouseLeave={() => setPreAssessmentHovered(false)}
+        >
+          <button
+            type="button"
+            aria-label="Read more about the pre-assessment interview"
+            aria-expanded={preAssessmentInfoOpen}
+            aria-controls="pre-assessment-read-more"
+            aria-describedby={preAssessmentInfoOpen ? 'pre-assessment-read-more' : undefined}
+            onFocus={() => setPreAssessmentHovered(true)}
+            onBlur={() => setPreAssessmentHovered(false)}
+            onClick={() => {
+              if (preAssessmentPinned) {
+                setPreAssessmentPinned(false);
+                setPreAssessmentHovered(false);
+              } else {
+                setPreAssessmentPinned(true);
+              }
+            }}
+            onKeyDown={event => {
+              if (event.key === 'Escape') {
+                setPreAssessmentHovered(false);
+                setPreAssessmentPinned(false);
+              }
+            }}
+            className="flex min-w-[118px] flex-col items-center justify-center gap-0.5 rounded-lg bg-green-600 px-2 py-2 text-center font-extrabold leading-4 text-white transition hover:bg-green-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-700 focus-visible:ring-offset-2 sm:min-w-[160px] sm:flex-row sm:gap-1.5 sm:px-3 sm:py-2 sm:text-sm sm:leading-5"
+          >
+            <span className="flex items-center gap-1.5">
+              <Info aria-hidden="true" className="h-4 w-4 shrink-0" />
+              <span>Pre-Assessment</span>
+            </span>
+            <span className="text-[10px] font-semibold leading-3 sm:ml-5">Read More</span>
+          </button>
+          {preAssessmentInfoOpen && (
+            <div
+              id="pre-assessment-read-more"
+              role="tooltip"
+              className="absolute right-0 top-full z-50 mt-2 max-h-[min(70vh,34rem)] w-[calc(100vw-2rem)] max-w-[26rem] overflow-y-auto rounded-xl border border-emerald-700 bg-[#052e24] p-4 text-left text-xs leading-5 text-green-50 shadow-xl"
+            >
+              <p>
+                RPL starts here. The first interview is critical; you can set the process up to succeed or fail at this stage. An applicant&apos;s success is strongly influenced by the information you provide at this time. You need to cover:
+              </p>
+              <ol className="mt-2 list-decimal space-y-1.5 pl-4 text-[11px] leading-5 text-green-50/95">
+                <li><strong className="font-semibold text-white">RPL is assessment only.</strong></li>
+                <li>
+                  Before the interview, encourage the applicant on first contact to bring base documents, LCV, licences, and position descriptions. These can help you, as the assessor, suggest evidence types.
+                </li>
+                <li><strong className="font-semibold text-white">Timeframe:</strong> Be realistic and allow enough time for one or two evidence presentations and a gap assessment.</li>
+                <li><strong className="font-semibold text-white">Workload:</strong> Collecting evidence takes time and effort. The applicant needs to understand that evidence must cover all assessment outcomes of the unit.</li>
+                <li><strong className="font-semibold text-white">Cost:</strong> RPL costs the same amount as learning and assessment, but the applicant does not receive the learning.</li>
+                <li><strong className="font-semibold text-white">Reasonable adjustment:</strong> Applicants with suitable evidence of special consideration can request an adjustment. It cannot lower the assessment benchmark.</li>
+                <li><strong className="font-semibold text-white">Relax—you&apos;ve got this.</strong></li>
+              </ol>
+            </div>
+          )}
         </div>
       </CardHeader>
 
