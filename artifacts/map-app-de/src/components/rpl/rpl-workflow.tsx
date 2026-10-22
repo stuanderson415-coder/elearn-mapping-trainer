@@ -379,10 +379,13 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
   const [assessmentGuidancePinned, setAssessmentGuidancePinned] = useState(false);
   const [acceptableEvidenceHovered, setAcceptableEvidenceHovered] = useState(false);
   const [acceptableEvidencePinned, setAcceptableEvidencePinned] = useState(false);
+  const [mappingGuidanceHovered, setMappingGuidanceHovered] = useState(false);
+  const [mappingGuidancePinned, setMappingGuidancePinned] = useState(false);
   const paletteRef = useRef<HTMLDivElement>(null);
   const reasonableAdjustmentInfoOpen = reasonableAdjustmentHovered || reasonableAdjustmentPinned;
   const assessmentGuidanceOpen = assessmentGuidanceHovered || assessmentGuidancePinned;
   const acceptableEvidenceOpen = acceptableEvidenceHovered || acceptableEvidencePinned;
+  const mappingGuidanceOpen = mappingGuidanceHovered || mappingGuidancePinned;
 
   useEffect(() => {
     const currentStudentNumber = record.student.studentNumber.trim() || 'draft';
@@ -1237,6 +1240,76 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
           <Badge variant="outline" className="border-purple-200 bg-purple-50 text-purple-800">{coveredRows} / {requirementRows.length} directly covered</Badge>
           {selectedEvidence && <Badge className="bg-zinc-900 text-white">Selected: {selectedEvidence.title}</Badge>}
         </div>
+      </div>
+      <div
+        className="relative w-fit"
+        onMouseEnter={() => setMappingGuidanceHovered(true)}
+        onMouseLeave={() => setMappingGuidanceHovered(false)}
+        onFocusCapture={() => setMappingGuidanceHovered(true)}
+        onBlur={event => {
+          if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+            setMappingGuidanceHovered(false);
+          }
+        }}
+        onKeyDown={event => {
+          if (event.key === 'Escape') {
+            setMappingGuidanceHovered(false);
+            setMappingGuidancePinned(false);
+          }
+        }}
+      >
+        <button
+          type="button"
+          aria-label="Show guidance for mapping evidence"
+          aria-expanded={mappingGuidanceOpen}
+          aria-controls="mapping-evidence-guidance"
+          aria-haspopup="dialog"
+          onClick={() => {
+            if (mappingGuidancePinned) {
+              setMappingGuidancePinned(false);
+              setMappingGuidanceHovered(false);
+            } else {
+              setMappingGuidancePinned(true);
+            }
+          }}
+          className="inline-flex h-8 items-center gap-1.5 rounded-lg bg-green-600 px-2.5 text-[11px] font-bold text-white transition hover:bg-green-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-700 focus-visible:ring-offset-2"
+        >
+          <Info aria-hidden="true" className="h-4 w-4" />
+          Map your evidence
+        </button>
+        {mappingGuidanceOpen && (
+          <div
+            id="mapping-evidence-guidance"
+            role="dialog"
+            aria-label="Core principles for ASQA-compliant mapping"
+            className="absolute left-0 top-full z-50 mt-2 max-h-[min(70vh,34rem)] w-[min(90vw,38rem)] overflow-y-auto rounded-xl border border-emerald-700 bg-[#052e24]/90 p-4 text-left text-[11px] leading-4 text-green-50 shadow-xl"
+          >
+            <h3 className="text-sm font-semibold text-white">Mini Guide to RPL Mapping</h3>
+            <ol className="mt-3 list-decimal space-y-2 pl-4">
+              <li>
+                <strong className="text-white">Break Down the Unit Fully:</strong> Your mapping document must cover all unit components, including:
+                <ul className="mt-1 list-disc space-y-0.5 pl-4 text-[10px] leading-4 text-green-50/95">
+                  <li>Elements and performance criteria</li>
+                  <li>Performance evidence and knowledge evidence</li>
+                  <li>Foundation skills</li>
+                  <li>Assessment conditions</li>
+                </ul>
+              </li>
+              <li>
+                <strong className="text-white">Aim for Breadth and Depth:</strong> Do not rely on a single question or task to cover complex criteria.
+              </li>
+              <li>
+                <strong className="text-white">Link Specific References:</strong> Check the description and tagging of your evidence against the contexts and language of the unit.
+              </li>
+              <li>
+                <strong className="text-white">Balance Knowledge and Skills:</strong> Use a balanced combination of direct, indirect, and supplementary evidence to address both knowledge and skills.
+              </li>
+              <li>
+                <strong className="text-white">Maintain Traceability:</strong> For RPL, show how candidate evidence is matched and judged against the unit, and record where the evidence is located.
+              </li>
+            </ol>
+          </div>
+        )}
       </div>
       {!record.evidence.length && (
         <div className="rounded-lg border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-900">
