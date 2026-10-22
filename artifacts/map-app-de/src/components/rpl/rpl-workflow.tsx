@@ -845,44 +845,25 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
               aria-label="Principles of assessment and rules of evidence"
               className="absolute right-0 top-full z-50 mt-2 max-h-[min(75vh,42rem)] w-[calc(100vw-2rem)] max-w-[40rem] overflow-y-auto rounded-xl border border-emerald-700 bg-[#052e24]/90 p-4 text-left text-[11px] leading-4 text-green-50 shadow-xl"
             >
-              <h4 className="text-sm font-bold leading-5 text-white">Principles of Assessment &amp; Rules of Evidence</h4>
-              <p className="mt-2">
+              <p>
                 The <strong>2025 Standards for RTOs</strong> require assessments to be fair, consistent and supported by quality evidence that demonstrates a learner&apos;s competence.
               </p>
-              <p className="mt-3">
+              <p className="mt-2">
                 <strong>Standard 1.3 – Assessment Systems</strong> requires assessment to be fit for purpose and aligned with the requirements of the relevant training product, including units of competency.
               </p>
-              <p className="mt-3">
-                <strong>Standard 1.4 – Conducting Assessment</strong> establishes two essential requirements:
+              <p className="mt-2">
+                <strong>Standard 1.4 – Conducting Assessment</strong> establishes the two essential requirements shown in the infographic above.
               </p>
-              <p className="mt-3">
-                <strong>Principles of Assessment</strong> – focus on <em>how assessment is conducted</em>. Assessment must be:
-              </p>
-              <ul className="mt-1 list-disc space-y-1 pl-4 text-[10px] leading-4">
-                <li><strong>Fair:</strong> considers individual learner needs.</li>
-                <li><strong>Flexible:</strong> recognises skills gained in different ways.</li>
-                <li><strong>Valid:</strong> allows learners to demonstrate practical skills and knowledge.</li>
-                <li><strong>Reliable:</strong> produces consistent judgements between assessors.</li>
-              </ul>
-              <p className="mt-3">
-                <strong>Rules of Evidence</strong> – focus on <em>the quality of evidence used to make assessment decisions</em>. Evidence must be:
-              </p>
-              <ul className="mt-1 list-disc space-y-1 pl-4 text-[10px] leading-4">
-                <li><strong>Valid:</strong> demonstrates the required skills and knowledge.</li>
-                <li><strong>Authentic:</strong> is genuinely the learner&apos;s own work.</li>
-                <li><strong>Current:</strong> reflects the learner&apos;s present competence.</li>
-                <li><strong>Sufficient:</strong> provides enough relevant evidence to make a sound judgement.</li>
-              </ul>
-              <p className="mt-3">
+              <p className="mt-2">
                 <strong>Standard 1.5 – Validation</strong> requires regular review of assessment practices and judgements to maintain quality and consistency.
               </p>
-              <p className="mt-3">
+              <p className="mt-2">
                 For <strong>Recognition of Prior Learning (RPL)</strong>, these requirements are particularly important. Assessors must evaluate existing skills, knowledge and experience against unit requirements, identify any evidence gaps and make defensible decisions about competence.
               </p>
-              <p className="mt-3">
+              <p className="mt-2">
                 <strong>Standard 1.6 – Recognition of Prior Learning</strong> reinforces the requirement to support learners in seeking recognition of their existing capabilities.
               </p>
-              <p className="mt-3 font-medium text-white">
+              <p className="mt-2 font-medium text-white">
                 Together, these Standards help ensure that assessment decisions are fair, evidence-based and trustworthy.
               </p>
             </div>
