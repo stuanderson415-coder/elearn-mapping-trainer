@@ -59,12 +59,12 @@ function WelcomePanel() {
                   sideOffset={8}
                   aria-labelledby="rto-core-requirements-title"
                   data-testid="panel-rto-core-requirements"
-                  className="max-h-[min(80vh,32rem)] w-[calc(100vw-2rem)] overflow-y-auto border-green-200 bg-white p-4 shadow-lg sm:w-96"
+                  className="max-h-[min(80vh,32rem)] w-[calc(100vw-2rem)] overflow-y-auto border-green-200 bg-white/95 p-4 shadow-lg sm:w-96"
                 >
-                  <h3 id="rto-core-requirements-title" className="text-sm font-semibold text-green-950">
+                  <h3 id="rto-core-requirements-title" className="text-xs font-semibold text-green-950">
                     Core Requirements for RTOs
                   </h3>
-                  <ul className="mt-3 space-y-2 text-xs leading-5 text-zinc-700">
+                  <ul className="mt-3 space-y-2 text-[11px] leading-4 text-zinc-700">
                     <li>
                       <strong className="font-semibold text-zinc-900">Student Support &amp; Awareness:</strong>{' '}
                       Inform students about RPL options and provide accessible policies before and during enrollment.
@@ -113,7 +113,7 @@ function WelcomePanel() {
                 align="end"
                 sideOffset={8}
                 data-testid="tooltip-installation"
-                className="w-80 max-w-[calc(100vw-2rem)] whitespace-normal rounded-lg border border-emerald-200 bg-white p-3 text-left text-xs leading-5 text-zinc-800 shadow-lg"
+                className="w-80 max-w-[calc(100vw-2rem)] whitespace-normal rounded-lg border border-emerald-200 bg-white/95 p-3 text-left text-[11px] leading-4 text-zinc-800 shadow-lg"
               >
                 <p>
                   This website is also a Progressive Web App that can be installed on a computer, tablet, or phone. Open the website in Chrome, then either <strong>click the Install button</strong> in the address bar to install it. For mobile devices or other browsers, <strong>click Share</strong> and select the option to <strong>Add to Home Screen</strong>.

@@ -693,7 +693,7 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
                 }}
                 className="inline-flex h-8 items-center gap-1.5 rounded-lg bg-green-600 px-2.5 text-[11px] font-bold text-white transition hover:bg-green-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-700 focus-visible:ring-offset-2"
               >
-                <Info aria-hidden="true" className="h-4 w-4" />
+                <Info aria-hidden="true" className="h-5 w-5" />
                 Reasonable Adjustment
               </button>
               {reasonableAdjustmentInfoOpen && (
@@ -701,7 +701,7 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
                   id="reasonable-adjustment-guidance"
                   role="dialog"
                   aria-label="Reasonable adjustment guidance"
-                  className="absolute left-0 top-full z-50 mt-2 max-h-[min(70vh,34rem)] w-[calc(100vw-2rem)] max-w-[28rem] overflow-y-auto rounded-xl border border-emerald-700 bg-[#052e24] p-4 text-left text-xs leading-5 text-green-50 shadow-xl"
+                  className="absolute left-0 top-full z-50 mt-2 max-h-[min(70vh,34rem)] w-[calc(100vw-2rem)] max-w-[28rem] overflow-y-auto rounded-xl border border-emerald-700 bg-[#052e24]/90 p-4 text-left text-[11px] leading-4 text-green-50 shadow-xl"
                 >
                   <p>
                     A reasonable adjustment in the Australian Vocational Education and Training (VET) sector is a modification or measure made to training, learning, or assessment methods to help students with disability participate on the same basis as students without disability, as outlined by the{' '}
@@ -715,7 +715,7 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
                     </a>.
                   </p>
                   <p className="mt-3 font-semibold text-white">Core Principles</p>
-                  <ul className="mt-1 list-disc space-y-1.5 pl-4 text-[11px] leading-5 text-green-50/95">
+                  <ul className="mt-1 list-disc space-y-1.5 pl-4 text-[10px] leading-4 text-green-50/95">
                     <li><strong>Equal Access:</strong> Adjustments change the pathway, not the destination or core competency requirements.</li>
                     <li><strong>Legal Obligation:</strong> Registered Training Organisations (RTOs) must comply with Standard 2.4 and the Disability Standards for Education 2005 under the Disability Discrimination Act 1992.</li>
                     <li><strong>No Unjustifiable Hardship:</strong> An adjustment is reasonable unless it imposes an unjustifiable hardship on the RTO or compromises the integrity of the training product.</li>
@@ -835,7 +835,7 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
             }}
             className="inline-flex h-8 items-center gap-1.5 rounded-lg bg-green-600 px-2.5 text-[11px] font-bold text-white transition hover:bg-green-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-700 focus-visible:ring-offset-2"
           >
-            <Info aria-hidden="true" className="h-4 w-4" />
+            <Info aria-hidden="true" className="h-5 w-5" />
             Principles &amp; Rules
           </button>
           {assessmentGuidanceOpen && (
@@ -843,9 +843,9 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
               id="assessment-guidance-panel"
               role="dialog"
               aria-label="Principles of assessment and rules of evidence"
-              className="absolute right-0 top-full z-50 mt-2 max-h-[min(75vh,42rem)] w-[calc(100vw-2rem)] max-w-[40rem] overflow-y-auto rounded-xl border border-emerald-700 bg-[#052e24] p-4 text-left text-xs leading-5 text-green-50 shadow-xl"
+              className="absolute right-0 top-full z-50 mt-2 max-h-[min(75vh,42rem)] w-[calc(100vw-2rem)] max-w-[40rem] overflow-y-auto rounded-xl border border-emerald-700 bg-[#052e24]/90 p-4 text-left text-[11px] leading-4 text-green-50 shadow-xl"
             >
-              <h4 className="text-base font-bold leading-5 text-white">Principles of Assessment &amp; Rules of Evidence</h4>
+              <h4 className="text-sm font-bold leading-5 text-white">Principles of Assessment &amp; Rules of Evidence</h4>
               <p className="mt-2">
                 The <strong>2025 Standards for RTOs</strong> require assessments to be fair, consistent and supported by quality evidence that demonstrates a learner&apos;s competence.
               </p>
@@ -858,7 +858,7 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
               <p className="mt-3">
                 <strong>Principles of Assessment</strong> – focus on <em>how assessment is conducted</em>. Assessment must be:
               </p>
-              <ul className="mt-1 list-disc space-y-1 pl-4">
+              <ul className="mt-1 list-disc space-y-1 pl-4 text-[10px] leading-4">
                 <li><strong>Fair:</strong> considers individual learner needs.</li>
                 <li><strong>Flexible:</strong> recognises skills gained in different ways.</li>
                 <li><strong>Valid:</strong> allows learners to demonstrate practical skills and knowledge.</li>
@@ -867,7 +867,7 @@ export function RplWorkflow({ unit, studentNumber, prefill, initialStage = 'stud
               <p className="mt-3">
                 <strong>Rules of Evidence</strong> – focus on <em>the quality of evidence used to make assessment decisions</em>. Evidence must be:
               </p>
-              <ul className="mt-1 list-disc space-y-1 pl-4">
+              <ul className="mt-1 list-disc space-y-1 pl-4 text-[10px] leading-4">
                 <li><strong>Valid:</strong> demonstrates the required skills and knowledge.</li>
                 <li><strong>Authentic:</strong> is genuinely the learner&apos;s own work.</li>
                 <li><strong>Current:</strong> reflects the learner&apos;s present competence.</li>

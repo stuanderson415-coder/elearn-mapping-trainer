@@ -192,7 +192,7 @@ export function LookupForm({ onUnitLoaded, isPending }: Props) {
             className="flex min-w-[118px] flex-col items-center justify-center gap-0.5 rounded-lg bg-green-600 px-2 py-2 text-center font-extrabold leading-4 text-white transition hover:bg-green-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-700 focus-visible:ring-offset-2 sm:min-w-[160px] sm:flex-row sm:gap-1.5 sm:px-3 sm:py-2 sm:text-sm sm:leading-5"
           >
             <span className="flex items-center gap-1.5">
-              <Info aria-hidden="true" className="h-4 w-4 shrink-0" />
+              <Info aria-hidden="true" className="h-5 w-5 shrink-0" />
               <span>Pre-Assessment</span>
             </span>
             <span className="text-[10px] font-semibold leading-3 sm:ml-5">Read More</span>
@@ -201,12 +201,12 @@ export function LookupForm({ onUnitLoaded, isPending }: Props) {
             <div
               id="pre-assessment-read-more"
               role="tooltip"
-              className="absolute right-0 top-full z-50 mt-2 max-h-[min(70vh,34rem)] w-[calc(100vw-2rem)] max-w-[26rem] overflow-y-auto rounded-xl border border-emerald-700 bg-[#052e24] p-4 text-left text-xs leading-5 text-green-50 shadow-xl"
+              className="absolute right-0 top-full z-50 mt-2 max-h-[min(70vh,34rem)] w-[calc(100vw-2rem)] max-w-[26rem] overflow-y-auto rounded-xl border border-emerald-700 bg-[#052e24]/90 p-4 text-left text-[11px] leading-4 text-green-50 shadow-xl"
             >
               <p>
                 RPL starts here. The first interview is critical; you can set the process up to succeed or fail at this stage. An applicant&apos;s success is strongly influenced by the information you provide at this time. You need to cover:
               </p>
-              <ol className="mt-2 list-decimal space-y-1.5 pl-4 text-[11px] leading-5 text-green-50/95">
+              <ol className="mt-2 list-decimal space-y-1.5 pl-4 text-[10px] leading-4 text-green-50/95">
                 <li><strong className="font-semibold text-white">RPL is assessment only.</strong></li>
                 <li>
                   Before the interview, encourage the applicant on first contact to bring base documents, LCV, licences, and position descriptions. These can help you, as the assessor, suggest evidence types.
@@ -364,17 +364,17 @@ export function LookupForm({ onUnitLoaded, isPending }: Props) {
                     }}
                     className="inline-flex h-8 items-center gap-1.5 rounded-lg bg-green-600 px-2.5 text-[11px] font-bold text-white transition hover:bg-green-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-700 focus-visible:ring-offset-2"
                   >
-                    <CircleHelp aria-hidden="true" className="h-4 w-4" />
+                    <CircleHelp aria-hidden="true" className="h-5 w-5" />
                     Question Ideas
                   </button>
                   {questionIdeasOpen && (
                     <div
                       id="question-ideas-tooltip"
                       role="tooltip"
-                      className="absolute left-0 top-full z-50 mt-2 max-h-[min(70vh,34rem)] w-[calc(100vw-2rem)] max-w-[26rem] overflow-y-auto rounded-xl border border-emerald-700 bg-[#052e24] p-4 text-left text-xs leading-5 text-green-50 shadow-xl"
+                      className="absolute left-0 top-full z-50 mt-2 max-h-[min(70vh,34rem)] w-[calc(100vw-2rem)] max-w-[26rem] overflow-y-auto rounded-xl border border-emerald-700 bg-[#052e24]/90 p-4 text-left text-[11px] leading-4 text-green-50 shadow-xl"
                     >
                       <p className="font-semibold text-white">Ask Open Questions:</p>
-                      <ol className="mt-2 list-decimal space-y-1.5 pl-4 text-[11px] leading-5 text-green-50/95">
+                      <ol className="mt-2 list-decimal space-y-1.5 pl-4 text-[10px] leading-4 text-green-50/95">
                         <li>
                           Yes/no questions will not drive a conversation. At this early stage, you want to get the applicant to describe their reasons for applying.
                         </li>
