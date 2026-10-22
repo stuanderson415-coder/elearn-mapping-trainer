@@ -3,3 +3,4 @@
 - [RPL outcome terminology](rpl-outcomes.md) — final decisions are Granted, In Progress, or Not Granted; partial RPL is not valid
 - [Install icons](install-icons.md) — password protection can block unauthenticated manifest/icon requests; preserve the demonstration access wall.
 - [Word export orientation](word-export-orientation.md) — docx landscape mode swaps supplied width and height; verify generated page dimensions.
+- [Dependency remediation](dependency-remediation.md) — targeted pnpm updates can leave vulnerable transitives locked; verify the resolved tree, not update success.
